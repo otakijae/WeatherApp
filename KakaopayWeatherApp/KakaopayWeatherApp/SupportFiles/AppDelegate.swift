@@ -5,11 +5,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
 
-
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		
 		self.window = UIWindow(frame: UIScreen.main.bounds)
-		self.window?.rootViewController = ViewController.instance
+		let navigationController = UINavigationController()
+		guard let mainListViewController = MainListViewController.instance as? MainListViewController else { return false }
+		mainListViewController.viewModel = ViewModel()
+		navigationController.viewControllers = [mainListViewController]
+		self.window!.rootViewController = navigationController
 		self.window?.makeKeyAndVisible()
 		
 		return true

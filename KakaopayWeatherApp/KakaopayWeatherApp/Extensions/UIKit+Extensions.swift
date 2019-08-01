@@ -42,7 +42,7 @@ extension UIViewController {
 	}
 	
 	func alert(title: String = "Kakaopay",
-						 message: String, okTitle: String = "확인", okAction: (() -> Swift.Void)? = nil) {
+						 message: String, okTitle: String = "확인", okAction: (() -> Void)? = nil) {
 		DispatchQueue.main.async {
 			let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 			let okAction = UIAlertAction(title: okTitle, style: .cancel) { _ in
@@ -202,4 +202,15 @@ extension UITextField {
 		self.attributedText = (self.text ?? "").colored(range: NSRange(location: range.location, length: range.length), color: color)
 	}
 	
+}
+
+func appDelegate() -> AppDelegate {
+	return UIApplication.shared.delegate as? AppDelegate ?? AppDelegate()
+}
+
+extension AppDelegate {
+	func moveRootView() {
+		guard let window = self.window else { return }
+		window.rootViewController?.dismiss(animated: false, completion: nil)
+	}
 }

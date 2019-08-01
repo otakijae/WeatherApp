@@ -8,28 +8,36 @@
 
 /* Begin PBXBuildFile section */
 		13206CB022F1D56B00F6C94F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13206CAF22F1D56B00F6C94F /* AppDelegate.swift */; };
-		13206CB222F1D56B00F6C94F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13206CB122F1D56B00F6C94F /* ViewController.swift */; };
 		13206CB722F1D56D00F6C94F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13206CB622F1D56D00F6C94F /* Assets.xcassets */; };
-		13206CBA22F1D56D00F6C94F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13206CB822F1D56D00F6C94F /* LaunchScreen.storyboard */; };
 		13206CC222F292AA00F6C94F /* UIKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13206CC122F292AA00F6C94F /* UIKit+Extensions.swift */; };
 		13206CC422F292F200F6C94F /* Foundation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13206CC322F292F200F6C94F /* Foundation+Extensions.swift */; };
 		13206CC622F2937A00F6C94F /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13206CC522F2937A00F6C94F /* UIColor+Extensions.swift */; };
-		13206CC822F2945F00F6C94F /* ViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13206CC722F2945F00F6C94F /* ViewController.storyboard */; };
 		13206CCA22F29E4500F6C94F /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13206CC922F29E4500F6C94F /* ViewModel.swift */; };
+		13206CCC22F2AED100F6C94F /* HTTPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13206CCB22F2AED100F6C94F /* HTTPHelper.swift */; };
+		13206CCE22F2AFCD00F6C94F /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13206CCD22F2AFCD00F6C94F /* URLs.swift */; };
+		13206CDE22F2CC6C00F6C94F /* SearchMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13206CDD22F2CC6C00F6C94F /* SearchMapViewController.swift */; };
+		13206CE022F2CC8000F6C94F /* SearchMapViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13206CDF22F2CC8000F6C94F /* SearchMapViewController.storyboard */; };
+		13D2D5E522F30B4D008508B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13D2D5E422F30B4D008508B9 /* LaunchScreen.storyboard */; };
+		13F17C8E22F2E5F900E46746 /* MainListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F17C8D22F2E5F900E46746 /* MainListViewController.swift */; };
+		13F17C9022F2E60500E46746 /* MainListViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13F17C8F22F2E60500E46746 /* MainListViewController.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		13206CAC22F1D56B00F6C94F /* KakaopayWeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KakaopayWeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13206CAF22F1D56B00F6C94F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		13206CB122F1D56B00F6C94F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		13206CB622F1D56D00F6C94F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		13206CB922F1D56D00F6C94F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		13206CBB22F1D56D00F6C94F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13206CC122F292AA00F6C94F /* UIKit+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Extensions.swift"; sourceTree = "<group>"; };
 		13206CC322F292F200F6C94F /* Foundation+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Foundation+Extensions.swift"; sourceTree = "<group>"; };
 		13206CC522F2937A00F6C94F /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
-		13206CC722F2945F00F6C94F /* ViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ViewController.storyboard; sourceTree = "<group>"; };
 		13206CC922F29E4500F6C94F /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		13206CCB22F2AED100F6C94F /* HTTPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHelper.swift; sourceTree = "<group>"; };
+		13206CCD22F2AFCD00F6C94F /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
+		13206CDD22F2CC6C00F6C94F /* SearchMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMapViewController.swift; sourceTree = "<group>"; };
+		13206CDF22F2CC8000F6C94F /* SearchMapViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchMapViewController.storyboard; sourceTree = "<group>"; };
+		13D2D5E422F30B4D008508B9 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		13F17C8D22F2E5F900E46746 /* MainListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListViewController.swift; sourceTree = "<group>"; };
+		13F17C8F22F2E60500E46746 /* MainListViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainListViewController.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,18 +70,78 @@
 		13206CAE22F1D56B00F6C94F /* KakaopayWeatherApp */ = {
 			isa = PBXGroup;
 			children = (
-				13206CAF22F1D56B00F6C94F /* AppDelegate.swift */,
+				13206CD822F2CBB700F6C94F /* ViewControllers */,
+				13206CD922F2CBC200F6C94F /* ViewModels */,
+				13206CDB22F2CBCD00F6C94F /* Modules */,
+				13206CDA22F2CBC700F6C94F /* Models */,
+				13206CDC22F2CBF000F6C94F /* Networking */,
+				13206CD622F2CB8900F6C94F /* Extensions */,
+				13206CD722F2CB9800F6C94F /* SupportFiles */,
+			);
+			path = KakaopayWeatherApp;
+			sourceTree = "<group>";
+		};
+		13206CD622F2CB8900F6C94F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
 				13206CC122F292AA00F6C94F /* UIKit+Extensions.swift */,
 				13206CC522F2937A00F6C94F /* UIColor+Extensions.swift */,
 				13206CC322F292F200F6C94F /* Foundation+Extensions.swift */,
-				13206CB122F1D56B00F6C94F /* ViewController.swift */,
-				13206CC922F29E4500F6C94F /* ViewModel.swift */,
-				13206CC722F2945F00F6C94F /* ViewController.storyboard */,
-				13206CB622F1D56D00F6C94F /* Assets.xcassets */,
-				13206CB822F1D56D00F6C94F /* LaunchScreen.storyboard */,
-				13206CBB22F1D56D00F6C94F /* Info.plist */,
 			);
-			path = KakaopayWeatherApp;
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		13206CD722F2CB9800F6C94F /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				13206CAF22F1D56B00F6C94F /* AppDelegate.swift */,
+				13206CBB22F1D56D00F6C94F /* Info.plist */,
+				13206CB622F1D56D00F6C94F /* Assets.xcassets */,
+			);
+			path = SupportFiles;
+			sourceTree = "<group>";
+		};
+		13206CD822F2CBB700F6C94F /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				13D2D5E422F30B4D008508B9 /* LaunchScreen.storyboard */,
+				13F17C8F22F2E60500E46746 /* MainListViewController.storyboard */,
+				13F17C8D22F2E5F900E46746 /* MainListViewController.swift */,
+				13206CDF22F2CC8000F6C94F /* SearchMapViewController.storyboard */,
+				13206CDD22F2CC6C00F6C94F /* SearchMapViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		13206CD922F2CBC200F6C94F /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				13206CC922F29E4500F6C94F /* ViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		13206CDA22F2CBC700F6C94F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		13206CDB22F2CBCD00F6C94F /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		13206CDC22F2CBF000F6C94F /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				13206CCD22F2AFCD00F6C94F /* URLs.swift */,
+				13206CCB22F2AED100F6C94F /* HTTPHelper.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,9 +202,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13206CBA22F1D56D00F6C94F /* LaunchScreen.storyboard in Resources */,
+				13206CE022F2CC8000F6C94F /* SearchMapViewController.storyboard in Resources */,
+				13F17C9022F2E60500E46746 /* MainListViewController.storyboard in Resources */,
+				13D2D5E522F30B4D008508B9 /* LaunchScreen.storyboard in Resources */,
 				13206CB722F1D56D00F6C94F /* Assets.xcassets in Resources */,
-				13206CC822F2945F00F6C94F /* ViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,8 +217,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				13206CC422F292F200F6C94F /* Foundation+Extensions.swift in Sources */,
+				13206CCC22F2AED100F6C94F /* HTTPHelper.swift in Sources */,
 				13206CC622F2937A00F6C94F /* UIColor+Extensions.swift in Sources */,
-				13206CB222F1D56B00F6C94F /* ViewController.swift in Sources */,
+				13F17C8E22F2E5F900E46746 /* MainListViewController.swift in Sources */,
+				13206CCE22F2AFCD00F6C94F /* URLs.swift in Sources */,
+				13206CDE22F2CC6C00F6C94F /* SearchMapViewController.swift in Sources */,
 				13206CB022F1D56B00F6C94F /* AppDelegate.swift in Sources */,
 				13206CCA22F29E4500F6C94F /* ViewModel.swift in Sources */,
 				13206CC222F292AA00F6C94F /* UIKit+Extensions.swift in Sources */,
@@ -157,17 +229,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		13206CB822F1D56D00F6C94F /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				13206CB922F1D56D00F6C94F /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		13206CBC22F1D56D00F6C94F /* Debug */ = {
@@ -221,7 +282,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -276,7 +337,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -292,7 +353,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R6MGG2G2T3;
-				INFOPLIST_FILE = KakaopayWeatherApp/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/KakaopayWeatherApp/SupportFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -300,7 +361,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ninetyfivejae.KakaopayWeatherApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -311,7 +372,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R6MGG2G2T3;
-				INFOPLIST_FILE = KakaopayWeatherApp/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/KakaopayWeatherApp/SupportFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -319,7 +380,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ninetyfivejae.KakaopayWeatherApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
