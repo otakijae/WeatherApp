@@ -51,8 +51,8 @@ extension UIViewController {
 			}
 			
 			alert.addAction(okAction)
-			alert.view.tintColor = UIColor.periwinkle
-			self.present(alert, animated: true, completion: { alert.view.tintColor = UIColor.periwinkle })
+			alert.view.tintColor = UIColor.darkGray
+			self.present(alert, animated: true, completion: { alert.view.tintColor = UIColor.darkGray })
 		}
 	}
 	
@@ -67,8 +67,8 @@ extension UIViewController {
 			
 			alert.addAction(cancelAction)
 			alert.addAction(okAction)
-			alert.view.tintColor = UIColor.periwinkle
-			self.present(alert, animated: true, completion: { alert.view.tintColor = UIColor.periwinkle })
+			alert.view.tintColor = UIColor.darkGray
+			self.present(alert, animated: true, completion: { alert.view.tintColor = UIColor.darkGray })
 		}
 	}
 	
@@ -84,8 +84,8 @@ extension UIViewController {
 			
 			alert.addAction(cancelAction)
 			alert.addAction(okAction)
-			alert.view.tintColor = UIColor.periwinkle
-			self.present(alert, animated: true, completion: { alert.view.tintColor = UIColor.periwinkle })
+			alert.view.tintColor = UIColor.darkGray
+			self.present(alert, animated: true, completion: { alert.view.tintColor = UIColor.darkGray })
 		}
 	}
 	
