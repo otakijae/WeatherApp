@@ -66,5 +66,4 @@ class SearchMapViewController: UIViewController, UISearchBarDelegate {
 		dismiss(animated: true)
 	}
 	
-	
 }

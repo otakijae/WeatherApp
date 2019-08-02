@@ -1,68 +1,87 @@
 import Foundation
 
+class API: HttpHelper {
+	
+	static let instance = API()
+	
+	func requestWeather(latitude: Double, longitude: Double, resultHandler: @escaping (Any) -> Void) {
+		let url = URL(string: "\(URLs.baseURL)/\(HttpHelper.accessToken)/\(latitude),\(longitude)")!
+		get(url: url, completionHandler: { data, response, error in
+			guard error == nil else { return }
+			if	let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+				guard let jsonToArray = try? JSONSerialization.jsonObject(with: data, options: []) else { return }
+				resultHandler(jsonToArray)
+			}
+		})
+	}
+	
+}
+
 class HttpHelper {
 	
+	static var accessToken: String {
+		get {
+			if let accessToken = UserDefaults.standard.string(forKey: "AccessToken") {
+				return "\(accessToken)"
+			} else {
+				return "d5a050a57a21064809f5a3946ab02436"
+			}
+		}
+		set {
+			UserDefaults.standard.setValue(accessToken, forKey: "AccessToken")
+			UserDefaults.standard.synchronize()
+		}
+	}
+	
 	enum HTTPMethod: String {
-		case post   = "POST"
-		case get    = "GET"
-		case put    = "PUT"
+		case post = "POST"
+		case get = "GET"
+		case put = "PUT"
+		case patch = "PATCH"
 		case delete = "DELETE"
 	}
 	
-	func getURLRequest(url: URL, httpMethod: HTTPMethod, parameters: [String: Any]? = nil) -> URLRequest {
-		var request = URLRequest(url: url)
-		request.timeoutInterval = 10.0
-		request.httpMethod = httpMethod.rawValue
-		request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-//		if self.accessToken == "" {
-//			self.accessToken = AccessToken.token() ?? ""
-//		}
-		
-		//### 중요
-//		request.addValue(accessToken, forHTTPHeaderField: "Authorization")
-		
-		guard let parameters = parameters else { return request }
-		
-		switch httpMethod {
-		case .get:
-			request.url = URL(string:"\(url)\(getParameterString(parameters: parameters))")
-			
-		case .post:
-			do {
-				request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
-			} catch let error {
-				print(error)
-			}
-			
-		case .put:
-			do {
-				request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
-			} catch let error {
-				print(error)
-			}
-			
-		case .delete:
-			do {
-				request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
-			} catch let error {
-				print(error)
-			}
-		}
-		
-		return request
+	let session: URLSession = URLSession.shared
+	
+	func get(url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
+		var request: URLRequest = URLRequest(url: url)
+		request.httpMethod = HTTPMethod.get.rawValue
+		request.addValue("application/json", forHTTPHeaderField: "Accept")
+		session.dataTask(with: request, completionHandler: completionHandler).resume()
 	}
 	
-	func getParameterString(parameters: [String: Any]? = nil) -> String {
-		guard let parameters = parameters else { return "" }
-		var urlValues = [String]()
-		parameters.forEach { (key: String, value: Any) in
-			guard let value = value as? String else { return }
-			if let encodedValue = value.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) {
-				urlValues.append(key + "=" + encodedValue)
-			}
-		}
-		
-		let firstValue = urlValues.removeFirst()
-		return urlValues.reduce("?\(firstValue)") { return $0 + "&" + $1 }
+	func post(url: URL, body: NSMutableDictionary, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) throws {
+		var request: URLRequest = URLRequest(url: url)
+		request.httpMethod = HTTPMethod.post.rawValue
+		request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+		request.addValue("application/json", forHTTPHeaderField: "Accept")
+		request.httpBody = try JSONSerialization.data(withJSONObject: body, options: JSONSerialization.WritingOptions.prettyPrinted)
+		session.dataTask(with: request, completionHandler: completionHandler).resume()
 	}
+	
+	func put(url: URL, body: NSMutableDictionary, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) throws {
+		var request: URLRequest = URLRequest(url: url)
+		request.httpMethod = HTTPMethod.put.rawValue
+		request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+		request.addValue("application/json", forHTTPHeaderField: "Accept")
+		request.httpBody = try JSONSerialization.data(withJSONObject: body, options: JSONSerialization.WritingOptions.prettyPrinted)
+		session.dataTask(with: request, completionHandler: completionHandler).resume()
+	}
+	
+	func patch(url: URL, body: NSMutableDictionary, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) throws {
+		var request: URLRequest = URLRequest(url: url)
+		request.httpMethod = HTTPMethod.patch.rawValue
+		request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+		request.addValue("application/json", forHTTPHeaderField: "Accept")
+		request.httpBody = try JSONSerialization.data(withJSONObject: body, options: JSONSerialization.WritingOptions.prettyPrinted)
+		session.dataTask(with: request, completionHandler: completionHandler).resume()
+	}
+	
+	func delete(url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
+		var request: URLRequest = URLRequest(url: url)
+		request.httpMethod = HTTPMethod.delete.rawValue
+		request.addValue("application/json", forHTTPHeaderField: "Accept")
+		session.dataTask(with: request, completionHandler: completionHandler).resume()
+	}
+	
 }
