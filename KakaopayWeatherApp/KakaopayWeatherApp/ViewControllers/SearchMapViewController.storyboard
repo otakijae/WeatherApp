@@ -105,4 +105,5 @@
     <resources>
         <image name="icClose" width="12" height="12"/>
     </resources>
+    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

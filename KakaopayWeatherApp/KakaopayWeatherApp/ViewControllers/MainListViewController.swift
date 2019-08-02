@@ -5,12 +5,17 @@ class MainListViewController: UIViewController {
 	var viewModel: ViewModel?
 	var vcList: [String] = []
 	
+	@IBOutlet weak var tableView: UITableView!
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		tableView.delegate = self
+		tableView.dataSource = self
+		
 		guard let viewModel = viewModel else { return }
 		addObservers(to: viewModel)
-		viewModel.add()
+		
 		viewModel.requestWeather()
 	}
 	
@@ -23,6 +28,26 @@ class MainListViewController: UIViewController {
 	}
 }
 
+extension MainListViewController: UITableViewDelegate, UITableViewDataSource {
+	
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return 150
+	}
+	
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return 2
+	}
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		
+	}
+	
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		return UITableViewCell()
+	}
+	
+}
+
 extension MainListViewController: Observer {
 	
 	func update(_ list: [String]) {
@@ -30,13 +55,13 @@ extension MainListViewController: Observer {
 		alert(message: "\(vcList)",
 			okTitle: "네",
 			okAction: { [unowned self] in
-				self.present(SearchMapViewController.instance, animated: true)
+				self.show(DetailWeatherViewController.instance, sender: self)
 		})
 	}
 	
 	func update(_ json: Any) {
-		print("### TEST ... MainListViewController")
-		print(json)
+//		print("### TEST ... MainListViewController")
+//		print(json)
 	}
 	
 }
