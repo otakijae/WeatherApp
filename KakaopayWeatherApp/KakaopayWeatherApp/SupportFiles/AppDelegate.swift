@@ -9,6 +9,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		self.window = UIWindow(frame: UIScreen.main.bounds)
 		let navigationController = UINavigationController()
+		navigationController.navigationBar.barTintColor = .white
+		navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.darkGray]
 		guard let mainListViewController = MainListViewController.instance as? MainListViewController else { return false }
 		mainListViewController.viewModel = ViewModel()
 		navigationController.viewControllers = [mainListViewController]
