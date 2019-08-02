@@ -17,7 +17,19 @@
                     <view key="view" contentMode="scaleToFill" id="2sZ-sL-Qma">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.90980392160000001" green="0.82745098039999998" blue="0.89411764709999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kakaopay 날씨" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ul2-Dx-3uF">
+                                <rect key="frame" x="112.5" y="318.5" width="150" height="30"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Medium" family="Apple SD Gothic Neo" pointSize="25"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="highlightedColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.99607843137254903" green="0.9137254901960784" blue="0.20392156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="ul2-Dx-3uF" firstAttribute="centerY" secondItem="2sZ-sL-Qma" secondAttribute="centerY" id="H4d-Ez-Pyu"/>
+                            <constraint firstItem="ul2-Dx-3uF" firstAttribute="centerX" secondItem="2sZ-sL-Qma" secondAttribute="centerX" id="koL-Cm-HE0"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="MJp-kE-Z28"/>
                     </view>
                 </viewController>

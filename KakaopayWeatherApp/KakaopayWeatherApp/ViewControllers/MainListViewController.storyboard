@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Main List View Controller-->
+        <!--날씨-->
         <scene sceneID="xcV-5y-nHu">
             <objects>
                 <viewController storyboardIdentifier="MainListViewController" id="HQW-ei-csV" customClass="MainListViewController" customModule="KakaopayWeatherApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -18,26 +18,105 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nGn-yi-TRo">
-                                <rect key="frame" x="147" y="223" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="test:" destination="HQW-ei-csV" eventType="touchUpInside" id="cUh-xW-GCI"/>
-                                </connections>
-                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6pv-xl-GRn">
+                                <rect key="frame" x="0.0" y="64" width="375" height="552"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="100" id="xR8-2C-IXB">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xR8-2C-IXB" id="9ry-o6-e45">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RL6-zy-rUy" userLabel="addButtonView">
+                                <rect key="frame" x="0.0" y="616" width="375" height="51"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n9s-d3-pvP">
+                                        <rect key="frame" x="146.5" y="0.0" width="82" height="51"/>
+                                        <state key="normal" title="도시 추가하기">
+                                            <color key="titleColor" red="0.23921568630000001" green="0.28627450980000002" blue="0.32549019610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="addCityButtonTapped:" destination="HQW-ei-csV" eventType="touchUpInside" id="0YO-ey-CO4"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rkY-pO-dS2">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
+                                        <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="gAD-zB-16v"/>
+                                        </constraints>
+                                    </view>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icAddition" translatesAutoresizingMaskIntoConstraints="NO" id="BzN-bp-l2J">
+                                        <rect key="frame" x="111.5" y="10.5" width="30" height="30"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="n9s-d3-pvP" secondAttribute="bottom" id="6he-WT-l0w"/>
+                                    <constraint firstAttribute="trailing" secondItem="rkY-pO-dS2" secondAttribute="trailing" id="9kb-nc-BZt"/>
+                                    <constraint firstItem="rkY-pO-dS2" firstAttribute="top" secondItem="RL6-zy-rUy" secondAttribute="top" id="A4O-Pe-cPz"/>
+                                    <constraint firstAttribute="height" constant="51" id="dQX-Vc-t7C"/>
+                                    <constraint firstItem="rkY-pO-dS2" firstAttribute="leading" secondItem="RL6-zy-rUy" secondAttribute="leading" id="dil-Ts-opn"/>
+                                    <constraint firstItem="n9s-d3-pvP" firstAttribute="leading" secondItem="BzN-bp-l2J" secondAttribute="trailing" constant="5" id="fat-b9-ln7"/>
+                                    <constraint firstItem="BzN-bp-l2J" firstAttribute="centerY" secondItem="RL6-zy-rUy" secondAttribute="centerY" id="jIL-So-ofL"/>
+                                    <constraint firstItem="n9s-d3-pvP" firstAttribute="centerY" secondItem="RL6-zy-rUy" secondAttribute="centerY" id="rG3-uG-Wmr"/>
+                                    <constraint firstItem="n9s-d3-pvP" firstAttribute="centerX" secondItem="RL6-zy-rUy" secondAttribute="centerX" id="rJg-fH-55a"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="RL6-zy-rUy" firstAttribute="trailing" secondItem="iU5-xt-WF4" secondAttribute="trailing" id="3XZ-b4-ps0"/>
+                            <constraint firstItem="RL6-zy-rUy" firstAttribute="top" secondItem="6pv-xl-GRn" secondAttribute="bottom" id="3nn-fv-axP"/>
+                            <constraint firstItem="6pv-xl-GRn" firstAttribute="width" secondItem="GVU-uY-0nW" secondAttribute="width" id="6FF-Yc-asg"/>
+                            <constraint firstItem="RL6-zy-rUy" firstAttribute="bottom" secondItem="iU5-xt-WF4" secondAttribute="bottom" id="6Wy-Md-j2p"/>
+                            <constraint firstItem="RL6-zy-rUy" firstAttribute="leading" secondItem="GVU-uY-0nW" secondAttribute="leading" id="SVB-1J-HGN"/>
+                            <constraint firstItem="6pv-xl-GRn" firstAttribute="centerX" secondItem="GVU-uY-0nW" secondAttribute="centerX" id="ZyN-Qs-SV4"/>
+                            <constraint firstItem="RL6-zy-rUy" firstAttribute="centerX" secondItem="GVU-uY-0nW" secondAttribute="centerX" id="ecQ-JU-lGx"/>
+                            <constraint firstItem="6pv-xl-GRn" firstAttribute="centerX" secondItem="iU5-xt-WF4" secondAttribute="centerX" id="fxq-Ck-WGk"/>
+                            <constraint firstItem="6pv-xl-GRn" firstAttribute="top" secondItem="iU5-xt-WF4" secondAttribute="top" id="jct-vI-plj"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="iU5-xt-WF4"/>
                     </view>
-                    <navigationItem key="navigationItem" id="jCL-gb-UrJ"/>
-                    <connections>
-                        <outlet property="button" destination="nGn-yi-TRo" id="mYE-BM-Zwt"/>
-                    </connections>
+                    <navigationItem key="navigationItem" title="날씨" id="jCL-gb-UrJ"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Fv-Ql-q6B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2865" y="698"/>
+            <point key="canvasLocation" x="3652" y="697.60119940029995"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="b62-RO-FGF">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5ZW-iE-VrF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="K4C-tq-h0L" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="UJf-KB-GvO">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="HQW-ei-csV" kind="relationship" relationship="rootViewController" id="c8d-RE-Ucd"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="2864.8000000000002" y="697.60119940029995"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icAddition" width="30" height="30"/>
+    </resources>
 </document>

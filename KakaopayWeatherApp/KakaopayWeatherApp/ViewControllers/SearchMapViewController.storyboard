@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Search Map View Controller-->
+        <!--도시 검색-->
         <scene sceneID="jbF-O8-WWB">
             <objects>
                 <viewController storyboardIdentifier="SearchMapViewController" id="JMW-hv-xYz" customClass="SearchMapViewController" customModule="KakaopayWeatherApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -21,9 +21,15 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="l0z-r2-OLk">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                             </mapView>
+                            <searchBar contentMode="redraw" placeholder="도시를 입력해보세요..." translatesAutoresizingMaskIntoConstraints="NO" id="lOr-2X-dmV">
+                                <rect key="frame" x="0.0" y="64" width="375" height="56"/>
+                                <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="search"/>
+                            </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gHu-uN-uOY">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="0.0" y="120" width="375" height="547"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="nF9-uO-r2I">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
@@ -40,27 +46,32 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="lOr-2X-dmV" firstAttribute="top" secondItem="ZBW-ky-zU1" secondAttribute="top" id="9P6-39-oKc"/>
+                            <constraint firstItem="gHu-uN-uOY" firstAttribute="top" secondItem="lOr-2X-dmV" secondAttribute="bottom" id="Byv-4Y-Bs7"/>
                             <constraint firstItem="ZBW-ky-zU1" firstAttribute="bottom" secondItem="l0z-r2-OLk" secondAttribute="bottom" id="Eys-MW-IBJ"/>
                             <constraint firstItem="l0z-r2-OLk" firstAttribute="top" secondItem="ZBW-ky-zU1" secondAttribute="top" id="Vee-LI-rp4"/>
                             <constraint firstItem="l0z-r2-OLk" firstAttribute="width" secondItem="aRD-RA-jaX" secondAttribute="width" id="VfC-BN-U6O"/>
+                            <constraint firstItem="lOr-2X-dmV" firstAttribute="centerX" secondItem="aRD-RA-jaX" secondAttribute="centerX" id="VkC-3s-acC"/>
                             <constraint firstItem="gHu-uN-uOY" firstAttribute="centerX" secondItem="ZBW-ky-zU1" secondAttribute="centerX" id="XxV-fC-lRu"/>
-                            <constraint firstItem="gHu-uN-uOY" firstAttribute="top" secondItem="ZBW-ky-zU1" secondAttribute="top" id="YNK-bN-cIg"/>
+                            <constraint firstItem="lOr-2X-dmV" firstAttribute="trailing" secondItem="ZBW-ky-zU1" secondAttribute="trailing" id="e83-8n-5uu"/>
                             <constraint firstItem="l0z-r2-OLk" firstAttribute="centerX" secondItem="ZBW-ky-zU1" secondAttribute="centerX" id="fa3-LM-xDg"/>
+                            <constraint firstItem="lOr-2X-dmV" firstAttribute="leading" secondItem="ZBW-ky-zU1" secondAttribute="leading" id="kJ0-nu-cO5"/>
                             <constraint firstItem="gHu-uN-uOY" firstAttribute="width" secondItem="aRD-RA-jaX" secondAttribute="width" id="qhS-si-cqj"/>
                             <constraint firstItem="ZBW-ky-zU1" firstAttribute="bottom" secondItem="gHu-uN-uOY" secondAttribute="bottom" id="s5e-7M-uJQ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ZBW-ky-zU1"/>
                     </view>
-                    <navigationItem key="navigationItem" id="FRS-kb-dho">
-                        <barButtonItem key="leftBarButtonItem" title="취소" id="CkP-qP-rpi">
+                    <navigationItem key="navigationItem" title="도시 검색" id="FRS-kb-dho">
+                        <barButtonItem key="leftBarButtonItem" title="취소" image="icClose" id="CkP-qP-rpi">
                             <connections>
                                 <action selector="dismiss:" destination="JMW-hv-xYz" id="UmZ-dc-z3A"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="완료" id="fzc-BE-1kH"/>
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="l0z-r2-OLk" id="0G4-mD-RXC"/>
+                        <outlet property="searchBar" destination="lOr-2X-dmV" id="yen-vd-TXd"/>
+                        <outlet property="tableView" destination="gHu-uN-uOY" id="cx2-zY-wHu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vSy-jQ-O55" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -75,6 +86,11 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="FD1-el-LTP">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -86,4 +102,7 @@
             <point key="canvasLocation" x="2528.8000000000002" y="910.79460269865069"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icClose" width="12" height="12"/>
+    </resources>
 </document>

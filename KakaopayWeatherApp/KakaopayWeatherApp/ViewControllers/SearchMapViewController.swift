@@ -12,15 +12,15 @@ class SearchMapViewController: UIViewController, UISearchBarDelegate {
 	var pointAnnotation: MKPointAnnotation!
 	var pinAnnotationView: MKPinAnnotationView!
 	
+	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet var mapView: MKMapView!
+	@IBOutlet weak var searchBar: UISearchBar!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
-		searchController = UISearchController(searchResultsController: nil)
-		searchController.hidesNavigationBarDuringPresentation = false
-		self.searchController.searchBar.delegate = self
-		present(searchController, animated: true, completion: nil)
+
+		self.searchBar.delegate = self
+		hideKeyboardWhenTappedAround()
 	}
 	
 	override func didReceiveMemoryWarning() {
@@ -28,9 +28,7 @@ class SearchMapViewController: UIViewController, UISearchBarDelegate {
 	}
 	
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-
 		searchBar.resignFirstResponder()
-		dismiss(animated: true, completion: nil)
 		if self.mapView.annotations.count != 0{
 			annotation = self.mapView.annotations[0]
 			self.mapView.removeAnnotation(annotation)
@@ -55,15 +53,39 @@ class SearchMapViewController: UIViewController, UISearchBarDelegate {
 			self.pointAnnotation.title = searchBar.text
 			self.pointAnnotation.coordinate = CLLocationCoordinate2D(latitude: localSearchResponse!.boundingRegion.center.latitude, longitude: localSearchResponse!.boundingRegion.center.longitude)
 			
+			print(localSearchResponse!.boundingRegion.center.latitude)
+			print(localSearchResponse!.boundingRegion.center.longitude)
 			
 			self.pinAnnotationView = MKPinAnnotationView(annotation: self.pointAnnotation, reuseIdentifier: nil)
 			self.mapView.centerCoordinate = self.pointAnnotation.coordinate
 			self.mapView.addAnnotation(self.pinAnnotationView.annotation!)
 		}
 	}
+	
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+		super.touchesBegan(touches, with: event)
+		
+		self.view.endEditing(true)
+		self.tableView.resignFirstResponder()
+		self.searchBar.resignFirstResponder()
+	}
 
 	@IBAction func dismiss(_ sender: Any) {
+		view.endEditing(true)
 		dismiss(animated: true)
+	}
+	
+}
+
+extension UIViewController {
+	
+	func hideKeyboardWhenTappedAround() {
+		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+		view.addGestureRecognizer(tapGesture)
+	}
+	
+	@objc func hideKeyboard() {
+		view.endEditing(true)
 	}
 	
 }
