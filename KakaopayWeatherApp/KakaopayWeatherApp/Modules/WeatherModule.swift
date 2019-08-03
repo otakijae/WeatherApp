@@ -1,29 +1,13 @@
 import Foundation
 import MapKit
 
-class WeatherModule: Observation {
+class WeatherModule {
 	
 	static let instance = WeatherModule()
 	
-	var simpleWeatherList: [City] = []
-	
-	func notify(_ json: Any) {
-		for observer in observers {
-			observer.update(json)
-		}
-	}
-	
-	func notify(_ city: City) {
-		for observer in observers {
-			observer.update(city)
-		}
-	}
-	
-	func notify(_ cityList: [City]) {
-		for observer in observers {
-			observer.update(cityList)
-		}
-	}
+	var city: Observable<City> = Observable<City>(value: City())
+	var cityList: Observable<[City]> = Observable<[City]>(value: [])
+	var simpleWeatherList: Observable<[City]> = Observable<[City]>(value: [])
 	
 	func requestSimpleWeather(with city: City) {
 		getCoordinates(with: city) { coodinates in
@@ -38,7 +22,7 @@ class WeatherModule: Observation {
 				
 				city.currentTime = Time.instance.getSimpleCurrentTime(in: timeZone)
 				city.currentTemperature = String(temperature)
-				self.notify(city)
+				self.city.value = city
 			}
 		}
 	}
@@ -54,8 +38,6 @@ class WeatherModule: Observation {
 					let currently = data["currently"] as? [String: Any],
 					let temperature = currently["temperature"] as? String else { return }
 				
-				print(json)
-				
 				city.currentTime = Time.instance.getSimpleCurrentTime(in: timeZone)
 				city.currentTemperature = temperature
 				resultHandler(city)
@@ -63,18 +45,10 @@ class WeatherModule: Observation {
 		}
 	}
 	
-	func requestSimpleWeatherList(with cityList: [City], resultHandler: @escaping ([City]) -> Void) {
-		simpleWeatherList.removeAll()
-		let last = cityList.count
-		var count = 0
+	func requestSimpleWeatherList(with cityList: [City]) {
+		simpleWeatherList.value.removeAll()
 		cityList.forEach {
-			count+=1
-			requestSimpleWeather(with: $0) { city in
-				self.simpleWeatherList.append(city)
-				if cityList.count == self.simpleWeatherList.count {
-					resultHandler(self.simpleWeatherList)
-				}
-			}
+			requestSimpleWeather(with: $0)
 		}
 	}
 	

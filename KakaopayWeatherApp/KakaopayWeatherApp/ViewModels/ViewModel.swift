@@ -1,32 +1,34 @@
 import Foundation
 
-class ViewModel: Observation {
+class ViewModel: ObserverProtocol {
 	
-	override init() {
-		super.init()
-		addObservers()
+	var id = String(describing: ViewModel.self)
+	var json: Observable<String> = Observable(value: "")
+	var city: Observable<City> = Observable<City>(value: City())
+	var cityList: Observable<[City]> = Observable<[City]>(value: [])
+	
+	init() {
+		subscribe()
 	}
 	
-	func addObservers() {
-		WeatherModule.instance.addObserver(self)
-	}
-	
-	func notify(_ json: Any) {
-		for observer in observers {
-			observer.update(json)
+	func subscribe() {
+		
+		WeatherModule.instance.city.addObserver(self) { city in
+			print("ViewModel")
+			print(city)
+			self.city.value = city
 		}
-	}
-	
-	func notify(_ city: City) {
-		for observer in observers {
-			observer.update(city)
+		
+		WeatherModule.instance.cityList.addObserver(self) { cityList in
+			print("ViewModel")
+			print(cityList)
 		}
-	}
-	
-	func notify(_ cityList: [City]) {
-		for observer in observers {
-			observer.update(cityList)
+		
+		WeatherModule.instance.simpleWeatherList.addObserver(self) { simpleWeatherList in
+			print("ViewModel")
+			print(simpleWeatherList)
 		}
+		
 	}
 	
 	func requestSimpleWeather(with city: City) {
@@ -34,29 +36,7 @@ class ViewModel: Observation {
 	}
 	
 	func requestSimpleWeatherList(with cityList: [City]) {
-		WeatherModule.instance.requestSimpleWeatherList(with: cityList) { simpleWeatherList in
-			self.notify(simpleWeatherList)
-		}
-	}
-	
-}
-
-extension ViewModel: Observer {
-	
-	func update(_ list: [String]) {
-		
-	}
-	
-	func update(_ json: Any) {
-		notify(json)
-	}
-	
-	func update(_ city: City) {
-		notify(city)
-	}
-	
-	func update(_ cityList: [City]) {
-		notify(cityList)
+		WeatherModule.instance.requestSimpleWeatherList(with: cityList)
 	}
 	
 }

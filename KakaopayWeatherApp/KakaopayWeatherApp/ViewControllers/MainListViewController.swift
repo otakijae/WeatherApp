@@ -1,11 +1,12 @@
 import UIKit
 
-class MainListViewController: UIViewController {
-		
+class MainListViewController: UIViewController, ObserverProtocol {
+	
+	var id = String(describing: self)
 	var viewModel: ViewModel?
 	var savedCityList: [String] {
 		get {
-			return UserDefaults.standard.stringArray(forKey: "CityList") ?? ["서울", "뉴욕"]
+			return UserDefaults.standard.stringArray(forKey: "CityList") ?? ["서울", "뉴욕", "안양", "퀸즈타운", "웰링턴", "부산"]
 		}
 		set {
 			UserDefaults.standard.set(savedCityList, forKey: "CityList")
@@ -27,7 +28,23 @@ class MainListViewController: UIViewController {
 		configureCityList()
 		
 		guard let viewModel = viewModel else { return }
-		addObservers(to: viewModel)
+		subscribe(viewModel)
+	}
+	
+	func subscribe(_ viewModel: ViewModel) {
+		
+		viewModel.city.addObserver(self) { city in
+			self.cityList.append(city)
+			DispatchQueue.main.async {
+				self.tableView.reloadData()
+			}
+		}
+		
+		viewModel.cityList.addObserver(self) { cityList in
+			print("MainList")
+			print(cityList)
+		}
+		
 	}
 	
 	func configureCityList() {
@@ -60,10 +77,6 @@ class MainListViewController: UIViewController {
 	override func setEditing(_ editing: Bool, animated: Bool) {
 		super.setEditing(editing, animated: animated)
 		self.tableView.setEditing(editing, animated: animated)
-	}
-	
-	func addObservers(to viewModel: ViewModel) {
-		viewModel.addObserver(self)
 	}
 	
 	@IBAction func addCityButtonTapped(_ sender: Any) {
@@ -106,36 +119,6 @@ extension MainListViewController: UITableViewDelegate, UITableViewDataSource {
 		guard let temperature = cityList[indexPath.item].currentTemperature else { return cell }
 		cell.temperatureLabel.text = temperature
 		return cell
-	}
-	
-}
-
-extension MainListViewController: Observer {
-	
-	func update(_ list: [String]) {
-		
-	}
-	
-	func update(_ json: Any) {
-
-	}
-	
-	func update(_ city: City) {
-		print("### TEST ... MainListViewController")
-		print(city.name)
-		print(city.latitude)
-		print(city.longitude)
-		print(city.currentTime)
-		print(city.currentTemperature)
-		
-		cityList.append(city)
-		DispatchQueue.main.async {
-			self.tableView.reloadData()
-		}
-	}
-	
-	func update(_ cityList: [City]) {
-		self.cityList = cityList
 	}
 	
 }

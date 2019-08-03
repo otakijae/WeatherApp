@@ -1,25 +1,44 @@
-protocol Observable {
-	func addObserver(_ observer: Observer)
-	func removeObserver(_ observer: Observer)
+protocol ObservableProtocol: class {
+	var observers : [ObserverProtocol] { get set }
+	
+	func addObserver(_ observer: ObserverProtocol)
+	func removeObserver(_ observer: ObserverProtocol)
+	func notifyObservers(_ observers: [ObserverProtocol])
 }
 
-protocol Observer: class {
-	func update(_ list: [String])
-	func update(_ json: Any)
-	func update(_ city: City)
-	func update(_ cityList: [City])
+protocol ObserverProtocol {
+	var id: String { get set }
 }
 
-class Observation: Observable {
+class Observable<T> {
 	
-	var observers = [Observer]()
+	typealias CompletionHandler = ((T) -> Void)
 	
-	func addObserver(_ observer: Observer) {
-		observers.append(observer)
+	var value: T {
+		didSet {
+			self.notifyObservers(self.observers)
+		}
 	}
 	
-	func removeObserver(_ observer: Observer) {
-		observers = observers.filter({ $0 !== observer })
+	var observers: [String: CompletionHandler] = [:]
+	
+	init(value: T) {
+		self.value = value
 	}
 	
+	func addObserver(_ observer: ObserverProtocol, completion: @escaping CompletionHandler) {
+		self.observers[observer.id] = completion
+	}
+	
+	func removeObserver(_ observer: ObserverProtocol) {
+		self.observers.removeValue(forKey: observer.id)
+	}
+	
+	func notifyObservers(_ observers: [String: CompletionHandler]) {
+		observers.forEach { $0.value(value) }
+	}
+	
+	deinit {
+		observers.removeAll()
+	}
 }

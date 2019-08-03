@@ -1,7 +1,8 @@
 import UIKit
 
-class DetailWeatherViewController: UIViewController {
+class DetailWeatherViewController: UIViewController, ObserverProtocol {
 	
+	var id = String(describing: self)
 	var viewModel: ViewModel?
 	var vcList: [String] = []
 
@@ -16,11 +17,21 @@ class DetailWeatherViewController: UIViewController {
 		tableView.dataSource = self
 		
 		guard let viewModel = viewModel else { return }
-		addObservers(to: viewModel)
+		subscribe(viewModel)
 	}
 	
-	func addObservers(to viewModel: ViewModel) {
-		viewModel.addObserver(self)
+	func subscribe(_ viewModel: ViewModel) {
+		
+		viewModel.city.addObserver(self) { city in
+			print("Detail")
+			print(city)
+		}
+
+		viewModel.cityList.addObserver(self) { cityList in
+			print("Detail")
+			print(cityList)
+		}
+		
 	}
 	
 }
@@ -90,26 +101,6 @@ extension DetailWeatherViewController: UITableViewDelegate, UITableViewDataSourc
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: OtherWeatherCell.className, for: indexPath) as? OtherWeatherCell else { return UITableViewCell() }
 		cell.editingAccessoryType = .disclosureIndicator
 		return cell
-	}
-	
-}
-
-extension DetailWeatherViewController: Observer {
-	
-	func update(_ list: [String]) {
-		
-	}
-	
-	func update(_ json: Any) {
-		
-	}
-	
-	func update(_ city: City) {
-		
-	}
-	
-	func update(_ cityList: [City]) {
-		
 	}
 	
 }
