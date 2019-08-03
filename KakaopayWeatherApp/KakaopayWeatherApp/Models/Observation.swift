@@ -6,6 +6,8 @@ protocol Observable {
 protocol Observer: class {
 	func update(_ list: [String])
 	func update(_ json: Any)
+	func update(_ city: City)
+	func update(_ cityList: [City])
 }
 
 class Observation: Observable {

@@ -17,8 +17,6 @@ class DetailWeatherViewController: UIViewController {
 		
 		guard let viewModel = viewModel else { return }
 		addObservers(to: viewModel)
-		
-		viewModel.requestWeather()
 	}
 	
 	func addObservers(to viewModel: ViewModel) {
@@ -99,17 +97,19 @@ extension DetailWeatherViewController: UITableViewDelegate, UITableViewDataSourc
 extension DetailWeatherViewController: Observer {
 	
 	func update(_ list: [String]) {
-		vcList = list
-		alert(message: "\(vcList)",
-			okTitle: "네",
-			okAction: { [unowned self] in
-				self.present(SearchMapViewController.instance, animated: true)
-		})
+		
 	}
 	
 	func update(_ json: Any) {
-		//		print("### TEST ... MainListViewController")
-		//		print(json)
+		
+	}
+	
+	func update(_ city: City) {
+		
+	}
+	
+	func update(_ cityList: [City]) {
+		
 	}
 	
 }

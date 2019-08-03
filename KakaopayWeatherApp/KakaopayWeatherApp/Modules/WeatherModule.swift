@@ -1,15 +1,11 @@
 import Foundation
+import MapKit
 
 class WeatherModule: Observation {
 	
 	static let instance = WeatherModule()
 	
-	func requestWeather(latitude: Double, longitude: Double) {
-		API.instance.requestWeather(latitude: latitude, longitude: longitude, time: getCurrentTimeZone()) { json in
-			print(json)
-			self.notify(json)
-		}
-	}
+	var simpleWeatherList: [City] = []
 	
 	func notify(_ json: Any) {
 		for observer in observers {
@@ -17,30 +13,84 @@ class WeatherModule: Observation {
 		}
 	}
 	
-	func getCurrentTimeZone() -> String {
-		let date = Date()
-		let dateFormatter = DateFormatter()
-		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZ"
-		let defaultTimeZoneString = dateFormatter.string(from: date)
-		return defaultTimeZoneString
+	func notify(_ city: City) {
+		for observer in observers {
+			observer.update(city)
+		}
 	}
 	
-	func getStringTime(from unixDate: Double?) -> String? {
-		guard let unixDate = unixDate else { return nil }
+	func notify(_ cityList: [City]) {
+		for observer in observers {
+			observer.update(cityList)
+		}
+	}
+	
+	func requestSimpleWeather(with city: City) {
+		getCoordinates(with: city) { coodinates in
+			city.latitude = coodinates?.0
+			city.longitude = coodinates?.1
+			API.instance.requestSimpleWeather(with: city) { json in
+				guard
+					let data = json as? [String: Any],
+					let timeZone = data["timezone"] as? String,
+					let currently = data["currently"] as? [String: Any],
+					let temperature = currently["temperature"] as? Double else { return }
+				
+				print(json)
+				
+				city.currentTime = Time.instance.getSimpleCurrentTime(in: timeZone)
+				city.currentTemperature = String(temperature)
+				self.notify(city)
+			}
+		}
+	}
+	
+	func requestSimpleWeather(with city: City, resultHandler: @escaping (City) -> Void) {
+		getCoordinates(with: city) { coodinates in
+			city.latitude = coodinates?.0
+			city.longitude = coodinates?.1
+			API.instance.requestSimpleWeather(with: city) { json in
+				guard
+					let data = json as? [String: Any],
+					let timeZone = data["timezone"] as? String,
+					let currently = data["currently"] as? [String: Any],
+					let temperature = currently["temperature"] as? String else { return }
+				
+				print(json)
+				
+				city.currentTime = Time.instance.getSimpleCurrentTime(in: timeZone)
+				city.currentTemperature = temperature
+				resultHandler(city)
+			}
+		}
+	}
+	
+	func requestSimpleWeatherList(with cityList: [City], resultHandler: @escaping ([City]) -> Void) {
+		simpleWeatherList.removeAll()
+		cityList.forEach {
+			requestSimpleWeather(with: $0) { city in
+				self.simpleWeatherList.append(city)
+				if cityList.count == self.simpleWeatherList.count {
+					resultHandler(self.simpleWeatherList)
+				}
+			}
+		}
+	}
+	
+	func getCoordinates(with city: City, resultHandler: @escaping ((Double,Double)?) -> Void) {
+		var localSearchRequest: MKLocalSearch.Request!
+		var localSearch: MKLocalSearch!
 		
-		let unixStringDate = NSDate(timeIntervalSince1970: unixDate)
-		let dateFormatter = DateFormatter()
-		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-		let dateString = dateFormatter.string(from: unixStringDate as Date)
-		
-		let trimmedStringDate: String = String(dateString.prefix(19))
-		guard let date = dateFormatter.date(from: trimmedStringDate) else { return nil }
-		dateFormatter.amSymbol = "오전"
-		dateFormatter.pmSymbol = "오후"
-		dateFormatter.dateFormat = "yyyy년 MM월 dd일 a hh시 mm분"
-		let time: String = dateFormatter.string(from: date)
-		
-		return time
+		localSearchRequest = MKLocalSearch.Request()
+		localSearchRequest.naturalLanguageQuery = city.name
+		localSearch = MKLocalSearch(request: localSearchRequest)
+		localSearch.start { (localSearchResponse, error) -> Void in
+			if localSearchResponse == nil {
+				resultHandler(nil)
+				return
+			}
+			resultHandler((localSearchResponse!.boundingRegion.center.latitude, localSearchResponse!.boundingRegion.center.longitude))
+		}
 	}
 	
 }

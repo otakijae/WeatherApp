@@ -2,8 +2,6 @@ import Foundation
 
 class ViewModel: Observation {
 	
-	var vmlist: [String] = []
-	
 	override init() {
 		super.init()
 		addObservers()
@@ -13,27 +11,31 @@ class ViewModel: Observation {
 		WeatherModule.instance.addObserver(self)
 	}
 	
-	func add() {
-		vmlist.append("aaa")
-		vmlist.append("bbb")
-		vmlist.append("ccc")
-		
-		notify()
-	}
-	
-	func requestWeather() {
-		WeatherModule.instance.requestWeather(latitude: 37.566067729627, longitude: 126.97413895279169)
-	}
-	
-	func notify() {
-		for observer in observers {
-			observer.update(vmlist)
-		}
-	}
-	
 	func notify(_ json: Any) {
 		for observer in observers {
 			observer.update(json)
+		}
+	}
+	
+	func notify(_ city: City) {
+		for observer in observers {
+			observer.update(city)
+		}
+	}
+	
+	func notify(_ cityList: [City]) {
+		for observer in observers {
+			observer.update(cityList)
+		}
+	}
+	
+	func requestSimpleWeather(with city: City) {
+		WeatherModule.instance.requestSimpleWeather(with: city)
+	}
+	
+	func requestSimpleWeatherList(with cityList: [City]) {
+		WeatherModule.instance.requestSimpleWeatherList(with: cityList) { simpleWeatherList in
+			self.notify(simpleWeatherList)
 		}
 	}
 	
@@ -47,6 +49,14 @@ extension ViewModel: Observer {
 	
 	func update(_ json: Any) {
 		notify(json)
+	}
+	
+	func update(_ city: City) {
+		notify(city)
+	}
+	
+	func update(_ cityList: [City]) {
+		notify(cityList)
 	}
 	
 }

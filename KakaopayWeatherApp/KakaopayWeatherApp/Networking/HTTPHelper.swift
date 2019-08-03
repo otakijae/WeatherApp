@@ -4,11 +4,12 @@ class API: HttpHelper {
 	
 	static let instance = API()
 	
-	func requestWeather(latitude: Double, longitude: Double, time: String, resultHandler: @escaping (Any) -> Void) {
-		let url = URL(string: "\(URLs.baseURL)/\(HttpHelper.accessToken)/\(latitude),\(longitude)")!
+	func requestSimpleWeather(with city: City, resultHandler: @escaping (Any) -> Void) {
+		let url = URL(string: "\(URLs.baseURL)/\(HttpHelper.accessToken)/\(city.latitude!),\(city.longitude!)")!
 		let parameters = ["units": "si",
 											"lang": "ko",
-											"time": time]
+											//"time": WeatherModule.instance.getCurrentTimeZone(),
+											"exclude": "minutely,daily,hourly,alerts,flags"]
 		get(url: url, parameters: parameters, completionHandler: { data, response, error in
 			guard error == nil else { return }
 			if	let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {

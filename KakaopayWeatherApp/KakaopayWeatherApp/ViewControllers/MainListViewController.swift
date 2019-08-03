@@ -3,7 +3,16 @@ import UIKit
 class MainListViewController: UIViewController {
 		
 	var viewModel: ViewModel?
-	var vcList: [String] = []
+	var savedCityList: [String] {
+		get {
+			return UserDefaults.standard.stringArray(forKey: "CityList") ?? ["서울", "뉴욕"]
+		}
+		set {
+			UserDefaults.standard.set(savedCityList, forKey: "CityList")
+			UserDefaults.standard.synchronize()
+		}
+	}
+	var cityList: [City] = []
 	
 	var rightEditButton = UIBarButtonItem()
 	@IBOutlet weak var tableView: UITableView!
@@ -14,15 +23,25 @@ class MainListViewController: UIViewController {
 		tableView.delegate = self
 		tableView.dataSource = self
 		
-		setupRightEditButton()
+		configureRightEditButton()
+		configureCityList()
 		
 		guard let viewModel = viewModel else { return }
 		addObservers(to: viewModel)
-		
-		viewModel.requestWeather()
 	}
 	
-	func setupRightEditButton() {
+	func configureCityList() {
+		savedCityList.forEach {
+			let city = City()
+			city.name = $0
+			cityList.append(city)
+			
+			guard let viewModel = viewModel else { return }
+			viewModel.requestSimpleWeather(with: city)
+		}
+	}
+	
+	func configureRightEditButton() {
 		rightEditButton = UIBarButtonItem(title: "편집", style: .plain, target: self, action: #selector(editButtonAction))
 		self.navigationItem.rightBarButtonItem = rightEditButton
 		self.navigationItem.rightBarButtonItem?.tintColor = UIColor.darkGray
@@ -54,11 +73,11 @@ class MainListViewController: UIViewController {
 extension MainListViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return 150
+		return view.frame.height / 6
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 2
+		return cityList.count
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -68,6 +87,7 @@ extension MainListViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
+			cityList.remove(at: indexPath.item)
 			tableView.deleteRows(at: [indexPath], with: .automatic)
 		}
 	}
@@ -77,8 +97,13 @@ extension MainListViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 	
 	func configureCityCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: CityCell.className, for: indexPath) as? CityCell else { return UITableViewCell() }
+		guard
+			let cell = tableView.dequeueReusableCell(withIdentifier: CityCell.className, for: indexPath) as? CityCell else { return UITableViewCell() }
 		cell.accessoryType = .disclosureIndicator
+		cell.timeLabel.text = Time.instance.getSimpleCurrentTime()
+		cell.cityNameLabel.text = cityList[indexPath.item].name
+		guard let temperature = cityList[indexPath.item].currentTemperature else { return cell }
+		cell.temperatureLabel.text = temperature
 		return cell
 	}
 	
@@ -87,17 +112,24 @@ extension MainListViewController: UITableViewDelegate, UITableViewDataSource {
 extension MainListViewController: Observer {
 	
 	func update(_ list: [String]) {
-		vcList = list
-		alert(message: "\(vcList)",
-			okTitle: "네",
-			okAction: { [unowned self] in
-				self.show(DetailWeatherViewController.instance, sender: self)
-		})
+		
 	}
 	
 	func update(_ json: Any) {
-//		print("### TEST ... MainListViewController")
-//		print(json)
+
+	}
+	
+	func update(_ city: City) {
+		print("### TEST ... MainListViewController")
+		print(city.name)
+		print(city.latitude)
+		print(city.longitude)
+		print(city.currentTime)
+		print(city.currentTemperature)
+	}
+	
+	func update(_ cityList: [City]) {
+		self.cityList = cityList
 	}
 	
 }
