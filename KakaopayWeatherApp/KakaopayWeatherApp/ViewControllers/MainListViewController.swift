@@ -39,6 +39,7 @@ class MainListViewController: UIViewController {
 			guard let viewModel = viewModel else { return }
 			viewModel.requestSimpleWeather(with: city)
 		}
+		cityList.removeAll()
 	}
 	
 	func configureRightEditButton() {
@@ -100,7 +101,7 @@ extension MainListViewController: UITableViewDelegate, UITableViewDataSource {
 		guard
 			let cell = tableView.dequeueReusableCell(withIdentifier: CityCell.className, for: indexPath) as? CityCell else { return UITableViewCell() }
 		cell.accessoryType = .disclosureIndicator
-		cell.timeLabel.text = Time.instance.getSimpleCurrentTime()
+		cell.timeLabel.text = cityList[indexPath.item].currentTime
 		cell.cityNameLabel.text = cityList[indexPath.item].name
 		guard let temperature = cityList[indexPath.item].currentTemperature else { return cell }
 		cell.temperatureLabel.text = temperature
@@ -126,6 +127,11 @@ extension MainListViewController: Observer {
 		print(city.longitude)
 		print(city.currentTime)
 		print(city.currentTemperature)
+		
+		cityList.append(city)
+		DispatchQueue.main.async {
+			self.tableView.reloadData()
+		}
 	}
 	
 	func update(_ cityList: [City]) {

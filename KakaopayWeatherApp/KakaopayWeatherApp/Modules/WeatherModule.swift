@@ -36,8 +36,6 @@ class WeatherModule: Observation {
 					let currently = data["currently"] as? [String: Any],
 					let temperature = currently["temperature"] as? Double else { return }
 				
-				print(json)
-				
 				city.currentTime = Time.instance.getSimpleCurrentTime(in: timeZone)
 				city.currentTemperature = String(temperature)
 				self.notify(city)
@@ -67,7 +65,10 @@ class WeatherModule: Observation {
 	
 	func requestSimpleWeatherList(with cityList: [City], resultHandler: @escaping ([City]) -> Void) {
 		simpleWeatherList.removeAll()
+		let last = cityList.count
+		var count = 0
 		cityList.forEach {
+			count+=1
 			requestSimpleWeather(with: $0) { city in
 				self.simpleWeatherList.append(city)
 				if cityList.count == self.simpleWeatherList.count {
