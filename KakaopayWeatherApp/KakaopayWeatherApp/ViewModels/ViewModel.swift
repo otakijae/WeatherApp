@@ -22,7 +22,7 @@ class ViewModel: Observation {
 	}
 	
 	func requestWeather() {
-		WeatherModule.instance.requestWeather(latitude: 42.3601, longitude: -71.0589)
+		WeatherModule.instance.requestWeather(latitude: 37.566067729627, longitude: 126.97413895279169)
 	}
 	
 	func notify() {

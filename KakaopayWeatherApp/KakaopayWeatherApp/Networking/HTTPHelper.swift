@@ -4,9 +4,12 @@ class API: HttpHelper {
 	
 	static let instance = API()
 	
-	func requestWeather(latitude: Double, longitude: Double, resultHandler: @escaping (Any) -> Void) {
+	func requestWeather(latitude: Double, longitude: Double, time: String, resultHandler: @escaping (Any) -> Void) {
 		let url = URL(string: "\(URLs.baseURL)/\(HttpHelper.accessToken)/\(latitude),\(longitude)")!
-		get(url: url, parameters: ["units": "si"], completionHandler: { data, response, error in
+		let parameters = ["units": "si",
+											"lang": "ko",
+											"time": time]
+		get(url: url, parameters: parameters, completionHandler: { data, response, error in
 			guard error == nil else { return }
 			if	let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
 				guard let jsonToArray = try? JSONSerialization.jsonObject(with: data, options: []) else { return }
