@@ -33,7 +33,9 @@ class MainListViewController: UIViewController, ObserverProtocol {
 
 		guard let viewModel = viewModel else { return }
 		subscribe(viewModel)
-		
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
 		configureRightEditButton()
 		refreshAction()
 	}

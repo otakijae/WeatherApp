@@ -16,11 +16,14 @@ class SearchMapViewController: UIViewController, UISearchBarDelegate {
 	@IBOutlet var mapView: MKMapView!
 	@IBOutlet weak var searchBar: UISearchBar!
 	
+	var cityList: [String] = []
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		self.tableView.delegate = self
+		self.tableView.dataSource = self
 		self.searchBar.delegate = self
-		hideKeyboardWhenTappedAround()
 	}
 	
 	override func didReceiveMemoryWarning() {
@@ -41,20 +44,22 @@ class SearchMapViewController: UIViewController, UISearchBarDelegate {
 			
 			print(localSearchResponse?.mapItems.count)
 			localSearchResponse?.mapItems.forEach { print($0) }
+			print(localSearchResponse?.mapItems.first?.name)
 			
 			if localSearchResponse == nil {
-				let alertController = UIAlertController(title: nil, message: "Place Not Found", preferredStyle: UIAlertController.Style.alert)
-				alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default, handler: nil))
-				self.present(alertController, animated: true, completion: nil)
+				self.alert(message: "검색된 도시가 없습니다.", okTitle: "확인", okAction: { [unowned self] in
+					self.dismiss(self)
+				})
 				return
 			}
+			
+			self.cityList.removeAll()
+			self.cityList.append(searchBar.text!)
+			self.tableView.reloadData()
 			
 			self.pointAnnotation = MKPointAnnotation()
 			self.pointAnnotation.title = searchBar.text
 			self.pointAnnotation.coordinate = CLLocationCoordinate2D(latitude: localSearchResponse!.boundingRegion.center.latitude, longitude: localSearchResponse!.boundingRegion.center.longitude)
-			
-			print(localSearchResponse!.boundingRegion.center.latitude)
-			print(localSearchResponse!.boundingRegion.center.longitude)
 			
 			self.pinAnnotationView = MKPinAnnotationView(annotation: self.pointAnnotation, reuseIdentifier: nil)
 			self.mapView.centerCoordinate = self.pointAnnotation.coordinate
@@ -77,15 +82,35 @@ class SearchMapViewController: UIViewController, UISearchBarDelegate {
 	
 }
 
-extension UIViewController {
+extension SearchMapViewController: UITableViewDelegate, UITableViewDataSource {
 	
-	func hideKeyboardWhenTappedAround() {
-		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-		view.addGestureRecognizer(tapGesture)
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return view.frame.height / 10
 	}
 	
-	@objc func hideKeyboard() {
-		view.endEditing(true)
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return cityList.count
+	}
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		var savedCityList = UserDefaults.standard.array(forKey: "CityList") as? [String] ?? []
+		savedCityList.append(cityList[indexPath.item])
+		UserDefaults.standard.set(savedCityList, forKey: "CityList")
+		UserDefaults.standard.synchronize()
+		
+		tableView.deselectRow(at: indexPath, animated: true)
+		self.dismiss(self)
+	}
+	
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		return configureSearchedCityCell(tableView: tableView, indexPath: indexPath)
+	}
+	
+	func configureSearchedCityCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+		guard
+			let cell = tableView.dequeueReusableCell(withIdentifier: SearchedCityCell.className, for: indexPath) as? SearchedCityCell else { return UITableViewCell() }
+		cell.cityNameLabel.text = cityList[indexPath.item]
+		return cell
 	}
 	
 }
