@@ -6,6 +6,7 @@ class ViewModel: ObserverProtocol {
 	var json: Observable<String> = Observable(value: "")
 	var city: Observable<City> = Observable<City>(value: City())
 	var cityList: Observable<[City]> = Observable<[City]>(value: [])
+	var cityWeather: Observable<City> = Observable<City>(value: City())
 	
 	init() {
 		subscribe()
@@ -21,14 +22,19 @@ class ViewModel: ObserverProtocol {
 			self.cityList.value = cityList
 		}
 		
+		WeatherModule.instance.cityWeather.addObserver(self) { cityWeather in
+			self.cityWeather.value = cityWeather
+		}
+		
 	}
 	
 	func requestSimpleWeather(with city: City) {
 		WeatherModule.instance.requestSimpleWeather(with: city)
 	}
 	
-	func requestSimpleWeatherList(with cityList: [City]) {
-		
+	func requestSpecificWeather(with city: City?) {
+		guard let city = city else { return }
+		WeatherModule.instance.requestSpecificWeather(with: city)
 	}
 	
 }

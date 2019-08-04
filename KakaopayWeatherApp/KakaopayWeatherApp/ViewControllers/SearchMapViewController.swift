@@ -47,9 +47,7 @@ class SearchMapViewController: UIViewController, UISearchBarDelegate {
 			print(localSearchResponse?.mapItems.first?.name)
 			
 			if localSearchResponse == nil {
-				self.alert(message: "검색된 도시가 없습니다.", okTitle: "확인", okAction: { [unowned self] in
-					self.dismiss(self)
-				})
+				self.alert(message: "검색된 도시가 없습니다.", okTitle: "확인")
 				return
 			}
 			

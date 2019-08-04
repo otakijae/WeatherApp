@@ -6,7 +6,7 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	var viewModel: ViewModel?
 	var savedCityList: [String] {
 		get {
-			return UserDefaults.standard.array(forKey: "CityList") as? [String] ?? ["서울"]
+			return UserDefaults.standard.array(forKey: "CityList") as? [String] ?? []
 		}
 		set {
 			UserDefaults.standard.set(newValue, forKey: "CityList")
@@ -38,9 +38,6 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	override func viewWillAppear(_ animated: Bool) {
 		configureRightEditButton()
 		refreshAction()
-		
-		//### TEST
-		WeatherModule.instance.requestFullWeather(with: cityList.first!)
 	}
 	
 	func subscribe(_ viewModel: ViewModel) {

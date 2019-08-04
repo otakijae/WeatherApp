@@ -19,16 +19,17 @@ class DetailWeatherViewController: UIViewController, ObserverProtocol {
 		
 		guard let viewModel = viewModel else { return }
 		subscribe(viewModel)
+		
+		viewModel.requestSpecificWeather(with: selectedCity)
 	}
 	
 	func subscribe(_ viewModel: ViewModel) {
 		
-		viewModel.city.addObserver(self) { city in
-			
-		}
-
-		viewModel.cityList.addObserver(self) { cityList in
-			
+		viewModel.cityWeather.addObserver(self) { cityWeather in
+			self.selectedCity = cityWeather
+			DispatchQueue.main.async {
+				self.tableView.reloadData()
+			}
 		}
 		
 	}
