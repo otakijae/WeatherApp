@@ -27,36 +27,23 @@ class WeatherModule {
 		}
 	}
 	
-	func requestSimpleWeather(with city: City, resultHandler: @escaping (City) -> Void) {
+	func requestSpecificWeather(with city: City) {
 		getCoordinates(with: city) { coodinates in
 			city.latitude = coodinates?.0
 			city.longitude = coodinates?.1
-			API.instance.requestSimpleWeather(with: city) { json in
+			API.instance.requestSpecificWeather(with: city) { json in
 				guard
 					let data = json as? [String: Any],
 					let timeZone = data["timezone"] as? String,
 					let currently = data["currently"] as? [String: Any],
-					let temperature = currently["temperature"] as? String else { return }
+					let temperature = currently["temperature"] as? Double else { return }
 				
 				city.currentTime = Time.instance.getSimpleCurrentTime(in: timeZone)
-				city.currentTemperature = temperature
-				resultHandler(city)
+				city.currentTemperature = String(temperature)
+				self.city.value = city
 			}
 		}
 	}
-	
-//	func requestSimpleWeatherList(with cityList: [City]) {
-//		simpleWeatherList.removeAll()
-//		cityList.forEach {
-//			requestSimpleWeather(with: $0) { city in
-//				self.simpleWeatherList.append(city)
-//				if self.simpleWeatherList.count == cityList.count {
-//					self.count = 0
-//					self.cityList.value = self.simpleWeatherList
-//				}
-//			}
-//		}
-//	}
 	
 	func requestFullWeather(with city: City) {
 		getCoordinates(with: city) { coodinates in

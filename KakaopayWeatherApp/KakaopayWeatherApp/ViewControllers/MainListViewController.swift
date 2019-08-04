@@ -38,6 +38,9 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	override func viewWillAppear(_ animated: Bool) {
 		configureRightEditButton()
 		refreshAction()
+		
+		//### TEST
+		WeatherModule.instance.requestFullWeather(with: cityList.first!)
 	}
 	
 	func subscribe(_ viewModel: ViewModel) {
@@ -115,6 +118,15 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	@IBAction func addCityButtonTapped(_ sender: Any) {
 		self.present(SearchMapViewController.instance, animated: true)
 	}
+	
+	func showDetailWeatherViewController(with city: City) {
+		guard
+			let detailWeatherViewController = DetailWeatherViewController.instance as? DetailWeatherViewController,
+			let viewModel = viewModel else { return }
+		detailWeatherViewController.selectedCity = city
+		detailWeatherViewController.viewModel = viewModel
+		self.show(detailWeatherViewController, sender: self)
+	}
 }
 
 extension MainListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -129,7 +141,7 @@ extension MainListViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		self.show(DetailWeatherViewController.instance, sender: self)
+		showDetailWeatherViewController(with: cityList[indexPath.item])
 	}
 	
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

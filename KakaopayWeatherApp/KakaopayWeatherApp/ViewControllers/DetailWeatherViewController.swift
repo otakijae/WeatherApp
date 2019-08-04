@@ -5,6 +5,7 @@ class DetailWeatherViewController: UIViewController, ObserverProtocol {
 	var id = String(describing: self)
 	var viewModel: ViewModel?
 	var vcList: [String] = []
+	var selectedCity: City?
 
 	@IBOutlet weak var tableView: UITableView!
 	
