@@ -5,11 +5,25 @@ class API: HttpHelper {
 	static let instance = API()
 	
 	func requestSimpleWeather(with city: City, resultHandler: @escaping (Any) -> Void) {
-		let url = URL(string: "\(URLs.baseURL)/\(HttpHelper.accessToken)/\(city.latitude!),\(city.longitude!)")!
+		guard let latitude = city.latitude, let longitude = city.longitude else { return }
+		let url = URL(string: "\(URLs.baseURL)/\(HttpHelper.accessToken)/\(latitude),\(longitude)")!
 		let parameters = ["units": "si",
 											"lang": "ko",
 											//"time": WeatherModule.instance.getCurrentTimeZone(),
 											"exclude": "minutely,daily,hourly,alerts,flags"]
+		get(url: url, parameters: parameters, completionHandler: { data, response, error in
+			guard error == nil else { return }
+			if	let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+				guard let jsonToArray = try? JSONSerialization.jsonObject(with: data, options: []) else { return }
+				resultHandler(jsonToArray)
+			}
+		})
+	}
+	
+	func requestFullWeather(with city: City, resultHandler: @escaping (Any) -> Void) {
+		let url = URL(string: "\(URLs.baseURL)/\(HttpHelper.accessToken)/\(city.latitude!),\(city.longitude!)")!
+		let parameters = ["units": "si",
+											"lang": "ko"]
 		get(url: url, parameters: parameters, completionHandler: { data, response, error in
 			guard error == nil else { return }
 			if	let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {

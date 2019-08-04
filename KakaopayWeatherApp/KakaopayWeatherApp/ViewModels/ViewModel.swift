@@ -14,19 +14,11 @@ class ViewModel: ObserverProtocol {
 	func subscribe() {
 		
 		WeatherModule.instance.city.addObserver(self) { city in
-			print("ViewModel")
-			print(city)
 			self.city.value = city
 		}
 		
 		WeatherModule.instance.cityList.addObserver(self) { cityList in
-			print("ViewModel")
-			print(cityList)
-		}
-		
-		WeatherModule.instance.simpleWeatherList.addObserver(self) { simpleWeatherList in
-			print("ViewModel")
-			print(simpleWeatherList)
+			self.cityList.value = cityList
 		}
 		
 	}
@@ -36,7 +28,7 @@ class ViewModel: ObserverProtocol {
 	}
 	
 	func requestSimpleWeatherList(with cityList: [City]) {
-		WeatherModule.instance.requestSimpleWeatherList(with: cityList)
+		
 	}
 	
 }

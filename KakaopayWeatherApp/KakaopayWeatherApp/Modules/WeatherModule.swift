@@ -7,7 +7,7 @@ class WeatherModule {
 	
 	var city: Observable<City> = Observable<City>(value: City())
 	var cityList: Observable<[City]> = Observable<[City]>(value: [])
-	var simpleWeatherList: Observable<[City]> = Observable<[City]>(value: [])
+	var simpleWeatherList: [City] = []
 	
 	func requestSimpleWeather(with city: City) {
 		getCoordinates(with: city) { coodinates in
@@ -45,10 +45,26 @@ class WeatherModule {
 		}
 	}
 	
-	func requestSimpleWeatherList(with cityList: [City]) {
-		simpleWeatherList.value.removeAll()
-		cityList.forEach {
-			requestSimpleWeather(with: $0)
+//	func requestSimpleWeatherList(with cityList: [City]) {
+//		simpleWeatherList.removeAll()
+//		cityList.forEach {
+//			requestSimpleWeather(with: $0) { city in
+//				self.simpleWeatherList.append(city)
+//				if self.simpleWeatherList.count == cityList.count {
+//					self.count = 0
+//					self.cityList.value = self.simpleWeatherList
+//				}
+//			}
+//		}
+//	}
+	
+	func requestFullWeather(with city: City) {
+		getCoordinates(with: city) { coodinates in
+			city.latitude = coodinates?.0
+			city.longitude = coodinates?.1
+			API.instance.requestFullWeather(with: city) { json in
+				print(json)
+			}
 		}
 	}
 	

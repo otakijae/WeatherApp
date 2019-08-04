@@ -6,70 +6,101 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	var viewModel: ViewModel?
 	var savedCityList: [String] {
 		get {
-			return UserDefaults.standard.stringArray(forKey: "CityList") ?? ["서울", "뉴욕", "안양", "퀸즈타운", "웰링턴", "부산"]
+			return UserDefaults.standard.array(forKey: "CityList") as? [String] ?? ["서울"]
 		}
 		set {
-			UserDefaults.standard.set(savedCityList, forKey: "CityList")
+			UserDefaults.standard.set(newValue, forKey: "CityList")
 			UserDefaults.standard.synchronize()
 		}
 	}
 	var cityList: [City] = []
-	
+
+	var refreshControl = UIRefreshControl()
 	var rightEditButton = UIBarButtonItem()
-	@IBOutlet weak var tableView: UITableView!
+	@IBOutlet weak var tableView: UITableView! {
+		didSet {
+			refreshControl.addTarget(self, action: #selector(refreshAction), for: .valueChanged)
+			tableView.addSubview(refreshControl)
+		}
+	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		tableView.delegate = self
 		tableView.dataSource = self
-		
-		configureRightEditButton()
-		configureCityList()
-		
+
 		guard let viewModel = viewModel else { return }
 		subscribe(viewModel)
+		
+		configureRightEditButton()
+		refreshAction()
 	}
 	
 	func subscribe(_ viewModel: ViewModel) {
 		
 		viewModel.city.addObserver(self) { city in
-			self.cityList.append(city)
+			self.cityList.filter { $0.name == city.name }.first?.currentTime = city.currentTime
+			self.cityList.filter { $0.name == city.name }.first?.currentTemperature = city.currentTemperature
 			DispatchQueue.main.async {
+				self.configureRightEditButton()
 				self.tableView.reloadData()
 			}
 		}
 		
 		viewModel.cityList.addObserver(self) { cityList in
-			print("MainList")
-			print(cityList)
+			
 		}
 		
 	}
 	
+	@objc func refreshAction() {
+		guard let viewModel = viewModel else { return }
+		configureCityList()
+		checkEmptyCityList(viewModel)
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+			self.refreshControl.endRefreshing()
+		}
+	}
+	
 	func configureCityList() {
+		cityList.removeAll()
 		savedCityList.forEach {
 			let city = City()
 			city.name = $0
 			cityList.append(city)
-			
-			guard let viewModel = viewModel else { return }
-			viewModel.requestSimpleWeather(with: city)
 		}
-		cityList.removeAll()
+	}
+	
+	func requestSimpleWeatherList(_ viewModel: ViewModel) {
+		cityList.forEach {
+			viewModel.requestSimpleWeather(with: $0)
+		}
+	}
+	
+	func checkEmptyCityList(_ viewModel: ViewModel) {
+		if cityList.isEmpty {
+			
+		} else {
+			requestSimpleWeatherList(viewModel)
+		}
+	}
+	
+	func showDescriptionView() {
+		
 	}
 	
 	func configureRightEditButton() {
 		rightEditButton = UIBarButtonItem(title: "편집", style: .plain, target: self, action: #selector(editButtonAction))
 		self.navigationItem.rightBarButtonItem = rightEditButton
 		self.navigationItem.rightBarButtonItem?.tintColor = UIColor.darkGray
-		//rightEditButton.isEnabled = !remocon.remoconReservations.isEmpty
+		rightEditButton.isEnabled = !cityList.isEmpty
 	}
 	
 	@objc func editButtonAction() {
 		setEditing(!tableView.isEditing, animated: true)
 		if !tableView.isEditing {
-			//requestList()
+			refreshAction()
 		}
 		rightEditButton.title = tableView.isEditing ? "완료" : "편집"
 	}
@@ -87,7 +118,7 @@ class MainListViewController: UIViewController, ObserverProtocol {
 extension MainListViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return view.frame.height / 6
+		return view.frame.height / 7
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -102,6 +133,7 @@ extension MainListViewController: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
 			cityList.remove(at: indexPath.item)
+			savedCityList.remove(at: indexPath.item)
 			tableView.deleteRows(at: [indexPath], with: .automatic)
 		}
 	}
@@ -116,8 +148,7 @@ extension MainListViewController: UITableViewDelegate, UITableViewDataSource {
 		cell.accessoryType = .disclosureIndicator
 		cell.timeLabel.text = cityList[indexPath.item].currentTime
 		cell.cityNameLabel.text = cityList[indexPath.item].name
-		guard let temperature = cityList[indexPath.item].currentTemperature else { return cell }
-		cell.temperatureLabel.text = temperature
+		cell.temperatureLabel.text = cityList[indexPath.item].currentTemperature
 		return cell
 	}
 	

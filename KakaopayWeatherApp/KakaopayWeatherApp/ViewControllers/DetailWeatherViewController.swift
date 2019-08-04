@@ -23,13 +23,11 @@ class DetailWeatherViewController: UIViewController, ObserverProtocol {
 	func subscribe(_ viewModel: ViewModel) {
 		
 		viewModel.city.addObserver(self) { city in
-			print("Detail")
-			print(city)
+			
 		}
 
 		viewModel.cityList.addObserver(self) { cityList in
-			print("Detail")
-			print(cityList)
+			
 		}
 		
 	}
