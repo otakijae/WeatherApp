@@ -73,6 +73,40 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0CY-Is-8iF">
+                                <rect key="frame" x="0.0" y="64" width="375" height="552"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icSun" translatesAutoresizingMaskIntoConstraints="NO" id="TPV-VA-ZlS">
+                                        <rect key="frame" x="219" y="304" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="NDN-tE-ohv"/>
+                                            <constraint firstAttribute="height" constant="50" id="fbZ-mB-3Ya"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icMoon" translatesAutoresizingMaskIntoConstraints="NO" id="KgK-NL-JRB">
+                                        <rect key="frame" x="100" y="304" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="XW2-46-gcG"/>
+                                            <constraint firstAttribute="height" constant="50" id="c6S-Px-1ux"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="아래 버튼을 눌러 도시를 추가해보세요." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="boR-Jz-NfA">
+                                        <rect key="frame" x="59" y="404" width="257.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="boR-Jz-NfA" firstAttribute="top" secondItem="KgK-NL-JRB" secondAttribute="bottom" constant="50" id="GqI-TX-J2v"/>
+                                    <constraint firstItem="boR-Jz-NfA" firstAttribute="centerY" secondItem="0CY-Is-8iF" secondAttribute="centerY" multiplier="3:2" id="Prf-3N-MsH"/>
+                                    <constraint firstItem="TPV-VA-ZlS" firstAttribute="centerX" secondItem="0CY-Is-8iF" secondAttribute="centerX" multiplier="1.3:1" id="Q9X-BF-y6z"/>
+                                    <constraint firstItem="boR-Jz-NfA" firstAttribute="top" secondItem="TPV-VA-ZlS" secondAttribute="bottom" constant="50" id="VSF-kI-88K"/>
+                                    <constraint firstItem="boR-Jz-NfA" firstAttribute="centerX" secondItem="0CY-Is-8iF" secondAttribute="centerX" id="cFb-sc-iEF"/>
+                                    <constraint firstItem="KgK-NL-JRB" firstAttribute="centerX" secondItem="0CY-Is-8iF" secondAttribute="centerX" multiplier="1:1.5" id="h0e-G8-YF5"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RL6-zy-rUy" userLabel="addButtonView">
                                 <rect key="frame" x="0.0" y="616" width="375" height="51"/>
                                 <subviews>
@@ -113,20 +147,25 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="0CY-Is-8iF" firstAttribute="width" secondItem="6pv-xl-GRn" secondAttribute="width" id="1Yb-i1-nS0"/>
                             <constraint firstItem="RL6-zy-rUy" firstAttribute="trailing" secondItem="iU5-xt-WF4" secondAttribute="trailing" id="3XZ-b4-ps0"/>
                             <constraint firstItem="RL6-zy-rUy" firstAttribute="top" secondItem="6pv-xl-GRn" secondAttribute="bottom" id="3nn-fv-axP"/>
                             <constraint firstItem="6pv-xl-GRn" firstAttribute="width" secondItem="GVU-uY-0nW" secondAttribute="width" id="6FF-Yc-asg"/>
                             <constraint firstItem="RL6-zy-rUy" firstAttribute="bottom" secondItem="iU5-xt-WF4" secondAttribute="bottom" id="6Wy-Md-j2p"/>
+                            <constraint firstItem="0CY-Is-8iF" firstAttribute="height" secondItem="6pv-xl-GRn" secondAttribute="height" id="Ns4-Rm-FMN"/>
                             <constraint firstItem="RL6-zy-rUy" firstAttribute="leading" secondItem="GVU-uY-0nW" secondAttribute="leading" id="SVB-1J-HGN"/>
+                            <constraint firstItem="0CY-Is-8iF" firstAttribute="centerY" secondItem="6pv-xl-GRn" secondAttribute="centerY" id="YRl-7h-FYo"/>
                             <constraint firstItem="6pv-xl-GRn" firstAttribute="centerX" secondItem="GVU-uY-0nW" secondAttribute="centerX" id="ZyN-Qs-SV4"/>
                             <constraint firstItem="RL6-zy-rUy" firstAttribute="centerX" secondItem="GVU-uY-0nW" secondAttribute="centerX" id="ecQ-JU-lGx"/>
                             <constraint firstItem="6pv-xl-GRn" firstAttribute="centerX" secondItem="iU5-xt-WF4" secondAttribute="centerX" id="fxq-Ck-WGk"/>
                             <constraint firstItem="6pv-xl-GRn" firstAttribute="top" secondItem="iU5-xt-WF4" secondAttribute="top" id="jct-vI-plj"/>
+                            <constraint firstItem="0CY-Is-8iF" firstAttribute="centerX" secondItem="6pv-xl-GRn" secondAttribute="centerX" id="kKw-ok-vCc"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="iU5-xt-WF4"/>
                     </view>
                     <navigationItem key="navigationItem" title="날씨" id="jCL-gb-UrJ"/>
                     <connections>
+                        <outlet property="descriptionView" destination="0CY-Is-8iF" id="Dyq-4A-yqd"/>
                         <outlet property="tableView" destination="6pv-xl-GRn" id="Bkh-iT-Inp"/>
                     </connections>
                 </viewController>
@@ -163,6 +202,8 @@
     </scenes>
     <resources>
         <image name="icAddition" width="30" height="30"/>
+        <image name="icMoon" width="27" height="20"/>
+        <image name="icSun" width="31" height="23"/>
     </resources>
     <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

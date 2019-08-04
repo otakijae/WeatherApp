@@ -15,6 +15,7 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	}
 	var cityList: [City] = []
 
+	@IBOutlet weak var descriptionView: UIView!
 	var refreshControl = UIRefreshControl()
 	var rightEditButton = UIBarButtonItem()
 	@IBOutlet weak var tableView: UITableView! {
@@ -80,14 +81,13 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	
 	func checkEmptyCityList(_ viewModel: ViewModel) {
 		if cityList.isEmpty {
-			
+			tableView.isHidden = true
+			descriptionView.isHidden = false
 		} else {
+			tableView.isHidden = false
+			descriptionView.isHidden = true
 			requestSimpleWeatherList(viewModel)
 		}
-	}
-	
-	func showDescriptionView() {
-		
 	}
 	
 	func configureRightEditButton() {
