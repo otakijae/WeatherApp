@@ -6,21 +6,13 @@ class SearchMapViewController: UIViewController, ObserverProtocol, UISearchBarDe
 	var id = String(describing: self)
 	var viewModel: ViewModel?
 
-
 	var searchController: UISearchController!
-	var annotation: MKAnnotation!
-	var localSearchRequest: MKLocalSearch.Request!
-	var localSearch: MKLocalSearch!
-	var localSearchResponse: MKLocalSearch.Response!
-	var error: NSError!
-	var pointAnnotation: MKPointAnnotation!
-	var pinAnnotationView: MKPinAnnotationView!
 	
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet var mapView: MKMapView!
 	@IBOutlet weak var searchBar: UISearchBar!
 	
-	var cityList: [String] = []
+	var cityList: [MKMapItem] = []
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -35,37 +27,29 @@ class SearchMapViewController: UIViewController, ObserverProtocol, UISearchBarDe
 	}
 	
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-		searchBar.resignFirstResponder()
-		if self.mapView.annotations.count != 0{
-			annotation = self.mapView.annotations[0]
-			self.mapView.removeAnnotation(annotation)
-		}
+		let localSearchRequest: MKLocalSearch.Request = MKLocalSearch.Request()
+		var localSearch: MKLocalSearch!
 		
-		localSearchRequest = MKLocalSearch.Request()
+		searchBar.resignFirstResponder()
+		
 		localSearchRequest.naturalLanguageQuery = searchBar.text
 		localSearch = MKLocalSearch(request: localSearchRequest)
 		localSearch.start { (localSearchResponse, error) -> Void in
-			
-			print(localSearchResponse?.mapItems.count)
-			localSearchResponse?.mapItems.forEach { print($0) }
-			print(localSearchResponse?.mapItems.first?.name)
 			
 			if localSearchResponse == nil {
 				self.alert(message: "검색된 도시가 없습니다.", okTitle: "확인")
 				return
 			}
 			
-			self.cityList.removeAll()
-			self.cityList.append(searchBar.text!)
+			localSearchResponse?.mapItems.forEach {
+				print($0.name)
+				print($0.placemark.title)
+				print($0.placemark.locality)
+			}
+			
+			guard let mapItems = localSearchResponse?.mapItems else { return }
+			self.cityList = mapItems
 			self.tableView.reloadData()
-			
-			self.pointAnnotation = MKPointAnnotation()
-			self.pointAnnotation.title = searchBar.text
-			self.pointAnnotation.coordinate = CLLocationCoordinate2D(latitude: localSearchResponse!.boundingRegion.center.latitude, longitude: localSearchResponse!.boundingRegion.center.longitude)
-			
-			self.pinAnnotationView = MKPinAnnotationView(annotation: self.pointAnnotation, reuseIdentifier: nil)
-			self.mapView.centerCoordinate = self.pointAnnotation.coordinate
-			self.mapView.addAnnotation(self.pinAnnotationView.annotation!)
 		}
 	}
 	
@@ -95,8 +79,9 @@ extension SearchMapViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		guard let selectedCity = cityList[indexPath.item].placemark.locality else { return }
 		var savedCityList = UserDefaults.standard.array(forKey: "CityList") as? [String] ?? []
-		savedCityList.append(cityList[indexPath.item])
+		savedCityList.append(selectedCity)
 		UserDefaults.standard.set(savedCityList, forKey: "CityList")
 		UserDefaults.standard.synchronize()
 		
@@ -111,7 +96,7 @@ extension SearchMapViewController: UITableViewDelegate, UITableViewDataSource {
 	func configureSearchedCityCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
 		guard
 			let cell = tableView.dequeueReusableCell(withIdentifier: SearchedCityCell.className, for: indexPath) as? SearchedCityCell else { return UITableViewCell() }
-		cell.cityNameLabel.text = cityList[indexPath.item]
+		cell.cityNameLabel.text = cityList[indexPath.item].placemark.title
 		return cell
 	}
 	
