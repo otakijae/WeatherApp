@@ -27,6 +27,7 @@ class DetailWeatherViewController: UIViewController, ObserverProtocol {
 		
 		viewModel.cityWeather.addObserver(self) { cityWeather in
 			self.selectedCity = cityWeather
+			print(self.selectedCity?.printProperties())
 			DispatchQueue.main.async {
 				self.tableView.reloadData()
 			}
@@ -48,13 +49,13 @@ extension DetailWeatherViewController: UITableViewDelegate, UITableViewDataSourc
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		switch indexPath.item {
 		case CellType.currently.rawValue:
-			return 200
+			return 240
 		case CellType.hourly.rawValue:
 			return 150
 		case CellType.daily.rawValue:
 			return 200
 		case CellType.other.rawValue:
-			return 200
+			return 240
 		default:
 			return 200
 		}
@@ -81,7 +82,13 @@ extension DetailWeatherViewController: UITableViewDelegate, UITableViewDataSourc
 	
 	func configureCurrentlyWeatherCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: CurrentlyWeatherCell.className, for: indexPath) as? CurrentlyWeatherCell else { return UITableViewCell() }
-		cell.editingAccessoryType = .disclosureIndicator
+		cell.cityNameLabel.text = selectedCity?.name
+		cell.statusLabel.text = selectedCity?.weather?.icon
+		cell.temperatureLabel.text = selectedCity?.currentTemperature
+		cell.summaryLabel.text = selectedCity?.weather?.summary
+		cell.dateLabel.text = selectedCity?.currentTime
+		cell.temperatureMinLabel.text = "\(selectedCity?.weather?.temperatureMin ?? 0)"
+		cell.temperatureMaxLabel.text = "\(selectedCity?.weather?.temperatureMax ?? 0)"
 		return cell
 	}
 	
@@ -99,7 +106,16 @@ extension DetailWeatherViewController: UITableViewDelegate, UITableViewDataSourc
 	
 	func configureOtherWeatherCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: OtherWeatherCell.className, for: indexPath) as? OtherWeatherCell else { return UITableViewCell() }
-		cell.editingAccessoryType = .disclosureIndicator
+		cell.suriseTimeLabel.text = selectedCity?.weather?.sunriseTime
+		cell.sunsetTimeLabel.text = selectedCity?.weather?.sunsetTime
+		cell.precipitationProbabilityLabel.text = "\(selectedCity?.weather?.precipitationProbability ?? 0)%"
+		cell.humidityLabel.text = "\(selectedCity?.weather?.humidity ?? 0)"
+		cell.windSpeedLabel.text = "\(selectedCity?.weather?.windSpeed ?? 0)m/s"
+		cell.apparentTemperatureLabel.text = "\(selectedCity?.weather?.apparentTemperature ?? 0)°"
+		cell.precipitationIntensityLabel.text = "\(selectedCity?.weather?.precipitationIntensity ?? 0)cm"
+		cell.pressureLabel.text = "\(selectedCity?.weather?.pressure ?? 0)hPa"
+		cell.visibilityLabel.text = "\(selectedCity?.weather?.visibility ?? 0)km"
+		cell.uvIndexLabel.text = "\(selectedCity?.weather?.uvIndex ?? 0)"
 		return cell
 	}
 	

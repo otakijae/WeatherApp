@@ -26,21 +26,6 @@ extension UIViewController {
 		return UIStoryboard(name: self.className, bundle: nil).instantiateInitialViewController()!
 	}
 	
-	func startRightBarIndicatorAnimating(style: UIActivityIndicatorView.Style = .gray) {
-		let indicator = UIActivityIndicatorView(style: style)
-		indicator.startAnimating()
-		self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: indicator)
-	}
-	
-	func stopRightBarIndicatorAnimating() {
-		if
-			let rightBarButtonItem = self.navigationItem.rightBarButtonItem,
-			let indicator = rightBarButtonItem.customView as? UIActivityIndicatorView {
-			indicator.stopAnimating()
-			self.navigationItem.rightBarButtonItem = nil
-		}
-	}
-	
 	func alert(title: String = "Kakaopay",
 						 message: String, okTitle: String = "확인", okAction: (() -> Void)? = nil) {
 		DispatchQueue.main.async {
@@ -87,23 +72,6 @@ extension UIViewController {
 			alert.view.tintColor = UIColor.darkGray
 			self.present(alert, animated: true, completion: { alert.view.tintColor = UIColor.darkGray })
 		}
-	}
-	
-	func actionSheet(title: String = "Kakaopay",
-									 message: String? = nil,
-									 cancelTitle: String? = "Cancel",
-									 cancelStyle: UIAlertAction.Style = .cancel,
-									 actions: [(title: String, action: ((UIAlertAction) -> Void))]) {
-		let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
-		actions.forEach {
-			alertController.addAction(UIAlertAction(title: $0.title, style: .default, handler: $0.action))
-		}
-		
-		alertController.addAction(UIAlertAction(title: cancelTitle, style: cancelStyle, handler: { _ in
-			alertController.dismiss(animated: true)
-		}))
-		
-		self.present(alertController, animated: true)
 	}
 	
 	static let indicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.whiteLarge)
@@ -202,15 +170,4 @@ extension UITextField {
 		self.attributedText = (self.text ?? "").colored(range: NSRange(location: range.location, length: range.length), color: color)
 	}
 	
-}
-
-func appDelegate() -> AppDelegate {
-	return UIApplication.shared.delegate as? AppDelegate ?? AppDelegate()
-}
-
-extension AppDelegate {
-	func moveRootView() {
-		guard let window = self.window else { return }
-		window.rootViewController?.dismiss(animated: false, completion: nil)
-	}
 }

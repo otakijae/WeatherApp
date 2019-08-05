@@ -2,16 +2,14 @@ import UIKit
 
 class CurrentlyWeatherCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-			
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-    }
-
+	@IBOutlet weak var cityNameLabel: UILabel!
+	@IBOutlet weak var statusLabel: UILabel!
+	@IBOutlet weak var temperatureLabel: UILabel!
+	@IBOutlet weak var summaryLabel: UILabel!
+	@IBOutlet weak var dateLabel: UILabel!
+	@IBOutlet weak var temperatureMinLabel: UILabel!
+	@IBOutlet weak var temperatureMaxLabel: UILabel!
+	
 }
 
 class HourlyWeatherCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -111,14 +109,15 @@ class DailyWeatherCell: UITableViewCell {
 
 class OtherWeatherCell: UITableViewCell {
 	
-	override func awakeFromNib() {
-		super.awakeFromNib()
-		
-	}
-	
-	override func setSelected(_ selected: Bool, animated: Bool) {
-		super.setSelected(selected, animated: animated)
-		
-	}
+	@IBOutlet weak var suriseTimeLabel: UILabel!
+	@IBOutlet weak var sunsetTimeLabel: UILabel!
+	@IBOutlet weak var precipitationProbabilityLabel: UILabel!
+	@IBOutlet weak var humidityLabel: UILabel!
+	@IBOutlet weak var windSpeedLabel: UILabel!
+	@IBOutlet weak var apparentTemperatureLabel: UILabel!
+	@IBOutlet weak var precipitationIntensityLabel: UILabel!
+	@IBOutlet weak var pressureLabel: UILabel!
+	@IBOutlet weak var visibilityLabel: UILabel!
+	@IBOutlet weak var uvIndexLabel: UILabel!
 	
 }
