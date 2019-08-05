@@ -21,6 +21,7 @@ class DetailWeatherViewController: UIViewController, ObserverProtocol {
 		subscribe(viewModel)
 		
 		viewModel.requestSpecificWeather(with: selectedCity)
+		viewModel.requestDailyWeather(with: selectedCity)
 	}
 	
 	func subscribe(_ viewModel: ViewModel) {
@@ -31,6 +32,18 @@ class DetailWeatherViewController: UIViewController, ObserverProtocol {
 			DispatchQueue.main.async {
 				self.tableView.reloadData()
 			}
+		}
+		
+		viewModel.dailyWeatherList.addObserver(self) { dailyWeatherList in
+			self.selectedCity?.dailyWeatherList = dailyWeatherList
+			self.selectedCity?.dailyWeatherList.forEach { print($0.dayOfWeek) }
+			DispatchQueue.main.async {
+				self.tableView.reloadData()
+			}
+		}
+		
+		viewModel.hourlyWeatherList.addObserver(self) { hourlyWeatherList in
+			self.selectedCity?.hourlyWeatherList = hourlyWeatherList
 		}
 		
 	}
@@ -53,7 +66,7 @@ extension DetailWeatherViewController: UITableViewDelegate, UITableViewDataSourc
 		case CellType.hourly.rawValue:
 			return 150
 		case CellType.daily.rawValue:
-			return 200
+			return 240
 		case CellType.other.rawValue:
 			return 240
 		default:
@@ -88,8 +101,8 @@ extension DetailWeatherViewController: UITableViewDelegate, UITableViewDataSourc
 		cell.summaryLabel.text = selectedCity?.weather?.summary
 		cell.dateLabel.text = selectedCity?.currentTime
 		cell.dayOfWeekLabel.text = selectedCity?.dayOfWeek
-		cell.temperatureMinLabel.text = "\(selectedCity?.weather?.temperatureMin ?? 0)"
-		cell.temperatureMaxLabel.text = "\(selectedCity?.weather?.temperatureMax ?? 0)"
+		cell.temperatureMinLabel.text = "\(selectedCity?.weather?.temperatureMin ?? 0)°"
+		cell.temperatureMaxLabel.text = "\(selectedCity?.weather?.temperatureMax ?? 0)°"
 		return cell
 	}
 	
@@ -101,7 +114,7 @@ extension DetailWeatherViewController: UITableViewDelegate, UITableViewDataSourc
 	
 	func configureDailyWeatherCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: DailyWeatherCell.className, for: indexPath) as? DailyWeatherCell else { return UITableViewCell() }
-		cell.editingAccessoryType = .disclosureIndicator
+		cell.selectedCity = selectedCity
 		return cell
 	}
 	

@@ -8,6 +8,10 @@ class WeatherModule {
 	var city: Observable<City> = Observable<City>(value: City())
 	var cityList: Observable<[City]> = Observable<[City]>(value: [])
 	var cityWeather: Observable<City> = Observable<City>(value: City())
+	var dailyWeatherList: Observable<[Daily]> = Observable<[Daily]>(value: [])
+	var hourlyWeatherList: Observable<[Hourly]> = Observable<[Hourly]>(value: [])
+	var discoveredDailyWeatherList: [Daily] = []
+	var discoveredHourlyWeatherList: [Daily] = []
 	
 	func requestSimpleWeather(with city: City) {
 		getCoordinates(with: city) { coodinates in
@@ -85,6 +89,38 @@ class WeatherModule {
 				city.currentTemperature = String(temperature)
 				
 				self.cityWeather.value = city
+			}
+		}
+	}
+	
+	func requestDailyWeather(with city: City) {
+		getCoordinates(with: city) { coodinates in
+			city.latitude = coodinates?.0
+			city.longitude = coodinates?.1
+			API.instance.requestDailyWeather(with: city) { json in
+				self.discoveredDailyWeatherList.removeAll()
+				guard
+					let data = json as? [String: Any],
+					let timeZone = data["timezone"] as? String,
+					let daily = data["daily"] as? [String: Any],
+					let dailyData = daily["data"] as? [Any] else { return }
+				
+				dailyData.forEach {
+					guard
+						let result = $0 as? [String: Any],
+						let time = result["time"] as? Double,
+						let icon = result["icon"] as? String,
+						let temperatureMax = result["temperatureMax"] as? Double,
+						let temperatureMin = result["temperatureMin"] as? Double else { return }
+					
+					let daily = Daily()
+					daily.dayOfWeek = Time.instance.getDayOfWeek(from: time, in: timeZone)
+					daily.icon = icon
+					daily.temperatureMax = temperatureMax
+					daily.temperatureMin = temperatureMin
+					self.discoveredDailyWeatherList.append(daily)
+				}
+				self.dailyWeatherList.value = self.discoveredDailyWeatherList				
 			}
 		}
 	}

@@ -17,6 +17,11 @@ class HourlyWeatherCell: UITableViewCell, UICollectionViewDataSource, UICollecti
 	
 	@IBOutlet weak var collectionView: UICollectionView!
 	@IBOutlet weak var collectionViewFlowLayout: UICollectionViewFlowLayout!
+	var selectedCity: City? {
+		didSet {
+			collectionView.reloadData()
+		}
+	}
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -94,18 +99,48 @@ class HourlyCollectionViewCell: UICollectionViewCell {
 	
 }
 
-class DailyWeatherCell: UITableViewCell {
+class DailyWeatherCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
+	
+	@IBOutlet weak var tableView: UITableView!
+	var selectedCity: City? {
+		didSet {
+			tableView.reloadData()
+		}
+	}
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
+		tableView.dataSource = self
+		tableView.delegate = self
 	}
 	
-	override func setSelected(_ selected: Bool, animated: Bool) {
-		super.setSelected(selected, animated: animated)
-		
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		guard let selectedCity = selectedCity else { return 0 }
+		return selectedCity.dailyWeatherList.count
 	}
 	
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		return configureDailyTableViewCell(tableView: tableView, indexPath: indexPath)
+	}
+	
+	func configureDailyTableViewCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+		guard
+			let cell = tableView.dequeueReusableCell(withIdentifier: DailyTableViewCell.className, for: indexPath) as? DailyTableViewCell else { return UITableViewCell() }
+		cell.dayOfWeekLabel.text = selectedCity?.dailyWeatherList[indexPath.item].dayOfWeek
+		cell.statusLabel.text = selectedCity?.dailyWeatherList[indexPath.item].icon
+		cell.temperatureMinLabel.text = "\(selectedCity?.dailyWeatherList[indexPath.item].temperatureMin ?? 0)°"
+		cell.temperatureMaxLabel.text = "\(selectedCity?.dailyWeatherList[indexPath.item].temperatureMax ?? 0)°"
+		return cell
+	}
+	
+}
+
+class DailyTableViewCell: UITableViewCell {
+	@IBOutlet weak var dayOfWeekLabel: UILabel!
+	@IBOutlet weak var statusLabel: UILabel!
+	@IBOutlet weak var temperatureMinLabel: UILabel!
+	@IBOutlet weak var temperatureMaxLabel: UILabel!
 }
 
 class OtherWeatherCell: UITableViewCell {

@@ -9,6 +9,8 @@ class City {
 	var dayOfWeek: String?
 	var currentTemperature: String?
 	var weather: Weather?
+	var dailyWeatherList: [Daily] = []
+	var hourlyWeatherList: [Hourly] = []
 	
 	func printProperties() {
 		print("name: \(name)")
@@ -58,4 +60,17 @@ class Weather {
 	var pressure: Double?
 	var visibility: Double?
 	var uvIndex: Double?
+}
+
+class Daily {
+	var dayOfWeek: String?
+	var icon: String?
+	var temperatureMax: Double?
+	var temperatureMin: Double?
+}
+
+class Hourly {
+	var time: String?
+	var icon: String?
+	var temperature: Double?
 }

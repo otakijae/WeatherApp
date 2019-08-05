@@ -157,16 +157,83 @@
                                             <outlet property="collectionViewFlowLayout" destination="7Xk-35-n8Z" id="09d-FL-zaN"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DailyWeatherCell" rowHeight="200" id="NyG-yC-Ca5" customClass="DailyWeatherCell" customModule="KakaopayWeatherApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="418" width="375" height="200"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DailyWeatherCell" rowHeight="240" id="NyG-yC-Ca5" customClass="DailyWeatherCell" customModule="KakaopayWeatherApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="418" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NyG-yC-Ca5" id="1mK-Wd-n1I">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="199.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="239.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zqt-jl-amg">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="239.5"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <prototypes>
+                                                        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DailyTableViewCell" id="6Sy-Mi-rFP" customClass="DailyTableViewCell" customModule="KakaopayWeatherApp" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6Sy-Mi-rFP" id="Zil-lc-qP6">
+                                                                <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="요일" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NFA-Na-Ncn">
+                                                                        <rect key="frame" x="20" y="13" width="26" height="18"/>
+                                                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="15"/>
+                                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="상태" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9r5-Va-YHt">
+                                                                        <rect key="frame" x="66" y="13" width="26" height="18"/>
+                                                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="15"/>
+                                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="최소" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZfU-kK-Pn8">
+                                                                        <rect key="frame" x="283" y="13" width="26" height="18"/>
+                                                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="15"/>
+                                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="최대" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Cq-Dr-ORh">
+                                                                        <rect key="frame" x="329" y="13" width="26" height="18"/>
+                                                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="15"/>
+                                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstItem="NFA-Na-Ncn" firstAttribute="centerY" secondItem="Zil-lc-qP6" secondAttribute="centerY" id="5ey-gE-o6s"/>
+                                                                    <constraint firstItem="9r5-Va-YHt" firstAttribute="leading" secondItem="NFA-Na-Ncn" secondAttribute="trailing" constant="20" id="CO6-sK-zQG"/>
+                                                                    <constraint firstItem="8Cq-Dr-ORh" firstAttribute="centerY" secondItem="Zil-lc-qP6" secondAttribute="centerY" id="Jn3-mH-Rkc"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="8Cq-Dr-ORh" secondAttribute="trailing" constant="20" id="anx-Tv-mPp"/>
+                                                                    <constraint firstItem="8Cq-Dr-ORh" firstAttribute="leading" secondItem="ZfU-kK-Pn8" secondAttribute="trailing" constant="20" id="cp5-Lc-Ffk"/>
+                                                                    <constraint firstItem="NFA-Na-Ncn" firstAttribute="leading" secondItem="Zil-lc-qP6" secondAttribute="leading" constant="20" id="f0Y-UY-r1m"/>
+                                                                    <constraint firstItem="9r5-Va-YHt" firstAttribute="centerY" secondItem="Zil-lc-qP6" secondAttribute="centerY" id="iao-jJ-HcR"/>
+                                                                    <constraint firstItem="ZfU-kK-Pn8" firstAttribute="centerY" secondItem="Zil-lc-qP6" secondAttribute="centerY" id="rkz-RR-IFg"/>
+                                                                </constraints>
+                                                            </tableViewCellContentView>
+                                                            <connections>
+                                                                <outlet property="dayOfWeekLabel" destination="NFA-Na-Ncn" id="TIo-x6-D4Z"/>
+                                                                <outlet property="statusLabel" destination="9r5-Va-YHt" id="71d-cL-SEC"/>
+                                                                <outlet property="temperatureMaxLabel" destination="8Cq-Dr-ORh" id="hfg-73-dKO"/>
+                                                                <outlet property="temperatureMinLabel" destination="ZfU-kK-Pn8" id="Eau-xx-mtK"/>
+                                                            </connections>
+                                                        </tableViewCell>
+                                                    </prototypes>
+                                                </tableView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="zqt-jl-amg" firstAttribute="centerY" secondItem="1mK-Wd-n1I" secondAttribute="centerY" id="0OG-yD-W6n"/>
+                                                <constraint firstItem="zqt-jl-amg" firstAttribute="height" secondItem="1mK-Wd-n1I" secondAttribute="height" id="HFu-2V-dcD"/>
+                                                <constraint firstItem="zqt-jl-amg" firstAttribute="width" secondItem="1mK-Wd-n1I" secondAttribute="width" id="TOo-5i-wJJ"/>
+                                                <constraint firstItem="zqt-jl-amg" firstAttribute="centerX" secondItem="1mK-Wd-n1I" secondAttribute="centerX" id="lAK-zU-Amq"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="tableView" destination="zqt-jl-amg" id="bxo-Vu-UKw"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OtherWeatherCell" rowHeight="240" id="3u6-Pb-CPA" customClass="OtherWeatherCell" customModule="KakaopayWeatherApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="618" width="375" height="240"/>
+                                        <rect key="frame" x="0.0" y="658" width="375" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3u6-Pb-CPA" id="iew-Dk-qJQ">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="239.5"/>

@@ -7,6 +7,8 @@ class ViewModel: ObserverProtocol {
 	var city: Observable<City> = Observable<City>(value: City())
 	var cityList: Observable<[City]> = Observable<[City]>(value: [])
 	var cityWeather: Observable<City> = Observable<City>(value: City())
+	var dailyWeatherList: Observable<[Daily]> = Observable<[Daily]>(value: [])
+	var hourlyWeatherList: Observable<[Hourly]> = Observable<[Hourly]>(value: [])
 	
 	init() {
 		subscribe()
@@ -26,6 +28,14 @@ class ViewModel: ObserverProtocol {
 			self.cityWeather.value = cityWeather
 		}
 		
+		WeatherModule.instance.dailyWeatherList.addObserver(self) { dailyWeatherList in
+			self.dailyWeatherList.value = dailyWeatherList
+		}
+		
+		WeatherModule.instance.hourlyWeatherList.addObserver(self) { hourlyWeatherList in
+			self.hourlyWeatherList.value = hourlyWeatherList
+		}
+		
 	}
 	
 	func requestSimpleWeather(with city: City) {
@@ -35,6 +45,15 @@ class ViewModel: ObserverProtocol {
 	func requestSpecificWeather(with city: City?) {
 		guard let city = city else { return }
 		WeatherModule.instance.requestSpecificWeather(with: city)
+	}
+	
+	func requestDailyWeather(with city: City?) {
+		guard let city = city else { return }
+		WeatherModule.instance.requestDailyWeather(with: city)
+	}
+	
+	func requestHourlyWeather(with city: City?) {
+		
 	}
 	
 }
