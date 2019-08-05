@@ -7,6 +7,7 @@ class CurrentlyWeatherCell: UITableViewCell {
 	@IBOutlet weak var temperatureLabel: UILabel!
 	@IBOutlet weak var summaryLabel: UILabel!
 	@IBOutlet weak var dateLabel: UILabel!
+	@IBOutlet weak var dayOfWeekLabel: UILabel!
 	@IBOutlet weak var temperatureMinLabel: UILabel!
 	@IBOutlet weak var temperatureMaxLabel: UILabel!
 	

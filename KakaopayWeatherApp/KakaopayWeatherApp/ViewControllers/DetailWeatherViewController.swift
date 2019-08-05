@@ -87,6 +87,7 @@ extension DetailWeatherViewController: UITableViewDelegate, UITableViewDataSourc
 		cell.temperatureLabel.text = selectedCity?.currentTemperature
 		cell.summaryLabel.text = selectedCity?.weather?.summary
 		cell.dateLabel.text = selectedCity?.currentTime
+		cell.dayOfWeekLabel.text = selectedCity?.dayOfWeek
 		cell.temperatureMinLabel.text = "\(selectedCity?.weather?.temperatureMin ?? 0)"
 		cell.temperatureMaxLabel.text = "\(selectedCity?.weather?.temperatureMax ?? 0)"
 		return cell

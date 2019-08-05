@@ -125,9 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				13D2D5E422F30B4D008508B9 /* LaunchScreen.storyboard */,
-				13C29A3B22F48FA300438EEA /* CityCell.swift */,
-				13E48E4022F71670000C7F7D /* SearchedCityCell.swift */,
-				13C29A3522F47A2C00438EEA /* WeatherCells.swift */,
+				13E48E4422F7E757000C7F7D /* CustomCells */,
 				13F17C8F22F2E60500E46746 /* MainListViewController.storyboard */,
 				13F17C8D22F2E5F900E46746 /* MainListViewController.swift */,
 				13C29A3922F48B9A00438EEA /* DetailWeatherViewController.storyboard */,
@@ -172,6 +170,16 @@
 				13E48E4222F72064000C7F7D /* API.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		13E48E4422F7E757000C7F7D /* CustomCells */ = {
+			isa = PBXGroup;
+			children = (
+				13C29A3B22F48FA300438EEA /* CityCell.swift */,
+				13E48E4022F71670000C7F7D /* SearchedCityCell.swift */,
+				13C29A3522F47A2C00438EEA /* WeatherCells.swift */,
+			);
+			path = CustomCells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

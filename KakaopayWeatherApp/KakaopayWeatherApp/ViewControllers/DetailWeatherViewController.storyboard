@@ -59,6 +59,12 @@
                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="날씨 요약" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kLR-hh-OVQ">
+                                                    <rect key="frame" x="156" y="140" width="63.5" height="20.5"/>
+                                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="최소" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zdu-AE-iPT">
                                                     <rect key="frame" x="275" y="198.5" width="30" height="21"/>
                                                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
@@ -71,8 +77,8 @@
                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="날씨 요약" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kLR-hh-OVQ">
-                                                    <rect key="frame" x="156" y="140" width="63.5" height="20.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="요일" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z0D-O2-1wP">
+                                                    <rect key="frame" x="54.5" y="199" width="29.5" height="20.5"/>
                                                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -86,11 +92,13 @@
                                                 <constraint firstItem="jmR-j8-E4z" firstAttribute="centerX" secondItem="BzM-eE-ZhU" secondAttribute="centerX" id="HqI-4T-pI3"/>
                                                 <constraint firstItem="kLR-hh-OVQ" firstAttribute="top" secondItem="jmR-j8-E4z" secondAttribute="bottom" constant="10" id="MiN-B1-6pd"/>
                                                 <constraint firstAttribute="trailing" secondItem="HC8-Ba-kWq" secondAttribute="trailing" constant="20" id="TH1-NC-TVD"/>
+                                                <constraint firstItem="z0D-O2-1wP" firstAttribute="leading" secondItem="pkq-Ze-rqQ" secondAttribute="trailing" constant="5" id="WvM-eK-t58"/>
                                                 <constraint firstAttribute="bottom" secondItem="Zdu-AE-iPT" secondAttribute="bottom" constant="20" id="Y5h-Lb-Asu"/>
                                                 <constraint firstItem="pkq-Ze-rqQ" firstAttribute="leading" secondItem="BzM-eE-ZhU" secondAttribute="leading" constant="20" id="bkI-v4-xdP"/>
                                                 <constraint firstItem="PoP-LL-IWB" firstAttribute="centerX" secondItem="BzM-eE-ZhU" secondAttribute="centerX" id="h7e-ek-IvZ"/>
                                                 <constraint firstItem="Zdu-AE-iPT" firstAttribute="centerY" secondItem="HC8-Ba-kWq" secondAttribute="centerY" id="j1V-tN-scz"/>
                                                 <constraint firstAttribute="bottom" secondItem="HC8-Ba-kWq" secondAttribute="bottom" constant="20" id="jI8-XE-jQ6"/>
+                                                <constraint firstAttribute="bottom" secondItem="z0D-O2-1wP" secondAttribute="bottom" constant="20" id="r5q-Vt-yAy"/>
                                                 <constraint firstItem="PoP-LL-IWB" firstAttribute="top" secondItem="gRX-bj-gbO" secondAttribute="bottom" constant="5" id="sed-kG-Dae"/>
                                                 <constraint firstItem="HC8-Ba-kWq" firstAttribute="leading" secondItem="Zdu-AE-iPT" secondAttribute="trailing" constant="20" id="svl-r4-pOm"/>
                                                 <constraint firstItem="gRX-bj-gbO" firstAttribute="centerX" secondItem="BzM-eE-ZhU" secondAttribute="centerX" id="uLK-Qk-Khz"/>
@@ -101,6 +109,7 @@
                                         <connections>
                                             <outlet property="cityNameLabel" destination="gRX-bj-gbO" id="P5r-ps-gnw"/>
                                             <outlet property="dateLabel" destination="pkq-Ze-rqQ" id="5ED-91-pb4"/>
+                                            <outlet property="dayOfWeekLabel" destination="z0D-O2-1wP" id="UAJ-ff-1HT"/>
                                             <outlet property="statusLabel" destination="PoP-LL-IWB" id="ruI-kv-gvI"/>
                                             <outlet property="summaryLabel" destination="kLR-hh-OVQ" id="ICj-4B-7Cq"/>
                                             <outlet property="temperatureLabel" destination="jmR-j8-E4z" id="f0T-cP-B9E"/>

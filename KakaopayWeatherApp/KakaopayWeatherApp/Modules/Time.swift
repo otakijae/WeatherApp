@@ -78,4 +78,48 @@ struct Time {
 		return time
 	}
 	
+	enum WeekDay: String {
+		case sunday = "Sunday"
+		case monday = "Monday"
+		case tuesday = "Tuesday"
+		case wednesday = "Wednesday"
+		case thursday = "Thursday"
+		case friday = "Friday"
+		case saturday = "Saturday"
+	}
+	
+	func getDay(weekDay: WeekDay?) -> String {
+		guard let weekDay = weekDay else { return "" }
+		switch weekDay {
+		case .sunday:
+			return "일요일"
+		case .monday:
+			return "월요일"
+		case .tuesday:
+			return "화요일"
+		case .wednesday:
+			return "수요일"
+		case .thursday:
+			return "목요일"
+		case .friday:
+			return "금요일"
+		case .saturday:
+			return "토요일"
+		}
+	}
+	
+	func getDayOfWeek(from unixDate: Double, in timeZone: String) -> String {
+		let unixStringDate = NSDate(timeIntervalSince1970: unixDate)
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+		let dateString = dateFormatter.string(from: unixStringDate as Date)
+		
+		guard let date = dateFormatter.date(from: dateString) else { fatalError() }
+		dateFormatter.dateFormat = "EEEE"
+		dateFormatter.timeZone = TimeZone(identifier: timeZone)!
+		let time: String = dateFormatter.string(from: date)
+		
+		return getDay(weekDay: WeekDay(rawValue: time))
+	}
+	
 }

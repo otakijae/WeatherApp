@@ -6,6 +6,7 @@ class City {
 	var longitude: Double?
 	var currentTime: String?
 	var specificTime: String?
+	var dayOfWeek: String?
 	var currentTemperature: String?
 	var weather: Weather?
 	

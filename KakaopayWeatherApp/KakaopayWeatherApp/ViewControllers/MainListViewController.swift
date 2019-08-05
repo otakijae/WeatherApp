@@ -38,6 +38,7 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	override func viewWillAppear(_ animated: Bool) {
 		configureRightEditButton()
 		refreshAction()
+		WeatherModule.instance.requestFullWeather(with: cityList.first!)
 	}
 	
 	func subscribe(_ viewModel: ViewModel) {

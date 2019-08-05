@@ -39,6 +39,7 @@ class WeatherModule {
 					let icon = currently["icon"] as? String,
 					let temperature = currently["temperature"] as? Double,
 					let summary = currently["summary"] as? String,
+					let time = currently["time"] as? Double,
 					
 					let precipitationProbability = currently["precipIntensity"] as? Double,
 					let humidity = currently["humidity"] as? Double,
@@ -80,6 +81,7 @@ class WeatherModule {
 				city.weather = weather
 				city.specificTime = Time.instance.getCurrentTime(in: timeZone)
 				city.currentTime = Time.instance.getSimpleCurrentTime(in: timeZone)
+				city.dayOfWeek = Time.instance.getDayOfWeek(from: time, in: timeZone)
 				city.currentTemperature = String(temperature)
 				
 				self.cityWeather.value = city
