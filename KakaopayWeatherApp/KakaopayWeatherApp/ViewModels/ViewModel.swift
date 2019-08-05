@@ -44,18 +44,10 @@ class ViewModel: ObserverProtocol {
 		}
 	}
 	
-	func requestSpecificWeather(with city: City?) {
+	func requestDetailWeathers(with city: City?) {
 		guard let city = city else { return }
 		WeatherModule.instance.requestSpecificWeather(with: city)
-	}
-	
-	func requestDailyWeather(with city: City?) {
-		guard let city = city else { return }
 		WeatherModule.instance.requestDailyWeather(with: city)
-	}
-	
-	func requestHourlyWeather(with city: City?) {
-		guard let city = city else { return }
 		WeatherModule.instance.requestHourlyWeather(with: city)
 	}
 	

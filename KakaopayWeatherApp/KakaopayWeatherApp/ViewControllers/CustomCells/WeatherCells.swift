@@ -9,6 +9,24 @@ class CurrentlyWeatherCell: UITableViewCell {
 	@IBOutlet weak var dayOfWeekLabel: UILabel!
 	@IBOutlet weak var temperatureMinLabel: UILabel!
 	@IBOutlet weak var temperatureMaxLabel: UILabel!
+	var selectedCity: City? {
+		didSet {
+			configureCurrentlyWeatherCell()
+		}
+	}
+	
+	func configureCurrentlyWeatherCell() {
+		guard let selectedCity = selectedCity else { return }
+		cityNameLabel.text = selectedCity.name
+		statusLabel.text = selectedCity.weather?.icon
+		temperatureLabel.text = selectedCity.currentTemperature
+		summaryLabel.text = selectedCity.weather?.summary
+		dateLabel.text = selectedCity.currentTime
+		dayOfWeekLabel.text = selectedCity.dayOfWeek
+		temperatureMinLabel.text = "\(selectedCity.weather?.temperatureMin ?? 0)°"
+		temperatureMaxLabel.text = "\(selectedCity.weather?.temperatureMax ?? 0)°"
+	}
+	
 }
 
 class HourlyWeatherCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -135,4 +153,23 @@ class OtherWeatherCell: UITableViewCell {
 	@IBOutlet weak var pressureLabel: UILabel!
 	@IBOutlet weak var visibilityLabel: UILabel!
 	@IBOutlet weak var uvIndexLabel: UILabel!
+	var selectedCity: City? {
+		didSet {
+			configureOtherWeatherCell()
+		}
+	}
+	
+	func configureOtherWeatherCell() {
+		guard let selectedCity = selectedCity else { return }
+		suriseTimeLabel.text = selectedCity.weather?.sunriseTime
+		sunsetTimeLabel.text = selectedCity.weather?.sunsetTime
+		precipitationProbabilityLabel.text = "\(selectedCity.weather?.precipitationProbability ?? 0)%"
+		humidityLabel.text = "\(selectedCity.weather?.humidity ?? 0)"
+		windSpeedLabel.text = "\(selectedCity.weather?.windSpeed ?? 0)m/s"
+		apparentTemperatureLabel.text = "\(selectedCity.weather?.apparentTemperature ?? 0)°"
+		precipitationIntensityLabel.text = "\(selectedCity.weather?.precipitationIntensity ?? 0)cm"
+		pressureLabel.text = "\(selectedCity.weather?.pressure ?? 0)hPa"
+		visibilityLabel.text = "\(selectedCity.weather?.visibility ?? 0)km"
+		uvIndexLabel.text = "\(selectedCity.weather?.uvIndex ?? 0)"
+	}
 }

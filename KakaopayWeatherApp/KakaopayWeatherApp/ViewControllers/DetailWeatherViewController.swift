@@ -7,48 +7,58 @@ class DetailWeatherViewController: UIViewController, ObserverProtocol {
 	var viewModel: ViewModel?
 	var vcList: [String] = []
 	var selectedCity: City?
+	var refreshControl = UIRefreshControl()
 
-	@IBOutlet weak var tableView: UITableView!
+	@IBOutlet weak var tableView: UITableView! {
+		didSet {
+			refreshControl.addTarget(self, action: #selector(refreshAction), for: .valueChanged)
+			tableView.addSubview(refreshControl)
+		}
+	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		self.navigationController?.navigationBar.tintColor = .darkGray
-
 		tableView.delegate = self
 		tableView.dataSource = self
 		
 		guard let viewModel = viewModel else { return }
 		subscribe(viewModel)
-		
-		viewModel.requestSpecificWeather(with: selectedCity)
-		viewModel.requestHourlyWeather(with: selectedCity)
-		viewModel.requestDailyWeather(with: selectedCity)
+		viewModel.requestDetailWeathers(with: selectedCity)
 	}
 	
 	func subscribe(_ viewModel: ViewModel) {
 		
 		viewModel.cityWeather.addObserver(self) { cityWeather in
 			self.selectedCity = cityWeather
-			DispatchQueue.main.async {
-				self.tableView.reloadData()
-			}
+			self.refreshTableView()
 		}
 		
 		viewModel.dailyWeatherList.addObserver(self) { dailyWeatherList in
 			self.selectedCity?.dailyWeatherList = dailyWeatherList
-			DispatchQueue.main.async {
-				self.tableView.reloadData()
-			}
+			self.refreshTableView()
 		}
 		
 		viewModel.hourlyWeatherList.addObserver(self) { hourlyWeatherList in
 			self.selectedCity?.hourlyWeatherList = hourlyWeatherList
-			DispatchQueue.main.async {
-				self.tableView.reloadData()
-			}
+			self.refreshTableView()
 		}
 		
+	}
+	
+	func refreshTableView() {
+		DispatchQueue.main.async {
+			self.tableView.reloadData()
+		}
+	}
+	
+	@objc func refreshAction() {
+		guard let viewModel = viewModel else { return }
+		viewModel.requestDetailWeathers(with: selectedCity)
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+			self.refreshControl.endRefreshing()
+		}
 	}
 	
 	@IBAction func linkToAPIWebPage(_ sender: Any) {
@@ -106,14 +116,7 @@ extension DetailWeatherViewController: UITableViewDelegate, UITableViewDataSourc
 	
 	func configureCurrentlyWeatherCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: CurrentlyWeatherCell.className, for: indexPath) as? CurrentlyWeatherCell else { return UITableViewCell() }
-		cell.cityNameLabel.text = selectedCity?.name
-		cell.statusLabel.text = selectedCity?.weather?.icon
-		cell.temperatureLabel.text = selectedCity?.currentTemperature
-		cell.summaryLabel.text = selectedCity?.weather?.summary
-		cell.dateLabel.text = selectedCity?.currentTime
-		cell.dayOfWeekLabel.text = selectedCity?.dayOfWeek
-		cell.temperatureMinLabel.text = "\(selectedCity?.weather?.temperatureMin ?? 0)°"
-		cell.temperatureMaxLabel.text = "\(selectedCity?.weather?.temperatureMax ?? 0)°"
+		cell.selectedCity = selectedCity
 		return cell
 	}
 	
@@ -131,16 +134,7 @@ extension DetailWeatherViewController: UITableViewDelegate, UITableViewDataSourc
 	
 	func configureOtherWeatherCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: OtherWeatherCell.className, for: indexPath) as? OtherWeatherCell else { return UITableViewCell() }
-		cell.suriseTimeLabel.text = selectedCity?.weather?.sunriseTime
-		cell.sunsetTimeLabel.text = selectedCity?.weather?.sunsetTime
-		cell.precipitationProbabilityLabel.text = "\(selectedCity?.weather?.precipitationProbability ?? 0)%"
-		cell.humidityLabel.text = "\(selectedCity?.weather?.humidity ?? 0)"
-		cell.windSpeedLabel.text = "\(selectedCity?.weather?.windSpeed ?? 0)m/s"
-		cell.apparentTemperatureLabel.text = "\(selectedCity?.weather?.apparentTemperature ?? 0)°"
-		cell.precipitationIntensityLabel.text = "\(selectedCity?.weather?.precipitationIntensity ?? 0)cm"
-		cell.pressureLabel.text = "\(selectedCity?.weather?.pressure ?? 0)hPa"
-		cell.visibilityLabel.text = "\(selectedCity?.weather?.visibility ?? 0)km"
-		cell.uvIndexLabel.text = "\(selectedCity?.weather?.uvIndex ?? 0)"
+		cell.selectedCity = selectedCity
 		return cell
 	}
 	
