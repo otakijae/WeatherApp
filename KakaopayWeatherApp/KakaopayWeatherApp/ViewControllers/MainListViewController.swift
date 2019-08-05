@@ -33,59 +33,55 @@ class MainListViewController: UIViewController, ObserverProtocol {
 
 		guard let viewModel = viewModel else { return }
 		subscribe(viewModel)
+		viewModel.requestNetworkConnectionStatus()
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
-		configureRightEditButton()
 		refreshAction()
-		WeatherModule.instance.requestFullWeather(with: cityList.first!)
 	}
 	
 	func subscribe(_ viewModel: ViewModel) {
 		
+		viewModel.networkDisconnected.addObserver(self) { _ in
+			self.alert(message: "WIFI 혹은 4G/LTE\n연결 상태를 확인해주세요.")
+		}
+		
 		viewModel.city.addObserver(self) { city in
 			self.cityList.filter { $0.name == city.name }.first?.currentTime = city.currentTime
 			self.cityList.filter { $0.name == city.name }.first?.currentTemperature = city.currentTemperature
-			DispatchQueue.main.async {
-				self.configureRightEditButton()
-				self.tableView.reloadData()
-			}
+			self.refreshTableView()
+		}
+		
+		viewModel.cityList.addObserver(self) { cityList in
+			self.cityList = cityList
+		}
+		
+		viewModel.cityListEmpty.addObserver(self) { _ in
+			self.tableView.isHidden = true
+			self.descriptionView.isHidden = false
+			self.refreshTableView()
+		}
+		
+		viewModel.cityListExists.addObserver(self) { _ in
+			self.tableView.isHidden = false
+			self.descriptionView.isHidden = true
+			self.refreshTableView()
 		}
 		
 	}
 	
+	func refreshTableView() {
+		DispatchQueue.main.async {
+			self.configureRightEditButton()
+			self.tableView.reloadData()
+		}
+	}
+	
 	@objc func refreshAction() {
 		guard let viewModel = viewModel else { return }
-		configureCityList()
-		checkEmptyCityList(viewModel)
+		viewModel.configureCityList(with: savedCityList)
 		DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
 			self.refreshControl.endRefreshing()
-		}
-	}
-	
-	func configureCityList() {
-		cityList.removeAll()
-		savedCityList.forEach {
-			let city = City()
-			city.name = $0
-			cityList.append(city)
-		}
-	}
-	
-	func requestSimpleWeatherList(_ viewModel: ViewModel) {
-		cityList.forEach {
-			viewModel.requestSimpleWeather(with: $0)
-		}
-	}
-	
-	func checkEmptyCityList(_ viewModel: ViewModel) {
-		if cityList.isEmpty {
-			tableView.isHidden = true
-			descriptionView.isHidden = false
-		} else {
-			tableView.isHidden = false
-			descriptionView.isHidden = true
-			requestSimpleWeatherList(viewModel)
 		}
 	}
 	
@@ -143,6 +139,7 @@ extension MainListViewController: UITableViewDelegate, UITableViewDataSource {
 			cityList.remove(at: indexPath.item)
 			savedCityList.remove(at: indexPath.item)
 			tableView.deleteRows(at: [indexPath], with: .automatic)
+			refreshAction()
 		}
 	}
 	
@@ -153,10 +150,7 @@ extension MainListViewController: UITableViewDelegate, UITableViewDataSource {
 	func configureCityCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
 		guard
 			let cell = tableView.dequeueReusableCell(withIdentifier: CityCell.className, for: indexPath) as? CityCell else { return UITableViewCell() }
-		cell.accessoryType = .disclosureIndicator
-		cell.timeLabel.text = cityList[indexPath.item].currentTime
-		cell.cityNameLabel.text = cityList[indexPath.item].name
-		cell.temperatureLabel.text = cityList[indexPath.item].currentTemperature
+		cell.city = cityList[indexPath.item]
 		return cell
 	}
 	
