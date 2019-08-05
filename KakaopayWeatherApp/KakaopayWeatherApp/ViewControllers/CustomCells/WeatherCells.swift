@@ -1,7 +1,6 @@
 import UIKit
 
 class CurrentlyWeatherCell: UITableViewCell {
-
 	@IBOutlet weak var cityNameLabel: UILabel!
 	@IBOutlet weak var statusLabel: UILabel!
 	@IBOutlet weak var temperatureLabel: UILabel!
@@ -10,7 +9,6 @@ class CurrentlyWeatherCell: UITableViewCell {
 	@IBOutlet weak var dayOfWeekLabel: UILabel!
 	@IBOutlet weak var temperatureMinLabel: UILabel!
 	@IBOutlet weak var temperatureMaxLabel: UILabel!
-	
 }
 
 class HourlyWeatherCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -36,7 +34,8 @@ class HourlyWeatherCell: UITableViewCell, UICollectionViewDataSource, UICollecti
 	}
 
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return 9
+		guard let selectedCity = selectedCity else { return 0 }
+		return selectedCity.hourlyWeatherList.count
 	}
 	
 	func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -58,29 +57,14 @@ class HourlyWeatherCell: UITableViewCell, UICollectionViewDataSource, UICollecti
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HourlyCollectionViewCell", for: indexPath) as UICollectionViewCell
-		
-		switch indexPath.row {
-		case 0:
-			cell.backgroundColor = .pastelRed
-		case 1:
-			cell.backgroundColor = .pastelApricot
-		case 2:
-			cell.backgroundColor = .pastelYellow
-		case 3:
-			cell.backgroundColor = .pastelGreen
-		case 4:
-			cell.backgroundColor = .pastelSkyblue
-		case 5:
-			cell.backgroundColor = .pastelBlue
-		case 6:
-			cell.backgroundColor = .pastelLightpurple
-		case 7:
-			cell.backgroundColor = .pastelPurple
-		default:
-			cell.backgroundColor = .pastelDarkGray
-		}
-		
+		return configureHourlyCollectionViewCell(collectionView: collectionView, indexPath: indexPath)
+	}
+	
+	func configureHourlyCollectionViewCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
+		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HourlyCollectionViewCell", for: indexPath) as? HourlyCollectionViewCell else { return UICollectionViewCell() }
+		cell.timeLabel.text = selectedCity?.hourlyWeatherList[indexPath.item].time
+		cell.statusLabel.text = selectedCity?.hourlyWeatherList[indexPath.item].icon
+		cell.temperatureLabel.text = "\(selectedCity?.hourlyWeatherList[indexPath.item].temperature ?? 0)°"
 		return cell
 	}
 	
@@ -91,12 +75,9 @@ class HourlyWeatherCell: UITableViewCell, UICollectionViewDataSource, UICollecti
 }
 
 class HourlyCollectionViewCell: UICollectionViewCell {
-	
-	override func awakeFromNib() {
-		super.awakeFromNib()
-		
-	}
-	
+	@IBOutlet weak var timeLabel: UILabel!
+	@IBOutlet weak var statusLabel: UILabel!
+	@IBOutlet weak var temperatureLabel: UILabel!
 }
 
 class DailyWeatherCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
@@ -144,7 +125,6 @@ class DailyTableViewCell: UITableViewCell {
 }
 
 class OtherWeatherCell: UITableViewCell {
-	
 	@IBOutlet weak var suriseTimeLabel: UILabel!
 	@IBOutlet weak var sunsetTimeLabel: UILabel!
 	@IBOutlet weak var precipitationProbabilityLabel: UILabel!
@@ -155,5 +135,4 @@ class OtherWeatherCell: UITableViewCell {
 	@IBOutlet weak var pressureLabel: UILabel!
 	@IBOutlet weak var visibilityLabel: UILabel!
 	@IBOutlet weak var uvIndexLabel: UILabel!
-	
 }

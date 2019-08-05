@@ -53,7 +53,8 @@ class ViewModel: ObserverProtocol {
 	}
 	
 	func requestHourlyWeather(with city: City?) {
-		
+		guard let city = city else { return }
+		WeatherModule.instance.requestHourlyWeather(with: city)
 	}
 	
 }

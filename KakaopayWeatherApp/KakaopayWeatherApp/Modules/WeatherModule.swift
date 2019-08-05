@@ -11,7 +11,7 @@ class WeatherModule {
 	var dailyWeatherList: Observable<[Daily]> = Observable<[Daily]>(value: [])
 	var hourlyWeatherList: Observable<[Hourly]> = Observable<[Hourly]>(value: [])
 	var discoveredDailyWeatherList: [Daily] = []
-	var discoveredHourlyWeatherList: [Daily] = []
+	var discoveredHourlyWeatherList: [Hourly] = []
 	
 	func requestSimpleWeather(with city: City) {
 		getCoordinates(with: city) { coodinates in
@@ -120,7 +120,37 @@ class WeatherModule {
 					daily.temperatureMin = temperatureMin
 					self.discoveredDailyWeatherList.append(daily)
 				}
-				self.dailyWeatherList.value = self.discoveredDailyWeatherList				
+				self.dailyWeatherList.value = self.discoveredDailyWeatherList
+			}
+		}
+	}
+	
+	func requestHourlyWeather(with city: City) {
+		getCoordinates(with: city) { coodinates in
+			city.latitude = coodinates?.0
+			city.longitude = coodinates?.1
+			API.instance.requestHourlyWeather(with: city) { json in
+				self.discoveredDailyWeatherList.removeAll()
+				guard
+					let data = json as? [String: Any],
+					let timeZone = data["timezone"] as? String,
+					let hourly = data["hourly"] as? [String: Any],
+					let hourlyData = hourly["data"] as? [Any] else { return }
+				
+				hourlyData.forEach {
+					guard
+						let result = $0 as? [String: Any],
+						let time = result["time"] as? Double,
+						let icon = result["icon"] as? String,
+						let temperature = result["temperature"] as? Double else { return }
+					
+					let hourly = Hourly()
+					hourly.time = Time.instance.getOnlyHourStringTime(from: time, in: timeZone)
+					hourly.icon = icon
+					hourly.temperature = temperature
+					self.discoveredHourlyWeatherList.append(hourly)
+				}
+				self.hourlyWeatherList.value = self.discoveredHourlyWeatherList
 			}
 		}
 	}

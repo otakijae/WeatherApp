@@ -21,6 +21,7 @@ class DetailWeatherViewController: UIViewController, ObserverProtocol {
 		subscribe(viewModel)
 		
 		viewModel.requestSpecificWeather(with: selectedCity)
+		viewModel.requestHourlyWeather(with: selectedCity)
 		viewModel.requestDailyWeather(with: selectedCity)
 	}
 	
@@ -44,6 +45,10 @@ class DetailWeatherViewController: UIViewController, ObserverProtocol {
 		
 		viewModel.hourlyWeatherList.addObserver(self) { hourlyWeatherList in
 			self.selectedCity?.hourlyWeatherList = hourlyWeatherList
+			self.selectedCity?.hourlyWeatherList.forEach { print($0.time) }
+			DispatchQueue.main.async {
+				self.tableView.reloadData()
+			}
 		}
 		
 	}
@@ -108,7 +113,7 @@ extension DetailWeatherViewController: UITableViewDelegate, UITableViewDataSourc
 	
 	func configureHourlyWeatherCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: HourlyWeatherCell.className, for: indexPath) as? HourlyWeatherCell else { return UITableViewCell() }
-		cell.editingAccessoryType = .disclosureIndicator
+		cell.selectedCity = selectedCity
 		return cell
 	}
 	

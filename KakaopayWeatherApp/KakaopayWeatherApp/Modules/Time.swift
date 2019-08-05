@@ -78,6 +78,27 @@ struct Time {
 		return time
 	}
 	
+	func getOnlyHourStringTime(from unixDate: Double?, in timeZone: String? = nil) -> String? {
+		guard let unixDate = unixDate else { return nil }
+		
+		let unixStringDate = NSDate(timeIntervalSince1970: unixDate)
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+		let dateString = dateFormatter.string(from: unixStringDate as Date)
+		
+		let trimmedStringDate: String = String(dateString.prefix(19))
+		guard let date = dateFormatter.date(from: trimmedStringDate) else { return nil }
+		dateFormatter.amSymbol = "오전"
+		dateFormatter.pmSymbol = "오후"
+		dateFormatter.dateFormat = "a hh시"
+		if let timeZone = timeZone {
+			dateFormatter.timeZone = TimeZone(identifier: timeZone)!
+		}
+		let time: String = dateFormatter.string(from: date)
+		
+		return time
+	}
+	
 	enum WeekDay: String {
 		case sunday = "Sunday"
 		case monday = "Monday"
