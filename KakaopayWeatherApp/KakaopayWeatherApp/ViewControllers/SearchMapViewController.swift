@@ -1,7 +1,11 @@
 import UIKit
 import MapKit
 
-class SearchMapViewController: UIViewController, UISearchBarDelegate {
+class SearchMapViewController: UIViewController, ObserverProtocol, UISearchBarDelegate {
+	
+	var id = String(describing: self)
+	var viewModel: ViewModel?
+
 
 	var searchController: UISearchController!
 	var annotation: MKAnnotation!

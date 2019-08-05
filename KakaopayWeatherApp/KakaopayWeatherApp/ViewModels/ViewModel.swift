@@ -20,10 +20,6 @@ class ViewModel: ObserverProtocol {
 			self.city.value = city
 		}
 		
-		WeatherModule.instance.cityList.addObserver(self) { cityList in
-			self.cityList.value = cityList
-		}
-		
 		WeatherModule.instance.cityWeather.addObserver(self) { cityWeather in
 			self.cityWeather.value = cityWeather
 		}

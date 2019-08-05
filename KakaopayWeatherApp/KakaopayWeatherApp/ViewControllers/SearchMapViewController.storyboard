@@ -53,7 +53,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
-                                            <outlet property="cityNameLabel" destination="yhk-aF-6Y9" id="D2N-L8-LtU"/>
+                                            <outlet property="cityNameLabel" destination="yhk-aF-6Y9" id="iXV-Hs-Xdh"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

@@ -52,10 +52,6 @@ class MainListViewController: UIViewController, ObserverProtocol {
 			}
 		}
 		
-		viewModel.cityList.addObserver(self) { cityList in
-			
-		}
-		
 	}
 	
 	@objc func refreshAction() {

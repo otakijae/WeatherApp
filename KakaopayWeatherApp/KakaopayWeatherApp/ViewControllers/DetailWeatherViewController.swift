@@ -1,4 +1,5 @@
 import UIKit
+import SafariServices
 
 class DetailWeatherViewController: UIViewController, ObserverProtocol {
 	
@@ -29,7 +30,6 @@ class DetailWeatherViewController: UIViewController, ObserverProtocol {
 		
 		viewModel.cityWeather.addObserver(self) { cityWeather in
 			self.selectedCity = cityWeather
-			print(self.selectedCity?.printProperties())
 			DispatchQueue.main.async {
 				self.tableView.reloadData()
 			}
@@ -37,7 +37,6 @@ class DetailWeatherViewController: UIViewController, ObserverProtocol {
 		
 		viewModel.dailyWeatherList.addObserver(self) { dailyWeatherList in
 			self.selectedCity?.dailyWeatherList = dailyWeatherList
-			self.selectedCity?.dailyWeatherList.forEach { print($0.dayOfWeek) }
 			DispatchQueue.main.async {
 				self.tableView.reloadData()
 			}
@@ -45,12 +44,19 @@ class DetailWeatherViewController: UIViewController, ObserverProtocol {
 		
 		viewModel.hourlyWeatherList.addObserver(self) { hourlyWeatherList in
 			self.selectedCity?.hourlyWeatherList = hourlyWeatherList
-			self.selectedCity?.hourlyWeatherList.forEach { print($0.time) }
 			DispatchQueue.main.async {
 				self.tableView.reloadData()
 			}
 		}
 		
+	}
+	
+	@IBAction func linkToAPIWebPage(_ sender: Any) {
+		let url = URL(string: "https://darksky.net/poweredby/")!
+		
+		if #available(iOS 9.0, *) {
+			self.present(SFSafariViewController(url: url), animated: true)
+		}
 	}
 	
 }
@@ -73,9 +79,9 @@ extension DetailWeatherViewController: UITableViewDelegate, UITableViewDataSourc
 		case CellType.daily.rawValue:
 			return 240
 		case CellType.other.rawValue:
-			return 240
+			return 270
 		default:
-			return 200
+			return 240
 		}
 	}
 	

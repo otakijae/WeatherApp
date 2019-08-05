@@ -6,7 +6,6 @@ class WeatherModule {
 	static let instance = WeatherModule()
 	
 	var city: Observable<City> = Observable<City>(value: City())
-	var cityList: Observable<[City]> = Observable<[City]>(value: [])
 	var cityWeather: Observable<City> = Observable<City>(value: City())
 	var dailyWeatherList: Observable<[Daily]> = Observable<[Daily]>(value: [])
 	var hourlyWeatherList: Observable<[Hourly]> = Observable<[Hourly]>(value: [])
@@ -25,7 +24,7 @@ class WeatherModule {
 					let temperature = currently["temperature"] as? Double else { return }
 				
 				city.currentTime = Time.instance.getSimpleCurrentTime(in: timeZone)
-				city.currentTemperature = String(temperature)
+				city.currentTemperature = "\(Int(round(temperature)))"
 				self.city.value = city
 			}
 		}
@@ -110,14 +109,16 @@ class WeatherModule {
 						let result = $0 as? [String: Any],
 						let time = result["time"] as? Double,
 						let icon = result["icon"] as? String,
+						let summary = result["summary"] as? String,
 						let temperatureMax = result["temperatureMax"] as? Double,
 						let temperatureMin = result["temperatureMin"] as? Double else { return }
 					
 					let daily = Daily()
 					daily.dayOfWeek = Time.instance.getDayOfWeek(from: time, in: timeZone)
 					daily.icon = icon
-					daily.temperatureMax = temperatureMax
-					daily.temperatureMin = temperatureMin
+					daily.summary = summary
+					daily.temperatureMax = "\(round(temperatureMax))" + "°"
+					daily.temperatureMin = "\(round(temperatureMin))" + "°"
 					self.discoveredDailyWeatherList.append(daily)
 				}
 				self.dailyWeatherList.value = self.discoveredDailyWeatherList
@@ -142,11 +143,13 @@ class WeatherModule {
 						let result = $0 as? [String: Any],
 						let time = result["time"] as? Double,
 						let icon = result["icon"] as? String,
+						let summary = result["summary"] as? String,
 						let temperature = result["temperature"] as? Double else { return }
 					
 					let hourly = Hourly()
 					hourly.time = Time.instance.getOnlyHourStringTime(from: time, in: timeZone)
 					hourly.icon = icon
+					hourly.summary = summary
 					hourly.temperature = temperature
 					self.discoveredHourlyWeatherList.append(hourly)
 				}

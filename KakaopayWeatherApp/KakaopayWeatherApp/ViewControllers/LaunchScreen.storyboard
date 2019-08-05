@@ -24,11 +24,20 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="highlightedColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y1F-pv-5Mf">
+                                <rect key="frame" x="129" y="589" width="117" height="28"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="13"/>
+                                <state key="normal" title="Powered by Dark Sky">
+                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.99607843137254903" green="0.9137254901960784" blue="0.20392156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ul2-Dx-3uF" firstAttribute="centerY" secondItem="2sZ-sL-Qma" secondAttribute="centerY" id="H4d-Ez-Pyu"/>
+                            <constraint firstItem="Y1F-pv-5Mf" firstAttribute="centerX" secondItem="2sZ-sL-Qma" secondAttribute="centerX" id="VFx-06-vn7"/>
                             <constraint firstItem="ul2-Dx-3uF" firstAttribute="centerX" secondItem="2sZ-sL-Qma" secondAttribute="centerX" id="koL-Cm-HE0"/>
+                            <constraint firstItem="MJp-kE-Z28" firstAttribute="bottom" secondItem="Y1F-pv-5Mf" secondAttribute="bottom" constant="50" id="pMA-qL-JGW"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="MJp-kE-Z28"/>
                     </view>
