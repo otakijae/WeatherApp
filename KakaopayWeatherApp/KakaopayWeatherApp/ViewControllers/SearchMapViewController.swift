@@ -9,7 +9,6 @@ class SearchMapViewController: UIViewController, ObserverProtocol, UISearchBarDe
 	var searchController: UISearchController!
 	
 	@IBOutlet weak var tableView: UITableView!
-	@IBOutlet var mapView: MKMapView!
 	@IBOutlet weak var searchBar: UISearchBar!
 	
 	var cityList: [MKMapItem] = []
@@ -71,7 +70,7 @@ class SearchMapViewController: UIViewController, ObserverProtocol, UISearchBarDe
 extension SearchMapViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return view.frame.height / 10
+		return view.frame.height / 12
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -79,9 +78,12 @@ extension SearchMapViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		guard let selectedCity = cityList[indexPath.item].placemark.locality else { return }
 		var savedCityList = UserDefaults.standard.array(forKey: "CityList") as? [String] ?? []
-		savedCityList.append(selectedCity)
+		if let selectedCity = cityList[indexPath.item].placemark.locality {
+			savedCityList.append(selectedCity)
+		} else {
+			savedCityList.append(cityList[indexPath.item].placemark.name!)
+		}
 		UserDefaults.standard.set(savedCityList, forKey: "CityList")
 		UserDefaults.standard.synchronize()
 		
