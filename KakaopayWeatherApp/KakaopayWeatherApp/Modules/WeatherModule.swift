@@ -22,7 +22,7 @@ class WeatherModule {
 					let currently = data["currently"] as? [String: Any],
 					let temperature = currently["temperature"] as? Double else { return }
 				
-				city.currentTime = Time.instance.getCurrentTime(in: timeZone)
+				city.currentTime = TimeModule.instance.getCurrentTime(in: timeZone)
 				city.currentTemperature = "\(Int(round(temperature)))"
 				self.city.value = city
 			}
@@ -68,8 +68,8 @@ class WeatherModule {
 				
 				weather.temperatureMax = temperatureMax
 				weather.temperatureMin = temperatureMin
-				weather.sunriseTime = Time.instance.getStringTime(from: sunriseTime)
-				weather.sunsetTime = Time.instance.getStringTime(from: sunsetTime)
+				weather.sunriseTime = TimeModule.instance.getStringTime(from: sunriseTime)
+				weather.sunsetTime = TimeModule.instance.getStringTime(from: sunsetTime)
 				
 				weather.precipitationProbability = precipitationProbability
 				weather.humidity = humidity
@@ -81,8 +81,8 @@ class WeatherModule {
 				weather.uvIndex = uvIndex
 				
 				city.weather = weather
-				city.currentTime = Time.instance.getCurrentTime(in: timeZone)
-				city.dayOfWeek = Time.instance.getDayOfWeek(from: time, in: timeZone)
+				city.currentTime = TimeModule.instance.getCurrentTime(in: timeZone)
+				city.dayOfWeek = TimeModule.instance.getDayOfWeek(from: time, in: timeZone)
 				city.currentTemperature = String(temperature)
 				
 				self.cityWeather.value = city
@@ -112,7 +112,7 @@ class WeatherModule {
 						let temperatureMin = result["temperatureMin"] as? Double else { return }
 					
 					let daily = Daily()
-					daily.dayOfWeek = Time.instance.getDayOfWeek(from: time, in: timeZone)
+					daily.dayOfWeek = TimeModule.instance.getDayOfWeek(from: time, in: timeZone)
 					daily.icon = icon
 					daily.summary = summary
 					daily.temperatureMax = "\(round(temperatureMax))" + "°"
@@ -145,7 +145,7 @@ class WeatherModule {
 						let temperature = result["temperature"] as? Double else { return }
 					
 					let hourly = Hourly()
-					hourly.time = Time.instance.getStringTime(from: time, in: timeZone, dateFormat: "a hh시")
+					hourly.time = TimeModule.instance.getStringTime(from: time, in: timeZone, dateFormat: "a hh시")
 					hourly.icon = icon
 					hourly.summary = summary
 					hourly.temperature = temperature

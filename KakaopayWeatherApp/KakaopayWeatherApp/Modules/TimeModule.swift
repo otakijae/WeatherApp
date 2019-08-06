@@ -1,8 +1,8 @@
 import Foundation
 
-struct Time {
+class TimeModule {
 	
-	static let instance = Time()
+	static let instance = TimeModule()
 	
 	enum AMPM: String {
 		case am = "오전"
