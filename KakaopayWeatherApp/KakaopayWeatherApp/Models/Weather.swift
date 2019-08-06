@@ -1,4 +1,4 @@
-class Weather {
+class Weather: Codable {
 	var timeZone: String?
 	var icon: String?
 	var temperature: Double?
@@ -19,7 +19,7 @@ class Weather {
 	var uvIndex: Double?
 }
 
-class Daily {
+class Daily: Codable {
 	var dayOfWeek: String?
 	var icon: String?
 	var summary: String?
@@ -27,7 +27,7 @@ class Daily {
 	var temperatureMin: String?
 }
 
-class Hourly {
+class Hourly: Codable {
 	var time: String?
 	var icon: String?
 	var summary: String?

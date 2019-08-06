@@ -22,7 +22,7 @@ class WeatherModule {
 					let currently = data["currently"] as? [String: Any],
 					let temperature = currently["temperature"] as? Double else { return }
 				
-				city.currentTime = Time.instance.getSimpleCurrentTime(in: timeZone)
+				city.currentTime = Time.instance.getCurrentTime(in: timeZone)
 				city.currentTemperature = "\(Int(round(temperature)))"
 				self.city.value = city
 			}
@@ -68,8 +68,8 @@ class WeatherModule {
 				
 				weather.temperatureMax = temperatureMax
 				weather.temperatureMin = temperatureMin
-				weather.sunriseTime = Time.instance.getSimpleStringTime(from: sunriseTime)
-				weather.sunsetTime = Time.instance.getSimpleStringTime(from: sunsetTime)
+				weather.sunriseTime = Time.instance.getStringTime(from: sunriseTime)
+				weather.sunsetTime = Time.instance.getStringTime(from: sunsetTime)
 				
 				weather.precipitationProbability = precipitationProbability
 				weather.humidity = humidity
@@ -81,8 +81,7 @@ class WeatherModule {
 				weather.uvIndex = uvIndex
 				
 				city.weather = weather
-				city.specificTime = Time.instance.getCurrentTime(in: timeZone)
-				city.currentTime = Time.instance.getSimpleCurrentTime(in: timeZone)
+				city.currentTime = Time.instance.getCurrentTime(in: timeZone)
 				city.dayOfWeek = Time.instance.getDayOfWeek(from: time, in: timeZone)
 				city.currentTemperature = String(temperature)
 				
@@ -146,7 +145,7 @@ class WeatherModule {
 						let temperature = result["temperature"] as? Double else { return }
 					
 					let hourly = Hourly()
-					hourly.time = Time.instance.getOnlyHourStringTime(from: time, in: timeZone)
+					hourly.time = Time.instance.getStringTime(from: time, in: timeZone, dateFormat: "a hh시")
 					hourly.icon = icon
 					hourly.summary = summary
 					hourly.temperature = temperature

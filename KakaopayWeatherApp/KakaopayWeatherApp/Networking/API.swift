@@ -12,7 +12,7 @@ class API: HttpHelper {
 											"exclude": "minutely,daily,hourly,alerts,flags"]
 		get(url: url, parameters: parameters, completionHandler: { data, response, error in
 			guard error == nil else { return }
-			if	let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+			if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
 				guard let jsonToArray = try? JSONSerialization.jsonObject(with: data, options: []) else { return }
 				resultHandler(jsonToArray)
 			}
@@ -27,7 +27,7 @@ class API: HttpHelper {
 											"exclude": "minutely,hourly,alerts,flags"]
 		get(url: url, parameters: parameters, completionHandler: { data, response, error in
 			guard error == nil else { return }
-			if	let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+			if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
 				guard let jsonToArray = try? JSONSerialization.jsonObject(with: data, options: []) else { return }
 				resultHandler(jsonToArray)
 			}
@@ -42,7 +42,7 @@ class API: HttpHelper {
 											"exclude": "currently,hourly,minutely,alerts,flags"]
 		get(url: url, parameters: parameters, completionHandler: { data, response, error in
 			guard error == nil else { return }
-			if	let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+			if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
 				guard let jsonToArray = try? JSONSerialization.jsonObject(with: data, options: []) else { return }
 				resultHandler(jsonToArray)
 			}
@@ -57,7 +57,7 @@ class API: HttpHelper {
 											"exclude": "currently,daily,minutely,alerts,flags"]
 		get(url: url, parameters: parameters, completionHandler: { data, response, error in
 			guard error == nil else { return }
-			if	let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+			if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
 				guard let jsonToArray = try? JSONSerialization.jsonObject(with: data, options: []) else { return }
 				resultHandler(jsonToArray)
 			}

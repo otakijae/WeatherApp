@@ -7,8 +7,7 @@ extension UIViewController {
 		return UIStoryboard(name: self.className, bundle: nil).instantiateInitialViewController()!
 	}
 	
-	func alert(title: String = "Kakaopay",
-						 message: String, okTitle: String = "확인", okAction: (() -> Void)? = nil) {
+	func alert(title: String = "Kakaopay", message: String, okTitle: String = "확인", okAction: (() -> Void)? = nil) {
 		DispatchQueue.main.async {
 			let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 			let okAction = UIAlertAction(title: okTitle, style: .cancel) { _ in
@@ -16,39 +15,6 @@ extension UIViewController {
 				action()
 			}
 			
-			alert.addAction(okAction)
-			alert.view.tintColor = UIColor.darkGray
-			self.present(alert, animated: true, completion: { alert.view.tintColor = UIColor.darkGray })
-		}
-	}
-	
-	func alert(title: String = "Kakaopay", message: String,
-						 okTitle: String,
-						 cancelTitle: String = "취소",
-						 okAction: @escaping () -> Void) {
-		DispatchQueue.main.async {
-			let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-			let okAction = UIAlertAction(title: okTitle, style: UIAlertAction.Style.default) { _ in okAction() }
-			let cancelAction = UIAlertAction(title: cancelTitle, style: UIAlertAction.Style.cancel) { _ in  }
-			
-			alert.addAction(cancelAction)
-			alert.addAction(okAction)
-			alert.view.tintColor = UIColor.darkGray
-			self.present(alert, animated: true, completion: { alert.view.tintColor = UIColor.darkGray })
-		}
-	}
-	
-	func alert(message: String,
-						 okTitle: String,
-						 cancelTitle: String = "취소",
-						 okAction: @escaping () -> Void,
-						 cancelAction: @escaping () -> Void) {
-		DispatchQueue.main.async {
-			let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
-			let okAction = UIAlertAction(title: okTitle, style: UIAlertAction.Style.default) { _ in okAction() }
-			let cancelAction = UIAlertAction(title: cancelTitle, style: UIAlertAction.Style.cancel) { _ in cancelAction() }
-			
-			alert.addAction(cancelAction)
 			alert.addAction(okAction)
 			alert.view.tintColor = UIColor.darkGray
 			self.present(alert, animated: true, completion: { alert.view.tintColor = UIColor.darkGray })

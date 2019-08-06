@@ -3,7 +3,7 @@ import Foundation
 class HttpHelper {
 	
 	static let baseURL = "https://api.darksky.net/forecast"
-	static var accessToken = "d5a050a57a21064809f5a3946ab02436"
+	static let accessToken = "d5a050a57a21064809f5a3946ab02436"
 	let session: URLSession = URLSession.shared
 
 	enum HTTPMethod: String {
