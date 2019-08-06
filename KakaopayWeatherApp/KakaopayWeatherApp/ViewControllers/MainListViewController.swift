@@ -4,19 +4,6 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	
 	var id = String(describing: self)
 	var viewModel: ViewModel?
-	var savedCityList: [City] {
-		get {
-			guard
-				let data = UserDefaults.standard.object(forKey: Constants.UserDefaultsKey.cityList.rawValue) as? Data,
-				let list = try? JSONDecoder().decode([City].self, from: data) else { return [] }
-			return list
-		}
-		set {
-			guard let encoded = try? JSONEncoder().encode(newValue) else { return }
-			UserDefaults.standard.set(encoded, forKey: Constants.UserDefaultsKey.cityList.rawValue)
-			UserDefaults.standard.synchronize()
-		}
-	}
 	var cityList: [City] = []
 
 	@IBOutlet weak var descriptionView: UIView!
@@ -83,7 +70,7 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	
 	@objc func refreshAction() {
 		guard let viewModel = viewModel else { return }
-		viewModel.configureCityList(with: savedCityList)
+		viewModel.configureCityList()
 		DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
 			self.refreshControl.endRefreshing()
 		}
@@ -113,16 +100,16 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	
 	func presentSearchLocationViewController() {
 		guard
-			let searchLocationViewController = SearchLocationViewController.instance as? SearchLocationViewController,
-			let viewModel = viewModel else { return }
+			let viewModel = viewModel,
+			let searchLocationViewController = SearchLocationViewController.instance as? SearchLocationViewController else { return }
 		searchLocationViewController.viewModel = viewModel
 		present(searchLocationViewController, animated: true)
 	}
 	
 	func showDetailWeatherViewController(with city: City) {
 		guard
-			let detailWeatherViewController = DetailWeatherViewController.instance as? DetailWeatherViewController,
-			let viewModel = viewModel else { return }
+			let viewModel = viewModel,
+			let detailWeatherViewController = DetailWeatherViewController.instance as? DetailWeatherViewController else { return }
 		detailWeatherViewController.selectedCity = city
 		detailWeatherViewController.viewModel = viewModel
 		show(detailWeatherViewController, sender: self)
@@ -147,7 +134,8 @@ extension MainListViewController: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 		if editingStyle == .delete {
 			cityList.remove(at: indexPath.item)
-			savedCityList.remove(at: indexPath.item)
+			guard let viewModel = viewModel else { return }
+			viewModel.savedCityList.remove(at: indexPath.item)
 			tableView.deleteRows(at: [indexPath], with: .automatic)
 			if cityList.isEmpty {
 				editButtonAction()

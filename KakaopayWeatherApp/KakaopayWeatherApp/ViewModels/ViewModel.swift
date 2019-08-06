@@ -14,6 +14,20 @@ class ViewModel: ObserverProtocol {
 	var dailyWeatherList = Observable<[Daily]>(value: [])
 	var hourlyWeatherList = Observable<[Hourly]>(value: [])
 	
+	var savedCityList: [City] {
+		get {
+			guard
+				let data = UserDefaults.standard.object(forKey: Constants.UserDefaultsKey.cityList.rawValue) as? Data,
+				let list = try? JSONDecoder().decode([City].self, from: data) else { return [] }
+			return list
+		}
+		set {
+			guard let encoded = try? JSONEncoder().encode(newValue) else { return }
+			UserDefaults.standard.set(encoded, forKey: Constants.UserDefaultsKey.cityList.rawValue)
+			UserDefaults.standard.synchronize()
+		}
+	}
+	
 	init() {
 		subscribe()
 	}
@@ -38,6 +52,20 @@ class ViewModel: ObserverProtocol {
 		
 	}
 	
+	func configureCityList() {
+		cityList.value = savedCityList
+		checkEmptyCityList(with: cityList.value)
+	}
+	
+	func checkEmptyCityList(with cityList: [City]) {
+		if cityList.isEmpty {
+			cityListEmpty.value = Void()
+		} else {
+			cityListExists.value = Void()
+			requestSimpleWeatherList(with: cityList)
+		}
+	}
+	
 	func requestSimpleWeatherList(with cityList: [City]) {
 		cityList.forEach {
 			WeatherModule.instance.requestSimpleWeather(with: $0)
@@ -51,17 +79,19 @@ class ViewModel: ObserverProtocol {
 		WeatherModule.instance.requestHourlyWeather(with: city)
 	}
 	
-	func configureCityList(with savedCityList: [City]) {
-		cityList.value = savedCityList
-		checkEmptyCityList(with: cityList.value)
+	func appendNewLocation(_ city: City) {
+		var newCityList = savedCityList
+		newCityList.append(city)
+		savedCityList = newCityList
 	}
 	
-	func checkEmptyCityList(with cityList: [City]) {
-		if cityList.isEmpty {
-			cityListEmpty.value = Void()
-		} else {
-			cityListExists.value = Void()
-			requestSimpleWeatherList(with: cityList)
+	func saveSelectedCity(with name: String) {
+		let city = City()
+		city.name = name
+		LocationModule.instance.getCoordinates(with: city) { coordinates in
+			city.latitude = coordinates?.0
+			city.longitude = coordinates?.1
+			self.appendNewLocation(city)
 		}
 	}
 	

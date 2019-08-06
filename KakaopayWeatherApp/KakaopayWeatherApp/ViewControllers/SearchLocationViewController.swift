@@ -6,20 +6,6 @@ class SearchLocationViewController: UIViewController, ObserverProtocol {
 	var id = String(describing: self)
 	var viewModel: ViewModel?
 	var cityList: [MKMapItem] = []
-	
-	var savedCityList: [City] {
-		get {
-			guard
-				let data = UserDefaults.standard.object(forKey: Constants.UserDefaultsKey.cityList.rawValue) as? Data,
-				let list = try? JSONDecoder().decode([City].self, from: data) else { return [] }
-			return list
-		}
-		set {
-			guard let encoded = try? JSONEncoder().encode(newValue) else { return }
-			UserDefaults.standard.set(encoded, forKey: Constants.UserDefaultsKey.cityList.rawValue)
-			UserDefaults.standard.synchronize()
-		}
-	}
 
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var searchBar: UISearchBar!
@@ -64,27 +50,12 @@ extension SearchLocationViewController: UITableViewDelegate, UITableViewDataSour
 	}
 	
 	func saveSelectedCity(indexPath: IndexPath) {
+		guard let viewModel = viewModel else { return }
 		if let selectedCityName = cityList[indexPath.item].placemark.locality {
-			let city = City()
-			city.name = selectedCityName
-			LocationModule.instance.getCoordinates(with: city) { coordinates in
-				city.latitude = coordinates?.0
-				city.longitude = coordinates?.1
-				var newCityList = self.savedCityList
-				newCityList.append(city)
-				self.savedCityList = newCityList
-			}
+			viewModel.saveSelectedCity(with: selectedCityName)
 		} else {
 			guard let cityName = cityList[indexPath.item].placemark.name else { return }
-			let city = City()
-			city.name = cityName
-			LocationModule.instance.getCoordinates(with: city) { coordinates in
-				city.latitude = coordinates?.0
-				city.longitude = coordinates?.1
-				var newCityList = self.savedCityList
-				newCityList.append(city)
-				self.savedCityList = newCityList
-			}
+			viewModel.saveSelectedCity(with: cityName)
 		}
 	}
 	
