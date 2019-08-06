@@ -4,12 +4,16 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	
 	var id = String(describing: self)
 	var viewModel: ViewModel?
-	var savedCityList: [String] {
+	var savedCityList: [City] {
 		get {
-			return UserDefaults.standard.array(forKey: Constants.UserDefaultsKey.cityList.rawValue) as? [String] ?? []
+			guard
+				let data = UserDefaults.standard.object(forKey: "cityList") as? Data,
+				let list = try? JSONDecoder().decode([City].self, from: data) else { return [] }
+			return list
 		}
 		set {
-			UserDefaults.standard.set(newValue, forKey: Constants.UserDefaultsKey.cityList.rawValue)
+			guard let encoded = try? JSONEncoder().encode(newValue) else { return }
+			UserDefaults.standard.set(encoded, forKey: "cityList")
 			UserDefaults.standard.synchronize()
 		}
 	}
@@ -39,6 +43,10 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	override func viewWillAppear(_ animated: Bool) {
 		refreshAction()
 	}
+	
+//	override func viewDidAppear(_ animated: Bool) {
+//		refreshAction()
+//	}
 	
 	func subscribe(_ viewModel: ViewModel) {
 		

@@ -6,6 +6,20 @@ class SearchLocationViewController: UIViewController, ObserverProtocol {
 	var id = String(describing: self)
 	var viewModel: ViewModel?
 	var cityList: [MKMapItem] = []
+	
+	var savedCityList: [City] {
+		get {
+			guard
+				let data = UserDefaults.standard.object(forKey: "cityList") as? Data,
+				let list = try? JSONDecoder().decode([City].self, from: data) else { return [] }
+			return list
+		}
+		set {
+			guard let encoded = try? JSONEncoder().encode(newValue) else { return }
+			UserDefaults.standard.set(encoded, forKey: "cityList")
+			UserDefaults.standard.synchronize()
+		}
+	}
 
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var searchBar: UISearchBar!
@@ -42,19 +56,36 @@ extension SearchLocationViewController: UITableViewDelegate, UITableViewDataSour
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		saveSelectedCity(indexPath: indexPath)
 		tableView.deselectRow(at: indexPath, animated: true)
-		dismiss(self)
+		startIndicator()
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+			self.stopIndicator()
+			self.dismiss(self)
+		}
 	}
 	
 	func saveSelectedCity(indexPath: IndexPath) {
-		var savedCityList = UserDefaults.standard.array(forKey: Constants.UserDefaultsKey.cityList.rawValue) as? [String] ?? []
-		if let selectedCity = cityList[indexPath.item].placemark.locality {
-			savedCityList.append(selectedCity)
+		if let selectedCityName = cityList[indexPath.item].placemark.locality {
+			let city = City()
+			city.name = selectedCityName
+			LocationModule.instance.getCoordinates(with: city) { coordinates in
+				city.latitude = coordinates?.0
+				city.longitude = coordinates?.1
+				var newCityList = self.savedCityList
+				newCityList.append(city)
+				self.savedCityList = newCityList
+			}
 		} else {
 			guard let cityName = cityList[indexPath.item].placemark.name else { return }
-			savedCityList.append(cityName)
+			let city = City()
+			city.name = cityName
+			LocationModule.instance.getCoordinates(with: city) { coordinates in
+				city.latitude = coordinates?.0
+				city.longitude = coordinates?.1
+				var newCityList = self.savedCityList
+				newCityList.append(city)
+				self.savedCityList = newCityList
+			}
 		}
-		UserDefaults.standard.set(savedCityList, forKey: Constants.UserDefaultsKey.cityList.rawValue)
-		UserDefaults.standard.synchronize()
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

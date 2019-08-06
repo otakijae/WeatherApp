@@ -51,14 +51,8 @@ class ViewModel: ObserverProtocol {
 		WeatherModule.instance.requestHourlyWeather(with: city)
 	}
 	
-	func configureCityList(with savedCityList: [String]) {
-		var list: [City] = []
-		savedCityList.forEach {
-			let city = City()
-			city.name = $0
-			list.append(city)
-		}
-		cityList.value = list
+	func configureCityList(with savedCityList: [City]) {
+		cityList.value = savedCityList
 		checkEmptyCityList(with: cityList.value)
 	}
 	
