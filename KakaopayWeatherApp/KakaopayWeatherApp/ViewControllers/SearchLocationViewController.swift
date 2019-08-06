@@ -1,7 +1,7 @@
 import UIKit
 import MapKit
 
-class SearchMapViewController: UIViewController, ObserverProtocol {
+class SearchLocationViewController: UIViewController, ObserverProtocol {
 	
 	var id = String(describing: self)
 	var viewModel: ViewModel?
@@ -29,7 +29,7 @@ class SearchMapViewController: UIViewController, ObserverProtocol {
 	
 }
 
-extension SearchMapViewController: UITableViewDelegate, UITableViewDataSource {
+extension SearchLocationViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return view.frame.height / 12
@@ -70,7 +70,7 @@ extension SearchMapViewController: UITableViewDelegate, UITableViewDataSource {
 	
 }
 
-extension SearchMapViewController: UISearchBarDelegate {
+extension SearchLocationViewController: UISearchBarDelegate {
 	
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		LocationModule.instance.requestLocations(query: searchBar.text) { result in
