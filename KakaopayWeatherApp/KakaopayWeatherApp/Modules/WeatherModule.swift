@@ -5,12 +5,12 @@ class WeatherModule {
 	
 	static let instance = WeatherModule()
 	
-	var city: Observable<City> = Observable<City>(value: City())
-	var cityWeather: Observable<City> = Observable<City>(value: City())
-	var dailyWeatherList: Observable<[Daily]> = Observable<[Daily]>(value: [])
-	var hourlyWeatherList: Observable<[Hourly]> = Observable<[Hourly]>(value: [])
-	var discoveredDailyWeatherList: [Daily] = []
-	var discoveredHourlyWeatherList: [Hourly] = []
+	var city = Observable<City>(value: City())
+	var cityWeather = Observable<City>(value: City())
+	var dailyWeatherList = Observable<[Daily]>(value: [])
+	var hourlyWeatherList = Observable<[Hourly]>(value: [])
+	var discoveredDailyWeatherList = [Daily]()
+	var discoveredHourlyWeatherList = [Hourly]()
 	
 	func requestSimpleWeather(with city: City) {
 		getCoordinates(with: city) { coodinates in

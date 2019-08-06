@@ -5,7 +5,6 @@ class DetailWeatherViewController: UIViewController, ObserverProtocol {
 	
 	var id = String(describing: self)
 	var viewModel: ViewModel?
-	var vcList: [String] = []
 	var selectedCity: City?
 	var refreshControl = UIRefreshControl()
 
@@ -65,7 +64,7 @@ class DetailWeatherViewController: UIViewController, ObserverProtocol {
 		let url = URL(string: "https://darksky.net/poweredby/")!
 		
 		if #available(iOS 9.0, *) {
-			self.present(SFSafariViewController(url: url), animated: true)
+			present(SFSafariViewController(url: url), animated: true)
 		}
 	}
 	

@@ -4,15 +4,15 @@ import SystemConfiguration
 class ViewModel: ObserverProtocol {
 	
 	var id = String(describing: ViewModel.self)
-	var networkDisconnected: Observable<Void> = Observable(value: Void())
-	var city: Observable<City> = Observable<City>(value: City())
-	var cityList: Observable<[City]> = Observable<[City]>(value: [])
-	var cityListEmpty: Observable<Void> = Observable(value: Void())
-	var cityListExists: Observable<Void> = Observable(value: Void())
+	var networkDisconnected = Observable(value: Void())
+	var city = Observable<City>(value: City())
+	var cityList = Observable<[City]>(value: [])
+	var cityListEmpty = Observable(value: Void())
+	var cityListExists = Observable(value: Void())
 	
-	var cityWeather: Observable<City> = Observable<City>(value: City())
-	var dailyWeatherList: Observable<[Daily]> = Observable<[Daily]>(value: [])
-	var hourlyWeatherList: Observable<[Hourly]> = Observable<[Hourly]>(value: [])
+	var cityWeather = Observable<City>(value: City())
+	var dailyWeatherList = Observable<[Daily]>(value: [])
+	var hourlyWeatherList = Observable<[Hourly]>(value: [])
 	
 	init() {
 		subscribe()

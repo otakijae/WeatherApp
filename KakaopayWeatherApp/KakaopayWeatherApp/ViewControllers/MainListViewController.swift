@@ -13,7 +13,7 @@ class MainListViewController: UIViewController, ObserverProtocol {
 			UserDefaults.standard.synchronize()
 		}
 	}
-	var cityList: [City] = []
+	var cityList = [City]()
 
 	@IBOutlet weak var descriptionView: UIView!
 	var refreshControl = UIRefreshControl()
@@ -102,11 +102,11 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	
 	override func setEditing(_ editing: Bool, animated: Bool) {
 		super.setEditing(editing, animated: animated)
-		self.tableView.setEditing(editing, animated: animated)
+		tableView.setEditing(editing, animated: animated)
 	}
 	
 	@IBAction func addCityButtonTapped(_ sender: Any) {
-		self.present(SearchMapViewController.instance, animated: true)
+		present(SearchMapViewController.instance, animated: true)
 	}
 	
 	func showDetailWeatherViewController(with city: City) {
@@ -115,7 +115,7 @@ class MainListViewController: UIViewController, ObserverProtocol {
 			let viewModel = viewModel else { return }
 		detailWeatherViewController.selectedCity = city
 		detailWeatherViewController.viewModel = viewModel
-		self.show(detailWeatherViewController, sender: self)
+		show(detailWeatherViewController, sender: self)
 	}
 }
 
