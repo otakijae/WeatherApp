@@ -21,4 +21,5 @@ class CityCell: UITableViewCell {
 
 class SearchedCityCell: UITableViewCell {
 	@IBOutlet weak var cityNameLabel: UILabel!
+	@IBOutlet weak var addressLabel: UILabel!
 }

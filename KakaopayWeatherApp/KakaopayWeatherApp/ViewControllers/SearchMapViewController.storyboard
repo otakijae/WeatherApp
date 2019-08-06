@@ -28,21 +28,27 @@
                                 <rect key="frame" x="0.0" y="120" width="375" height="547"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchedCityCell" id="nF9-uO-r2I" customClass="SearchedCityCell" customModule="KakaopayWeatherApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchedCityCell" rowHeight="82" id="nF9-uO-r2I" customClass="SearchedCityCell" customModule="KakaopayWeatherApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="82"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nF9-uO-r2I" id="SiY-bx-H5p">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="82"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="도시" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yhk-aF-6Y9">
-                                                    <rect key="frame" x="30" y="10" width="35" height="24"/>
-                                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="20"/>
+                                                    <rect key="frame" x="20" y="25" width="335" height="18"/>
+                                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="15"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="52f-BQ-kz1">
+                                                    <rect key="frame" x="20" y="48" width="335" height="12"/>
+                                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="10"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zh4-vV-LgW">
-                                                    <rect key="frame" x="0.0" y="43" width="375" height="1"/>
+                                                    <rect key="frame" x="0.0" y="81" width="375" height="1"/>
                                                     <color key="backgroundColor" red="0.91764705879999997" green="0.93725490199999995" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="ieG-1C-faf"/>
@@ -50,15 +56,20 @@
                                                 </view>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="52f-BQ-kz1" firstAttribute="leading" secondItem="SiY-bx-H5p" secondAttribute="leading" constant="20" id="ELc-Db-n2S"/>
                                                 <constraint firstAttribute="trailing" secondItem="Zh4-vV-LgW" secondAttribute="trailing" id="EXW-jZ-ixo"/>
-                                                <constraint firstItem="yhk-aF-6Y9" firstAttribute="centerY" secondItem="SiY-bx-H5p" secondAttribute="centerY" id="F3E-pt-qcW"/>
-                                                <constraint firstItem="yhk-aF-6Y9" firstAttribute="leading" secondItem="SiY-bx-H5p" secondAttribute="leading" constant="30" id="PDe-GF-zvY"/>
+                                                <constraint firstItem="yhk-aF-6Y9" firstAttribute="centerY" secondItem="SiY-bx-H5p" secondAttribute="centerY" multiplier="1:1.2" id="F3E-pt-qcW"/>
+                                                <constraint firstItem="yhk-aF-6Y9" firstAttribute="leading" secondItem="SiY-bx-H5p" secondAttribute="leading" constant="20" id="PDe-GF-zvY"/>
                                                 <constraint firstAttribute="bottom" secondItem="Zh4-vV-LgW" secondAttribute="bottom" id="Q4S-ug-FNK"/>
+                                                <constraint firstAttribute="trailing" secondItem="yhk-aF-6Y9" secondAttribute="trailing" constant="20" id="UuD-Ya-b54"/>
                                                 <constraint firstItem="Zh4-vV-LgW" firstAttribute="leading" secondItem="SiY-bx-H5p" secondAttribute="leading" id="bLi-Aa-PDl"/>
+                                                <constraint firstItem="52f-BQ-kz1" firstAttribute="top" secondItem="yhk-aF-6Y9" secondAttribute="bottom" constant="5" id="ba2-9F-aVy"/>
                                                 <constraint firstItem="Zh4-vV-LgW" firstAttribute="centerX" secondItem="SiY-bx-H5p" secondAttribute="centerX" id="eNQ-S0-Dyb"/>
+                                                <constraint firstAttribute="trailing" secondItem="52f-BQ-kz1" secondAttribute="trailing" constant="20" id="oJO-6A-BQu"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="addressLabel" destination="52f-BQ-kz1" id="NhH-Gf-mxx"/>
                                             <outlet property="cityNameLabel" destination="yhk-aF-6Y9" id="iXV-Hs-Xdh"/>
                                         </connections>
                                     </tableViewCell>
