@@ -8,8 +8,8 @@ class WeatherModule {
 	var cityWeather = Observable<City>(value: City())
 	var dailyWeatherList = Observable<[Daily]>(value: [])
 	var hourlyWeatherList = Observable<[Hourly]>(value: [])
-	var discoveredDailyWeatherList = [Daily]()
-	var discoveredHourlyWeatherList = [Hourly]()
+	var discoveredDailyWeatherList: [Daily] = []
+	var discoveredHourlyWeatherList: [Hourly] = []
 	
 	func requestSimpleWeather(with city: City) {
 		LocationModule.instance.getCoordinates(with: city) { coodinates in
@@ -153,16 +153,6 @@ class WeatherModule {
 					self.discoveredHourlyWeatherList.append(hourly)
 				}
 				self.hourlyWeatherList.value = self.discoveredHourlyWeatherList
-			}
-		}
-	}
-	
-	func requestFullWeather(with city: City) {
-		LocationModule.instance.getCoordinates(with: city) { coodinates in
-			city.latitude = coodinates?.0
-			city.longitude = coodinates?.1
-			API.instance.requestFullWeather(with: city) { json in
-				print(json)
 			}
 		}
 	}

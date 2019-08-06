@@ -5,7 +5,7 @@ class SearchMapViewController: UIViewController, ObserverProtocol {
 	
 	var id = String(describing: self)
 	var viewModel: ViewModel?
-	var cityList = [MKMapItem]()
+	var cityList: [MKMapItem] = []
 
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var searchBar: UISearchBar!

@@ -6,7 +6,7 @@ class API: HttpHelper {
 	
 	func requestSimpleWeather(with city: City, resultHandler: @escaping (Any) -> Void) {
 		guard let latitude = city.latitude, let longitude = city.longitude else { return }
-		let url = URL(string: "\(URLs.baseURL)/\(HttpHelper.accessToken)/\(latitude),\(longitude)")!
+		let url = URL(string: "\(HttpHelper.baseURL)/\(HttpHelper.accessToken)/\(latitude),\(longitude)")!
 		let parameters = ["units": "si",
 											"lang": "ko",
 											"exclude": "minutely,daily,hourly,alerts,flags"]
@@ -21,7 +21,7 @@ class API: HttpHelper {
 	
 	func requestSpecificWeather(with city: City, resultHandler: @escaping (Any) -> Void) {
 		guard let latitude = city.latitude, let longitude = city.longitude else { return }
-		let url = URL(string: "\(URLs.baseURL)/\(HttpHelper.accessToken)/\(latitude),\(longitude)")!
+		let url = URL(string: "\(HttpHelper.baseURL)/\(HttpHelper.accessToken)/\(latitude),\(longitude)")!
 		let parameters = ["units": "si",
 											"lang": "ko",
 											"exclude": "minutely,hourly,alerts,flags"]
@@ -36,7 +36,7 @@ class API: HttpHelper {
 	
 	func requestDailyWeather(with city: City, resultHandler: @escaping (Any) -> Void) {
 		guard let latitude = city.latitude, let longitude = city.longitude else { return }
-		let url = URL(string: "\(URLs.baseURL)/\(HttpHelper.accessToken)/\(latitude),\(longitude)")!
+		let url = URL(string: "\(HttpHelper.baseURL)/\(HttpHelper.accessToken)/\(latitude),\(longitude)")!
 		let parameters = ["units": "si",
 											"lang": "ko",
 											"exclude": "currently,hourly,minutely,alerts,flags"]
@@ -51,23 +51,10 @@ class API: HttpHelper {
 	
 	func requestHourlyWeather(with city: City, resultHandler: @escaping (Any) -> Void) {
 		guard let latitude = city.latitude, let longitude = city.longitude else { return }
-		let url = URL(string: "\(URLs.baseURL)/\(HttpHelper.accessToken)/\(latitude),\(longitude)")!
+		let url = URL(string: "\(HttpHelper.baseURL)/\(HttpHelper.accessToken)/\(latitude),\(longitude)")!
 		let parameters = ["units": "si",
 											"lang": "ko",
 											"exclude": "currently,daily,minutely,alerts,flags"]
-		get(url: url, parameters: parameters, completionHandler: { data, response, error in
-			guard error == nil else { return }
-			if	let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
-				guard let jsonToArray = try? JSONSerialization.jsonObject(with: data, options: []) else { return }
-				resultHandler(jsonToArray)
-			}
-		})
-	}
-	
-	func requestFullWeather(with city: City, resultHandler: @escaping (Any) -> Void) {
-		let url = URL(string: "\(URLs.baseURL)/\(HttpHelper.accessToken)/\(city.latitude!),\(city.longitude!)")!
-		let parameters = ["units": "si",
-											"lang": "ko"]
 		get(url: url, parameters: parameters, completionHandler: { data, response, error in
 			guard error == nil else { return }
 			if	let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {

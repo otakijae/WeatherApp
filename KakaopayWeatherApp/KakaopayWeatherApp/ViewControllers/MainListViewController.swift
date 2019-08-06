@@ -13,7 +13,7 @@ class MainListViewController: UIViewController, ObserverProtocol {
 			UserDefaults.standard.synchronize()
 		}
 	}
-	var cityList = [City]()
+	var cityList: [City] = []
 
 	@IBOutlet weak var descriptionView: UIView!
 	var refreshControl = UIRefreshControl()
@@ -94,9 +94,7 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	
 	@objc func editButtonAction() {
 		setEditing(!tableView.isEditing, animated: true)
-		if !tableView.isEditing {
-			refreshAction()
-		}
+		if !tableView.isEditing { refreshAction() }
 		rightEditButton.title = tableView.isEditing ? "완료" : "편집"
 	}
 	
@@ -139,7 +137,10 @@ extension MainListViewController: UITableViewDelegate, UITableViewDataSource {
 			cityList.remove(at: indexPath.item)
 			savedCityList.remove(at: indexPath.item)
 			tableView.deleteRows(at: [indexPath], with: .automatic)
-			refreshAction()
+			if cityList.isEmpty {
+				editButtonAction()
+				refreshAction()
+			}
 		}
 	}
 	

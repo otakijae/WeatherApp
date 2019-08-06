@@ -1,5 +1,3 @@
-import Foundation
-
 class City {
 	var name: String?
 	var latitude: Double?

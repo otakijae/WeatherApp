@@ -2,28 +2,16 @@ import Foundation
 
 class HttpHelper {
 	
-	static var accessToken: String {
-		get {
-			if let accessToken = UserDefaults.standard.string(forKey: "AccessToken") {
-				return "\(accessToken)"
-			} else {
-				return "d5a050a57a21064809f5a3946ab02436"
-			}
-		}
-		set {
-			UserDefaults.standard.setValue(accessToken, forKey: "AccessToken")
-			UserDefaults.standard.synchronize()
-		}
-	}
-	
+	static let baseURL = "https://api.darksky.net/forecast"
+	static var accessToken = "d5a050a57a21064809f5a3946ab02436"
+	let session: URLSession = URLSession.shared
+
 	enum HTTPMethod: String {
 		case post = "POST"
 		case get = "GET"
 		case put = "PUT"
 		case delete = "DELETE"
 	}
-	
-	let session: URLSession = URLSession.shared
 	
 	func get(url: URL, parameters: [String: Any]? = nil, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
 		var request: URLRequest = URLRequest(url: url)

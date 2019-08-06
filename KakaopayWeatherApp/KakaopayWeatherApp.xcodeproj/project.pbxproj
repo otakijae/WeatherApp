@@ -14,7 +14,6 @@
 		13206CC622F2937A00F6C94F /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13206CC522F2937A00F6C94F /* UIColor+Extensions.swift */; };
 		13206CCA22F29E4500F6C94F /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13206CC922F29E4500F6C94F /* ViewModel.swift */; };
 		13206CCC22F2AED100F6C94F /* HTTPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13206CCB22F2AED100F6C94F /* HTTPHelper.swift */; };
-		13206CCE22F2AFCD00F6C94F /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13206CCD22F2AFCD00F6C94F /* URLs.swift */; };
 		13206CDE22F2CC6C00F6C94F /* SearchMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13206CDD22F2CC6C00F6C94F /* SearchMapViewController.swift */; };
 		13206CE022F2CC8000F6C94F /* SearchMapViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13206CDF22F2CC8000F6C94F /* SearchMapViewController.storyboard */; };
 		13731D5A22F958BE00DFCA53 /* LocationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13731D5922F958BE00DFCA53 /* LocationModule.swift */; };
@@ -43,7 +42,6 @@
 		13206CC522F2937A00F6C94F /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		13206CC922F29E4500F6C94F /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		13206CCB22F2AED100F6C94F /* HTTPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHelper.swift; sourceTree = "<group>"; };
-		13206CCD22F2AFCD00F6C94F /* URLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLs.swift; sourceTree = "<group>"; };
 		13206CDD22F2CC6C00F6C94F /* SearchMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMapViewController.swift; sourceTree = "<group>"; };
 		13206CDF22F2CC8000F6C94F /* SearchMapViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchMapViewController.storyboard; sourceTree = "<group>"; };
 		13731D5922F958BE00DFCA53 /* LocationModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModule.swift; sourceTree = "<group>"; };
@@ -169,7 +167,6 @@
 		13206CDC22F2CBF000F6C94F /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				13206CCD22F2AFCD00F6C94F /* URLs.swift */,
 				13206CCB22F2AED100F6C94F /* HTTPHelper.swift */,
 				13E48E4222F72064000C7F7D /* API.swift */,
 			);
@@ -265,7 +262,6 @@
 				13E48E4622F80DB0000C7F7D /* Weather.swift in Sources */,
 				13C29A4022F5C2F700438EEA /* Time.swift in Sources */,
 				13C29A3622F47A2C00438EEA /* WeatherCells.swift in Sources */,
-				13206CCE22F2AFCD00F6C94F /* URLs.swift in Sources */,
 				13206CDE22F2CC6C00F6C94F /* SearchMapViewController.swift in Sources */,
 				13C29A3222F3E5D300438EEA /* WeatherModule.swift in Sources */,
 				13731D5A22F958BE00DFCA53 /* LocationModule.swift in Sources */,

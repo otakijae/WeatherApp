@@ -3,25 +3,6 @@ import Foundation
 
 extension UIViewController {
 	
-	func clearStatusBar() {
-		let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView
-		statusBar?.backgroundColor = .clear
-	}
-	
-	func clearNavigationBar() {
-		self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-		self.navigationController?.navigationBar.shadowImage = UIImage()
-		self.navigationController?.navigationBar.isTranslucent = true
-		self.navigationController?.navigationBar.backgroundColor = .clear
-	}
-	
-	func clearToolbar() {
-		self.navigationController?.toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .bottom, barMetrics: UIBarMetrics.default)
-		self.navigationController?.toolbar.isTranslucent = true
-		self.navigationController?.toolbar.setShadowImage(UIImage(), forToolbarPosition: .bottom)
-		self.navigationController?.toolbar.backgroundColor = .clear
-	}
-	
 	static var instance: UIViewController {
 		return UIStoryboard(name: self.className, bundle: nil).instantiateInitialViewController()!
 	}
@@ -124,50 +105,6 @@ extension UIViewController {
 										UIViewController.indicator.removeFromSuperview()
 										UIViewController.indicatorLabel.removeFromSuperview()
 		})
-	}
-	
-}
-
-extension UILabel {
-	
-	func makeSubStringColored(subString: String, color: UIColor) {
-		self.attributedText = (self.text ?? "").colored(range: ((self.text ?? "") as NSString).range(of: subString), color: color)
-	}
-	
-	func makeSubStringColored(range: (location: Int, length: Int), color: UIColor) {
-		self.attributedText = (self.text ?? "").colored(range: NSRange(location: range.location, length: range.length), color: color)
-	}
-	
-}
-
-extension UIFont {
-	
-	class func appleSDGothicNeoLight(size: CGFloat = 14) -> UIFont {
-		return UIFont(name: "AppleSDGothicNeo-Light", size: size)!
-	}
-	
-}
-
-extension UITextView {
-	
-	func makeSubStringColored(subString: String, color: UIColor) {
-		self.attributedText = (self.text ?? "").colored(range: ((self.text ?? "") as NSString).range(of: subString), color: color)
-	}
-	
-	func makeSubStringColored(range: (location: Int, length: Int), color: UIColor) {
-		self.attributedText = (self.text ?? "").colored(range: NSRange(location: range.location, length: range.length), color: color)
-	}
-	
-}
-
-extension UITextField {
-	
-	func makeSubStringColored(subString: String, color: UIColor) {
-		self.attributedText = (self.text ?? "").colored(range: ((self.text ?? "") as NSString).range(of: subString), color: color)
-	}
-	
-	func makeSubStringColored(range: (location: Int, length: Int), color: UIColor) {
-		self.attributedText = (self.text ?? "").colored(range: NSRange(location: range.location, length: range.length), color: color)
 	}
 	
 }
