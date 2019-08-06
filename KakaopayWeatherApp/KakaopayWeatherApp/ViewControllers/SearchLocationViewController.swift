@@ -16,6 +16,16 @@ class SearchLocationViewController: UIViewController, ObserverProtocol {
 		tableView.delegate = self
 		tableView.dataSource = self
 		searchBar.delegate = self
+		
+		guard let viewModel = viewModel else { return }
+		subscribe(viewModel)
+	}
+	
+	func subscribe(_ viewModel: ViewModel) {
+		viewModel.locationList.addObserver(self) { locationList in
+			self.cityList = locationList
+			self.tableView.reloadData()
+		}
 	}
 	
 	override func didReceiveMemoryWarning() {
@@ -40,22 +50,13 @@ extension SearchLocationViewController: UITableViewDelegate, UITableViewDataSour
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		saveSelectedCity(indexPath: indexPath)
+		guard let viewModel = viewModel else { return }
+		viewModel.saveSelectedCity(with: cityList[indexPath.item])
 		tableView.deselectRow(at: indexPath, animated: true)
 		startIndicator()
 		DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
 			self.stopIndicator()
 			self.dismiss(self)
-		}
-	}
-	
-	func saveSelectedCity(indexPath: IndexPath) {
-		guard let viewModel = viewModel else { return }
-		if let selectedCityName = cityList[indexPath.item].placemark.locality {
-			viewModel.saveSelectedCity(with: selectedCityName)
-		} else {
-			guard let cityName = cityList[indexPath.item].placemark.name else { return }
-			viewModel.saveSelectedCity(with: cityName)
 		}
 	}
 	
@@ -75,10 +76,8 @@ extension SearchLocationViewController: UITableViewDelegate, UITableViewDataSour
 extension SearchLocationViewController: UISearchBarDelegate {
 	
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-		LocationModule.instance.requestLocations(query: searchBar.text) { result in
-			self.cityList = result
-			self.tableView.reloadData()
-		}
+		guard let viewModel = viewModel else { return }
+		viewModel.requestLocations(query: searchBar.text)
 	}
 	
 }

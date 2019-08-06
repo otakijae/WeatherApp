@@ -1,5 +1,6 @@
 import Foundation
 import SystemConfiguration
+import MapKit
 
 class ViewModel: ObserverProtocol {
 	
@@ -13,6 +14,7 @@ class ViewModel: ObserverProtocol {
 	var cityWeather = Observable<City>(value: City())
 	var dailyWeatherList = Observable<[Daily]>(value: [])
 	var hourlyWeatherList = Observable<[Hourly]>(value: [])
+	var locationList = Observable<[MKMapItem]>(value: [])
 	
 	var savedCityList: [City] {
 		get {
@@ -50,6 +52,10 @@ class ViewModel: ObserverProtocol {
 			self.hourlyWeatherList.value = hourlyWeatherList
 		}
 		
+		LocationModule.instance.locationList.addObserver(self) { locationList in
+			self.locationList.value = locationList
+		}
+		
 	}
 	
 	func configureCityList() {
@@ -79,19 +85,35 @@ class ViewModel: ObserverProtocol {
 		WeatherModule.instance.requestHourlyWeather(with: city)
 	}
 	
+	func requestLocations(query: String?) {
+		guard let query = query else { return }
+		LocationModule.instance.requestLocations(query: query)
+	}
+	
 	func appendNewLocation(_ city: City) {
 		var newCityList = savedCityList
 		newCityList.append(city)
 		savedCityList = newCityList
 	}
 	
-	func saveSelectedCity(with name: String) {
-		let city = City()
-		city.name = name
-		LocationModule.instance.getCoordinates(with: city) { coordinates in
-			city.latitude = coordinates?.0
-			city.longitude = coordinates?.1
-			self.appendNewLocation(city)
+	func saveSelectedCity(with mapItem: MKMapItem) {
+		if let selectedCityName = mapItem.placemark.locality {
+			let city = City()
+			city.name = selectedCityName
+			LocationModule.instance.getCoordinates(with: city) { coordinates in
+				city.latitude = coordinates?.0
+				city.longitude = coordinates?.1
+				self.appendNewLocation(city)
+			}
+		} else {
+			guard let cityName = mapItem.placemark.name else { return }
+			let city = City()
+			city.name = cityName
+			LocationModule.instance.getCoordinates(with: city) { coordinates in
+				city.latitude = coordinates?.0
+				city.longitude = coordinates?.1
+				self.appendNewLocation(city)
+			}
 		}
 	}
 	
