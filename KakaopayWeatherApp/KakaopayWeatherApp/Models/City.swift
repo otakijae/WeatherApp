@@ -8,8 +8,8 @@ class City: Codable {
 	var dayOfWeek: String?
 	var currentTemperature: String?
 	var weather: Weather?
-	var dailyWeatherList: [Daily] = []
-	var hourlyWeatherList: [Hourly] = []
+	var dailyWeatherList: [Daily]?
+	var hourlyWeatherList: [Hourly]?
 }
 
 extension UserDefaults {

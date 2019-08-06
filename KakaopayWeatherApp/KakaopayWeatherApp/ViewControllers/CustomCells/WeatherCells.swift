@@ -53,8 +53,10 @@ class HourlyWeatherCell: UITableViewCell, UICollectionViewDataSource, UICollecti
 	}
 
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		guard let selectedCity = selectedCity else { return 0 }
-		return selectedCity.hourlyWeatherList.count
+		guard
+			let selectedCity = selectedCity,
+			let hourlyWeatherList = selectedCity.hourlyWeatherList else { return 0 }
+		return hourlyWeatherList.count
 	}
 	
 	func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -80,10 +82,13 @@ class HourlyWeatherCell: UITableViewCell, UICollectionViewDataSource, UICollecti
 	}
 	
 	func configureHourlyCollectionViewCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
-		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourlyCollectionViewCell.className, for: indexPath) as? HourlyCollectionViewCell else { return UICollectionViewCell() }
-		cell.timeLabel.text = selectedCity?.hourlyWeatherList[indexPath.item].time
-		cell.statusLabel.text = selectedCity?.hourlyWeatherList[indexPath.item].summary
-		cell.temperatureLabel.text = "\(selectedCity?.hourlyWeatherList[indexPath.item].temperature ?? 0)°"
+		guard
+			let hourlyWeatherList = selectedCity?.hourlyWeatherList,
+			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourlyCollectionViewCell.className, for: indexPath) as? HourlyCollectionViewCell else { return UICollectionViewCell() }
+		
+		cell.timeLabel.text = hourlyWeatherList[indexPath.item].time
+		cell.statusLabel.text = hourlyWeatherList[indexPath.item].summary
+		cell.temperatureLabel.text = "\(hourlyWeatherList[indexPath.item].temperature ?? 0)°"
 		return cell
 	}
 	
@@ -120,8 +125,10 @@ class DailyWeatherCell: UITableViewCell, UITableViewDataSource, UITableViewDeleg
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let selectedCity = selectedCity else { return 0 }
-		return selectedCity.dailyWeatherList.count
+		guard
+			let selectedCity = selectedCity,
+			let dailyWeatherList = selectedCity.dailyWeatherList else { return 0 }
+		return dailyWeatherList.count
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -130,11 +137,12 @@ class DailyWeatherCell: UITableViewCell, UITableViewDataSource, UITableViewDeleg
 	
 	func configureDailyTableViewCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
 		guard
+			let dailyWeatherList = selectedCity?.dailyWeatherList,
 			let cell = tableView.dequeueReusableCell(withIdentifier: DailyTableViewCell.className, for: indexPath) as? DailyTableViewCell else { return UITableViewCell() }
-		cell.dayOfWeekLabel.text = selectedCity?.dailyWeatherList[indexPath.item].dayOfWeek
-		cell.statusLabel.text = selectedCity?.dailyWeatherList[indexPath.item].summary
-		cell.temperatureMinLabel.text = selectedCity?.dailyWeatherList[indexPath.item].temperatureMin
-		cell.temperatureMaxLabel.text = selectedCity?.dailyWeatherList[indexPath.item].temperatureMax
+		cell.dayOfWeekLabel.text = dailyWeatherList[indexPath.item].dayOfWeek
+		cell.statusLabel.text = dailyWeatherList[indexPath.item].summary
+		cell.temperatureMinLabel.text = dailyWeatherList[indexPath.item].temperatureMin
+		cell.temperatureMaxLabel.text = dailyWeatherList[indexPath.item].temperatureMax
 		return cell
 	}
 	
