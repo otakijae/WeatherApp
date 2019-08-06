@@ -5,11 +5,7 @@ class SearchMapViewController: UIViewController, ObserverProtocol {
 	
 	var id = String(describing: self)
 	var viewModel: ViewModel?
-
-	private let manager = CLLocationManager()
-	private var search: MKLocalSearch? =  nil
-	private var searchCompleter = MKLocalSearchCompleter()
-	private var places = [MKLocalSearchCompletion]()
+	var cityList: [MKMapItem] = []
 
 	@IBOutlet weak var tableView: UITableView!
 	@IBOutlet weak var searchBar: UISearchBar!
@@ -20,9 +16,6 @@ class SearchMapViewController: UIViewController, ObserverProtocol {
 		self.tableView.delegate = self
 		self.tableView.dataSource = self
 		self.searchBar.delegate = self
-		
-		self.manager.delegate = self
-		self.searchCompleter.delegate = self
 	}
 	
 	override func didReceiveMemoryWarning() {
@@ -43,34 +36,22 @@ extension SearchMapViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return places.count
+		return cityList.count
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let request = MKLocalSearch.Request()
-		request.naturalLanguageQuery = places[indexPath.item].title
-		let search = MKLocalSearch(request: request)
-		search.start { (response, error) in
-			
-			guard
-				error == nil,
-				let response = response,
-				response.mapItems.count > 0,
-				let item = response.mapItems.first else { return }
-			
-			var savedCityList = UserDefaults.standard.array(forKey: "CityList") as? [String] ?? []
-			if let selectedCity = item.placemark.locality {
-				savedCityList.append(selectedCity)
-			} else {
-				guard let cityName = item.placemark.name else { return }
-				savedCityList.append(cityName)
-			}
-			UserDefaults.standard.set(savedCityList, forKey: "CityList")
-			UserDefaults.standard.synchronize()
-			
-			tableView.deselectRow(at: indexPath, animated: true)
-			self.dismiss(self)
+		var savedCityList = UserDefaults.standard.array(forKey: "CityList") as? [String] ?? []
+		if let selectedCity = cityList[indexPath.item].placemark.locality {
+			savedCityList.append(selectedCity)
+		} else {
+			guard let cityName = cityList[indexPath.item].placemark.name else { return }
+			savedCityList.append(cityName)
 		}
+		UserDefaults.standard.set(savedCityList, forKey: "CityList")
+		UserDefaults.standard.synchronize()
+		
+		tableView.deselectRow(at: indexPath, animated: true)
+		self.dismiss(self)
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -79,51 +60,26 @@ extension SearchMapViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	func configureSearchedCityCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchedCityCell.className, for: indexPath) as? SearchedCityCell else { return UITableViewCell() }
-		cell.cityNameLabel.text = places[indexPath.item].title
-		cell.addressLabel.text = places[indexPath.item].subtitle
+		cell.cityNameLabel.text = cityList[indexPath.item].placemark.name
+		cell.addressLabel.text = cityList[indexPath.item].placemark.title
 		return cell
-	}
-	
-}
-
-extension SearchMapViewController: MKLocalSearchCompleterDelegate {
-	
-	func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
-		places = completer.results
-		tableView.reloadData()
-	}
-	
-	func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
-		print("검색 결과가 없습니다")
 	}
 	
 }
 
 extension SearchMapViewController: UISearchBarDelegate {
 	
-	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-		searchBar.resignFirstResponder()
-	}
-	
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-		searchCompleter.queryFragment = searchText
-		searchCompleter.filterType = .locationsOnly
-	}
-	
-}
-
-extension SearchMapViewController: CLLocationManagerDelegate {
-	
-	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-		manager.requestLocation()
-	}
-	
-	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-		print(error.localizedDescription)
-	}
-	
-	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-
+		let localSearchRequest: MKLocalSearch.Request = MKLocalSearch.Request()
+		var localSearch: MKLocalSearch!
+		localSearchRequest.naturalLanguageQuery = searchBar.text
+		localSearch = MKLocalSearch(request: localSearchRequest)
+		localSearch.start { (localSearchResponse, error) -> Void in
+			if localSearchResponse == nil { return }
+						guard let mapItems = localSearchResponse?.mapItems else { return }
+			self.cityList = mapItems
+			self.tableView.reloadData()
+		}
 	}
 	
 }
