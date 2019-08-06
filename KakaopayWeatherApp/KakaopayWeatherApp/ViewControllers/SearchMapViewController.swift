@@ -73,13 +73,8 @@ extension SearchMapViewController: UITableViewDelegate, UITableViewDataSource {
 extension SearchMapViewController: UISearchBarDelegate {
 	
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-		let localSearchRequest = MKLocalSearch.Request()
-		localSearchRequest.naturalLanguageQuery = searchBar.text
-		let localSearch = MKLocalSearch(request: localSearchRequest)
-		localSearch.start { (localSearchResponse, error) -> Void in
-			if localSearchResponse == nil { return }
-			guard let mapItems = localSearchResponse?.mapItems else { return }
-			self.cityList = mapItems
+		LocationModule.instance.requestLocations(query: searchBar.text) { result in
+			self.cityList = result
 			self.tableView.reloadData()
 		}
 	}

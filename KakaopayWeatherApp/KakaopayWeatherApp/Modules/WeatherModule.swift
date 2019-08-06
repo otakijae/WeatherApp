@@ -1,5 +1,4 @@
 import Foundation
-import MapKit
 
 class WeatherModule {
 	
@@ -13,7 +12,7 @@ class WeatherModule {
 	var discoveredHourlyWeatherList = [Hourly]()
 	
 	func requestSimpleWeather(with city: City) {
-		getCoordinates(with: city) { coodinates in
+		LocationModule.instance.getCoordinates(with: city) { coodinates in
 			city.latitude = coodinates?.0
 			city.longitude = coodinates?.1
 			API.instance.requestSimpleWeather(with: city) { json in
@@ -31,7 +30,7 @@ class WeatherModule {
 	}
 	
 	func requestSpecificWeather(with city: City) {
-		getCoordinates(with: city) { coodinates in
+		LocationModule.instance.getCoordinates(with: city) { coodinates in
 			city.latitude = coodinates?.0
 			city.longitude = coodinates?.1
 			API.instance.requestSpecificWeather(with: city) { json in
@@ -93,7 +92,7 @@ class WeatherModule {
 	}
 	
 	func requestDailyWeather(with city: City) {
-		getCoordinates(with: city) { coodinates in
+		LocationModule.instance.getCoordinates(with: city) { coodinates in
 			city.latitude = coodinates?.0
 			city.longitude = coodinates?.1
 			API.instance.requestDailyWeather(with: city) { json in
@@ -127,7 +126,7 @@ class WeatherModule {
 	}
 	
 	func requestHourlyWeather(with city: City) {
-		getCoordinates(with: city) { coodinates in
+		LocationModule.instance.getCoordinates(with: city) { coodinates in
 			city.latitude = coodinates?.0
 			city.longitude = coodinates?.1
 			API.instance.requestHourlyWeather(with: city) { json in
@@ -159,28 +158,12 @@ class WeatherModule {
 	}
 	
 	func requestFullWeather(with city: City) {
-		getCoordinates(with: city) { coodinates in
+		LocationModule.instance.getCoordinates(with: city) { coodinates in
 			city.latitude = coodinates?.0
 			city.longitude = coodinates?.1
 			API.instance.requestFullWeather(with: city) { json in
 				print(json)
 			}
-		}
-	}
-	
-	func getCoordinates(with city: City, resultHandler: @escaping ((Double,Double)?) -> Void) {
-		var localSearchRequest: MKLocalSearch.Request!
-		var localSearch: MKLocalSearch!
-		
-		localSearchRequest = MKLocalSearch.Request()
-		localSearchRequest.naturalLanguageQuery = city.name
-		localSearch = MKLocalSearch(request: localSearchRequest)
-		localSearch.start { (localSearchResponse, error) -> Void in
-			if localSearchResponse == nil {
-				resultHandler(nil)
-				return
-			}
-			resultHandler((localSearchResponse!.boundingRegion.center.latitude, localSearchResponse!.boundingRegion.center.longitude))
 		}
 	}
 	

@@ -1,6 +1,7 @@
 import UIKit
 
 class CurrentlyWeatherCell: UITableViewCell {
+	
 	@IBOutlet weak var cityNameLabel: UILabel!
 	@IBOutlet weak var statusLabel: UILabel!
 	@IBOutlet weak var temperatureLabel: UILabel!
@@ -147,6 +148,7 @@ class DailyTableViewCell: UITableViewCell {
 }
 
 class OtherWeatherCell: UITableViewCell {
+	
 	@IBOutlet weak var suriseTimeLabel: UILabel!
 	@IBOutlet weak var sunsetTimeLabel: UILabel!
 	@IBOutlet weak var precipitationProbabilityLabel: UILabel!
@@ -176,4 +178,5 @@ class OtherWeatherCell: UITableViewCell {
 		visibilityLabel.text = "\(selectedCity.weather?.visibility ?? 0)km"
 		uvIndexLabel.text = "\(selectedCity.weather?.uvIndex ?? 0)"
 	}
+	
 }
