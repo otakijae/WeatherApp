@@ -46,14 +46,14 @@ extension SearchLocationViewController: UITableViewDelegate, UITableViewDataSour
 	}
 	
 	func saveSelectedCity(indexPath: IndexPath) {
-		var savedCityList = UserDefaults.standard.array(forKey: "CityList") as? [String] ?? []
+		var savedCityList = UserDefaults.standard.array(forKey: Constants.UserDefaultsKey.cityList.rawValue) as? [String] ?? []
 		if let selectedCity = cityList[indexPath.item].placemark.locality {
 			savedCityList.append(selectedCity)
 		} else {
 			guard let cityName = cityList[indexPath.item].placemark.name else { return }
 			savedCityList.append(cityName)
 		}
-		UserDefaults.standard.set(savedCityList, forKey: "CityList")
+		UserDefaults.standard.set(savedCityList, forKey: Constants.UserDefaultsKey.cityList.rawValue)
 		UserDefaults.standard.synchronize()
 	}
 	

@@ -2,9 +2,9 @@ import Foundation
 
 class HttpHelper {
 	
+	let session: URLSession = URLSession.shared
 	static let baseURL = "https://api.darksky.net/forecast"
 	static let accessToken = "d5a050a57a21064809f5a3946ab02436"
-	let session: URLSession = URLSession.shared
 
 	enum HTTPMethod: String {
 		case post = "POST"

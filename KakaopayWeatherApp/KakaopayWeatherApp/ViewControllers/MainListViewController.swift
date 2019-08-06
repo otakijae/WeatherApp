@@ -6,10 +6,10 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	var viewModel: ViewModel?
 	var savedCityList: [String] {
 		get {
-			return UserDefaults.standard.array(forKey: "CityList") as? [String] ?? []
+			return UserDefaults.standard.array(forKey: Constants.UserDefaultsKey.cityList.rawValue) as? [String] ?? []
 		}
 		set {
-			UserDefaults.standard.set(newValue, forKey: "CityList")
+			UserDefaults.standard.set(newValue, forKey: Constants.UserDefaultsKey.cityList.rawValue)
 			UserDefaults.standard.synchronize()
 		}
 	}
@@ -43,7 +43,7 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	func subscribe(_ viewModel: ViewModel) {
 		
 		viewModel.networkDisconnected.addObserver(self) { _ in
-			self.alert(message: "WIFI 혹은 4G/LTE\n연결 상태를 확인해주세요.")
+			self.alert(message: Constants.networkAlertMessage)
 		}
 		
 		viewModel.city.addObserver(self) { city in
@@ -86,7 +86,7 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	}
 	
 	func configureRightEditButton() {
-		rightEditButton = UIBarButtonItem(title: "편집", style: .plain, target: self, action: #selector(editButtonAction))
+		rightEditButton = UIBarButtonItem(title: Constants.edit, style: .plain, target: self, action: #selector(editButtonAction))
 		self.navigationItem.rightBarButtonItem = rightEditButton
 		self.navigationItem.rightBarButtonItem?.tintColor = UIColor.darkGray
 		rightEditButton.isEnabled = !cityList.isEmpty
@@ -95,7 +95,7 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	@objc func editButtonAction() {
 		setEditing(!tableView.isEditing, animated: true)
 		if !tableView.isEditing { refreshAction() }
-		rightEditButton.title = tableView.isEditing ? "완료" : "편집"
+		rightEditButton.title = tableView.isEditing ? Constants.complete : Constants.edit
 	}
 	
 	override func setEditing(_ editing: Bool, animated: Bool) {

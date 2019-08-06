@@ -61,7 +61,7 @@ class DetailWeatherViewController: UIViewController, ObserverProtocol {
 	}
 	
 	@IBAction func linkToAPIWebPage(_ sender: Any) {
-		let url = URL(string: "https://darksky.net/poweredby/")!
+		let url = URL(string: Constants.apiLink)!
 		
 		if #available(iOS 9.0, *) {
 			present(SFSafariViewController(url: url), animated: true)

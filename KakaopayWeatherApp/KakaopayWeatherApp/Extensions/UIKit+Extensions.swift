@@ -7,7 +7,7 @@ extension UIViewController {
 		return UIStoryboard(name: self.className, bundle: nil).instantiateInitialViewController()!
 	}
 	
-	func alert(title: String = "카카오페이 날씨", message: String, okTitle: String = "확인", okAction: (() -> Void)? = nil) {
+	func alert(title: String = Constants.applicationName, message: String, okTitle: String = Constants.confirm, okAction: (() -> Void)? = nil) {
 		DispatchQueue.main.async {
 			let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 			let okAction = UIAlertAction(title: okTitle, style: .cancel) { _ in
@@ -40,7 +40,7 @@ extension UIViewController {
 		UIViewController.indicatorLabel.center.x = self.view.center.x
 		UIViewController.indicatorLabel.center.y = self.view.center.y + 55
 		UIViewController.indicatorLabel.text = labelText
-		UIViewController.indicatorLabel.font = UIFont(name: "AppleSDGothicNeo-Light", size: 14.0)
+		UIViewController.indicatorLabel.font = UIFont(name: Constants.font, size: 14.0)
 		UIViewController.indicatorLabel.alpha = 0.0
 		UIViewController.indicatorLabel.textColor = UIColor.darkText
 		UIViewController.indicatorLabel.textAlignment = .center

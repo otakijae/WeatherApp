@@ -80,7 +80,7 @@ class HourlyWeatherCell: UITableViewCell, UICollectionViewDataSource, UICollecti
 	}
 	
 	func configureHourlyCollectionViewCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
-		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HourlyCollectionViewCell", for: indexPath) as? HourlyCollectionViewCell else { return UICollectionViewCell() }
+		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourlyCollectionViewCell.className, for: indexPath) as? HourlyCollectionViewCell else { return UICollectionViewCell() }
 		cell.timeLabel.text = selectedCity?.hourlyWeatherList[indexPath.item].time
 		cell.statusLabel.text = selectedCity?.hourlyWeatherList[indexPath.item].summary
 		cell.temperatureLabel.text = "\(selectedCity?.hourlyWeatherList[indexPath.item].temperature ?? 0)°"
