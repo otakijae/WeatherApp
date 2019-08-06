@@ -11,4 +11,5 @@ struct Constants {
 	static let apiLink = "https://darksky.net/poweredby/"
 	static let font = "AppleSDGothicNeo-Light"
 	static let numberOfCells = 4
+	static let tableViewCellHeight = 44
 }

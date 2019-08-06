@@ -92,10 +92,6 @@ class HourlyWeatherCell: UITableViewCell, UICollectionViewDataSource, UICollecti
 		return cell
 	}
 	
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-		return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-	}
-	
 }
 
 class HourlyCollectionViewCell: UICollectionViewCell {
@@ -121,7 +117,7 @@ class DailyWeatherCell: UITableViewCell, UITableViewDataSource, UITableViewDeleg
 	}
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return 44
+		return CGFloat(Constants.tableViewCellHeight)
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

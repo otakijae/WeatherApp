@@ -8,12 +8,9 @@ class LocationModule {
 	var locationList = Observable<[MKMapItem]>(value: [])
 	
 	func getCoordinates(with city: City, resultHandler: @escaping ((Double,Double)?) -> Void) {
-		var localSearchRequest: MKLocalSearch.Request!
-		var localSearch: MKLocalSearch!
-		
-		localSearchRequest = MKLocalSearch.Request()
+		let localSearchRequest = MKLocalSearch.Request()
 		localSearchRequest.naturalLanguageQuery = city.name
-		localSearch = MKLocalSearch(request: localSearchRequest)
+		let localSearch = MKLocalSearch(request: localSearchRequest)
 		localSearch.start { (localSearchResponse, error) -> Void in
 			if localSearchResponse == nil {
 				resultHandler(nil)
