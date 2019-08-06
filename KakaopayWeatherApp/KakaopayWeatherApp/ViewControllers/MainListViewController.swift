@@ -7,13 +7,13 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	var savedCityList: [City] {
 		get {
 			guard
-				let data = UserDefaults.standard.object(forKey: "cityList") as? Data,
+				let data = UserDefaults.standard.object(forKey: Constants.UserDefaultsKey.cityList.rawValue) as? Data,
 				let list = try? JSONDecoder().decode([City].self, from: data) else { return [] }
 			return list
 		}
 		set {
 			guard let encoded = try? JSONEncoder().encode(newValue) else { return }
-			UserDefaults.standard.set(encoded, forKey: "cityList")
+			UserDefaults.standard.set(encoded, forKey: Constants.UserDefaultsKey.cityList.rawValue)
 			UserDefaults.standard.synchronize()
 		}
 	}
@@ -43,10 +43,6 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	override func viewWillAppear(_ animated: Bool) {
 		refreshAction()
 	}
-	
-//	override func viewDidAppear(_ animated: Bool) {
-//		refreshAction()
-//	}
 	
 	func subscribe(_ viewModel: ViewModel) {
 		
@@ -95,8 +91,8 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	
 	func configureRightEditButton() {
 		rightEditButton = UIBarButtonItem(title: Constants.edit, style: .plain, target: self, action: #selector(editButtonAction))
-		self.navigationItem.rightBarButtonItem = rightEditButton
-		self.navigationItem.rightBarButtonItem?.tintColor = UIColor.darkGray
+		navigationItem.rightBarButtonItem = rightEditButton
+		navigationItem.rightBarButtonItem?.tintColor = UIColor.darkGray
 		rightEditButton.isEnabled = !cityList.isEmpty
 	}
 	

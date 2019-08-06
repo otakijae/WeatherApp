@@ -10,4 +10,5 @@ struct Constants {
 	static let confirm = "확인"
 	static let apiLink = "https://darksky.net/poweredby/"
 	static let font = "AppleSDGothicNeo-Light"
+	static let numberOfCells = 4
 }

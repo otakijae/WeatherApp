@@ -23,35 +23,6 @@ class HttpHelper {
 		session.dataTask(with: request, completionHandler: completionHandler).resume()
 	}
 	
-	func post(url: URL, parameters: [String: Any]? = nil, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) throws {
-		var request: URLRequest = URLRequest(url: url)
-		request.httpMethod = HTTPMethod.post.rawValue
-		request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-		request.addValue("application/json", forHTTPHeaderField: "Accept")
-		if let parameters = parameters {
-			request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
-		}
-		session.dataTask(with: request, completionHandler: completionHandler).resume()
-	}
-	
-	func put(url: URL, parameters: [String: Any]? = nil, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) throws {
-		var request: URLRequest = URLRequest(url: url)
-		request.httpMethod = HTTPMethod.put.rawValue
-		request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-		request.addValue("application/json", forHTTPHeaderField: "Accept")
-		if let parameters = parameters {
-			request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
-		}
-		session.dataTask(with: request, completionHandler: completionHandler).resume()
-	}
-	
-	func delete(url: URL, parameters: [String: Any]? = nil, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) {
-		var request: URLRequest = URLRequest(url: url)
-		request.httpMethod = HTTPMethod.delete.rawValue
-		request.addValue("application/json", forHTTPHeaderField: "Accept")
-		session.dataTask(with: request, completionHandler: completionHandler).resume()
-	}
-	
 	func getParameterString(parameters: [String: Any]? = nil) -> String {
 		guard let parameters = parameters else { return "" }
 		var urlValues = [String]()

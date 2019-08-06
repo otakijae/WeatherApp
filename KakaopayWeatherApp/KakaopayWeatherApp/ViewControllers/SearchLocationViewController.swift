@@ -10,13 +10,13 @@ class SearchLocationViewController: UIViewController, ObserverProtocol {
 	var savedCityList: [City] {
 		get {
 			guard
-				let data = UserDefaults.standard.object(forKey: "cityList") as? Data,
+				let data = UserDefaults.standard.object(forKey: Constants.UserDefaultsKey.cityList.rawValue) as? Data,
 				let list = try? JSONDecoder().decode([City].self, from: data) else { return [] }
 			return list
 		}
 		set {
 			guard let encoded = try? JSONEncoder().encode(newValue) else { return }
-			UserDefaults.standard.set(encoded, forKey: "cityList")
+			UserDefaults.standard.set(encoded, forKey: Constants.UserDefaultsKey.cityList.rawValue)
 			UserDefaults.standard.synchronize()
 		}
 	}

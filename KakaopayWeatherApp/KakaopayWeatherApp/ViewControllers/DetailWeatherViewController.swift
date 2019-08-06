@@ -18,7 +18,7 @@ class DetailWeatherViewController: UIViewController, ObserverProtocol {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		self.navigationController?.navigationBar.tintColor = .darkGray
+		navigationController?.navigationBar.tintColor = .darkGray
 		tableView.delegate = self
 		tableView.dataSource = self
 		
@@ -95,7 +95,7 @@ extension DetailWeatherViewController: UITableViewDelegate, UITableViewDataSourc
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 4
+		return Constants.numberOfCells
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
