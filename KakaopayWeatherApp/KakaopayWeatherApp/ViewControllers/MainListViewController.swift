@@ -108,7 +108,15 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	}
 	
 	@IBAction func addCityButtonTapped(_ sender: Any) {
-		present(SearchLocationViewController.instance, animated: true)
+		presentSearchLocationViewController()
+	}
+	
+	func presentSearchLocationViewController() {
+		guard
+			let searchLocationViewController = SearchLocationViewController.instance as? SearchLocationViewController,
+			let viewModel = viewModel else { return }
+		searchLocationViewController.viewModel = viewModel
+		present(searchLocationViewController, animated: true)
 	}
 	
 	func showDetailWeatherViewController(with city: City) {
