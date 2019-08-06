@@ -60,7 +60,7 @@ class TimeModule {
 		return time
 	}
 	
-	func getDay(weekDay: WeekDay?) -> String {
+	private func getDay(weekDay: WeekDay?) -> String {
 		guard let weekDay = weekDay else { return "" }
 		switch weekDay {
 		case .sunday:
