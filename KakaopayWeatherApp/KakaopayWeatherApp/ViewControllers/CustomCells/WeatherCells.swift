@@ -114,6 +114,10 @@ class DailyWeatherCell: UITableViewCell, UITableViewDataSource, UITableViewDeleg
 		tableView.delegate = self
 	}
 	
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return 44
+	}
+	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		guard let selectedCity = selectedCity else { return 0 }
 		return selectedCity.dailyWeatherList.count
