@@ -29,19 +29,19 @@ class DetailWeatherViewController: UIViewController, ObserverProtocol {
 	
 	func subscribe(_ viewModel: ViewModel) {
 		
-		viewModel.cityWeather.addObserver(self) { cityWeather in
-			self.selectedCity = cityWeather
-			self.refreshTableView()
+		viewModel.cityWeather.addObserver(self) { [weak self] cityWeather in
+			self?.selectedCity = cityWeather
+			self?.refreshTableView()
 		}
 		
-		viewModel.dailyWeatherList.addObserver(self) { dailyWeatherList in
-			self.selectedCity?.dailyWeatherList = dailyWeatherList
-			self.refreshTableView()
+		viewModel.dailyWeatherList.addObserver(self) { [weak self] dailyWeatherList in
+			self?.selectedCity?.dailyWeatherList = dailyWeatherList
+			self?.refreshTableView()
 		}
 		
-		viewModel.hourlyWeatherList.addObserver(self) { hourlyWeatherList in
-			self.selectedCity?.hourlyWeatherList = hourlyWeatherList
-			self.refreshTableView()
+		viewModel.hourlyWeatherList.addObserver(self) { [weak self] hourlyWeatherList in
+			self?.selectedCity?.hourlyWeatherList = hourlyWeatherList
+			self?.refreshTableView()
 		}
 		
 	}

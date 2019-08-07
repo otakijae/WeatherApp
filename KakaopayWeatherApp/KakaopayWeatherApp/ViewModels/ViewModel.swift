@@ -36,20 +36,20 @@ class ViewModel: ObserverProtocol {
 	
 	func subscribe() {
 		
-		WeatherModule.instance.city.addObserver(self) { city in
-			self.city.value = city
+		WeatherModule.instance.city.addObserver(self) { [weak self] city in
+			self?.city.value = city
 		}
 		
-		WeatherModule.instance.cityWeather.addObserver(self) { cityWeather in
-			self.cityWeather.value = cityWeather
+		WeatherModule.instance.cityWeather.addObserver(self) { [weak self] cityWeather in
+			self?.cityWeather.value = cityWeather
 		}
 		
-		WeatherModule.instance.dailyWeatherList.addObserver(self) { dailyWeatherList in
-			self.dailyWeatherList.value = dailyWeatherList
+		WeatherModule.instance.dailyWeatherList.addObserver(self) { [weak self] dailyWeatherList in
+			self?.dailyWeatherList.value = dailyWeatherList
 		}
 		
-		WeatherModule.instance.hourlyWeatherList.addObserver(self) { hourlyWeatherList in
-			self.hourlyWeatherList.value = hourlyWeatherList
+		WeatherModule.instance.hourlyWeatherList.addObserver(self) { [weak self] hourlyWeatherList in
+			self?.hourlyWeatherList.value = hourlyWeatherList
 		}
 		
 		LocationModule.instance.locationList.addObserver(self) { locationList in

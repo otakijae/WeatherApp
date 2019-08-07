@@ -33,27 +33,27 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	
 	func subscribe(_ viewModel: ViewModel) {
 		
-		viewModel.networkDisconnected.addObserver(self) { _ in
+		viewModel.networkDisconnected.addObserver(self) {
 			self.alert(message: Constants.networkAlertMessage)
 		}
 		
-		viewModel.city.addObserver(self) { city in
-			self.cityList.filter { $0.name == city.name }.first?.time = city.time
-			self.cityList.filter { $0.name == city.name }.first?.temperature = city.temperature
-			self.refreshTableView()
+		viewModel.city.addObserver(self) { [weak self] city in
+			self?.cityList.filter { $0.name == city.name }.first?.time = city.time
+			self?.cityList.filter { $0.name == city.name }.first?.temperature = city.temperature
+			self?.refreshTableView()
 		}
 		
 		viewModel.cityList.addObserver(self) { cityList in
 			self.cityList = cityList
 		}
 		
-		viewModel.cityListEmpty.addObserver(self) { _ in
+		viewModel.cityListEmpty.addObserver(self) {
 			self.tableView.isHidden = true
 			self.descriptionView.isHidden = false
 			self.refreshTableView()
 		}
 		
-		viewModel.cityListExists.addObserver(self) { _ in
+		viewModel.cityListExists.addObserver(self) {
 			self.tableView.isHidden = false
 			self.descriptionView.isHidden = true
 			self.refreshTableView()
