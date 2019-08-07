@@ -13,9 +13,9 @@ class CityCell: UITableViewCell {
 	func configureCityCell() {
 		guard let city = city else { return }
 		self.accessoryType = .disclosureIndicator
-		timeLabel.text = city.currentTime
+		timeLabel.text = city.time
 		cityNameLabel.text = city.name
-		temperatureLabel.text = city.currentTemperature
+		temperatureLabel.text = city.temperature
 	}
 }
 

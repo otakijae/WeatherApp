@@ -18,9 +18,9 @@ class WeatherModule {
 				let timeZone = data["timezone"] as? String,
 				let currently = data["currently"] as? [String: Any],
 				let temperature = currently["temperature"] as? Double else { return }
-			
-			city.currentTime = TimeModule.instance.getCurrentTime(in: timeZone)
-			city.currentTemperature = "\(Int(round(temperature)))"
+
+			city.time = TimeModule.instance.getCurrentTime(in: timeZone)
+			city.temperature = "\(Int(round(temperature)))"
 			self.city.value = city
 		}
 	}
@@ -74,9 +74,9 @@ class WeatherModule {
 			weather.uvIndex = uvIndex
 			
 			city.weather = weather
-			city.currentTime = TimeModule.instance.getCurrentTime(in: timeZone)
+			city.time = TimeModule.instance.getCurrentTime(in: timeZone)
 			city.dayOfWeek = TimeModule.instance.getDayOfWeek(from: time, in: timeZone)
-			city.currentTemperature = String(temperature)
+			city.temperature = String(temperature)
 			
 			self.cityWeather.value = city
 		}

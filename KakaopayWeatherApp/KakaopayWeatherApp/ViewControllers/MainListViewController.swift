@@ -38,8 +38,8 @@ class MainListViewController: UIViewController, ObserverProtocol {
 		}
 		
 		viewModel.city.addObserver(self) { city in
-			self.cityList.filter { $0.name == city.name }.first?.currentTime = city.currentTime
-			self.cityList.filter { $0.name == city.name }.first?.currentTemperature = city.currentTemperature
+			self.cityList.filter { $0.name == city.name }.first?.time = city.time
+			self.cityList.filter { $0.name == city.name }.first?.temperature = city.temperature
 			self.refreshTableView()
 		}
 		

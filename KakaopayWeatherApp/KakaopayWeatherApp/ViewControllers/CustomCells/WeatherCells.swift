@@ -20,9 +20,9 @@ class CurrentlyWeatherCell: UITableViewCell {
 		guard let selectedCity = selectedCity else { return }
 		cityNameLabel.text = selectedCity.name
 		statusLabel.text = selectedCity.weather?.icon
-		temperatureLabel.text = selectedCity.currentTemperature
+		temperatureLabel.text = selectedCity.temperature
 		summaryLabel.text = selectedCity.weather?.summary
-		dateLabel.text = selectedCity.currentTime
+		dateLabel.text = selectedCity.time
 		dayOfWeekLabel.text = selectedCity.dayOfWeek
 		temperatureMinLabel.text = "\(selectedCity.weather?.temperatureMin ?? 0)°"
 		temperatureMaxLabel.text = "\(selectedCity.weather?.temperatureMax ?? 0)°"
