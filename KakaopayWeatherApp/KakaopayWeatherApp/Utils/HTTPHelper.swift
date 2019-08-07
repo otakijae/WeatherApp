@@ -23,7 +23,7 @@ class HttpHelper {
 		session.dataTask(with: request, completionHandler: completionHandler).resume()
 	}
 	
-	func getParameterString(parameters: [String: Any]? = nil) -> String {
+	fileprivate func getParameterString(parameters: [String: Any]? = nil) -> String {
 		guard let parameters = parameters else { return "" }
 		var urlValues = [String]()
 		parameters.forEach { (key: String, value: Any) in

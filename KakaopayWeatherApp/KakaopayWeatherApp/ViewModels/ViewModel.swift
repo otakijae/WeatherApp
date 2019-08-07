@@ -34,7 +34,7 @@ class ViewModel: ObserverProtocol {
 		subscribe()
 	}
 	
-	func subscribe() {
+	fileprivate func subscribe() {
 		
 		WeatherModule.instance.city.addObserver(self) { [weak self] city in
 			self?.city.value = city
@@ -63,7 +63,7 @@ class ViewModel: ObserverProtocol {
 		checkEmptyCityList(with: cityList.value)
 	}
 	
-	func checkEmptyCityList(with cityList: [City]) {
+	fileprivate func checkEmptyCityList(with cityList: [City]) {
 		if cityList.isEmpty {
 			cityListEmpty.value = Void()
 		} else {
@@ -72,7 +72,7 @@ class ViewModel: ObserverProtocol {
 		}
 	}
 	
-	func requestSimpleWeatherList(with cityList: [City]) {
+	fileprivate func requestSimpleWeatherList(with cityList: [City]) {
 		cityList.forEach {
 			WeatherModule.instance.requestSimpleWeather(with: $0)
 		}
@@ -90,7 +90,7 @@ class ViewModel: ObserverProtocol {
 		LocationModule.instance.requestLocations(query: query)
 	}
 	
-	func appendNewLocation(_ city: City) {
+	fileprivate func appendNewLocation(_ city: City) {
 		var newCityList = savedCityList
 		newCityList.append(city)
 		savedCityList = newCityList
@@ -123,7 +123,7 @@ class ViewModel: ObserverProtocol {
 		}
 	}
 	
-	func isConnectedToNetwork() -> Bool {
+	fileprivate func isConnectedToNetwork() -> Bool {
 		var zeroAddress = sockaddr_in(sin_len: 0, sin_family: 0, sin_port: 0, sin_addr: in_addr(s_addr: 0), sin_zero: (0, 0, 0, 0, 0, 0, 0, 0))
 		zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
 		zeroAddress.sin_family = sa_family_t(AF_INET)
