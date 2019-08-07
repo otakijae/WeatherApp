@@ -42,7 +42,6 @@ class WeatherModule {
 				let sunriseTime = firstDailyData["sunriseTime"] as? Double,
 				let sunsetTime = firstDailyData["sunsetTime"] as? Double else { return }
 			
-			let weather = weather
 			weather.temperatureMax = temperatureMax
 			weather.temperatureMin = temperatureMin
 			weather.sunriseTime = TimeModule.instance.getStringTime(from: sunriseTime)
