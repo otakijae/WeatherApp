@@ -26,24 +26,13 @@ class WeatherModule {
 	}
 	
 	func requestSpecificWeather(with city: City) {
-		API.instance.requestSpecificWeather(with: city) { json in
+		API.instance.requestSpecificWeather(with: city) { (json, weather) in
 			guard
 				let data = json as? [String: Any],
 				let timeZone = data["timezone"] as? String,
 				let currently = data["currently"] as? [String: Any],
-				let icon = currently["icon"] as? String,
 				let temperature = currently["temperature"] as? Double,
-				let summary = currently["summary"] as? String,
 				let time = currently["time"] as? Double,
-				
-				let precipitationProbability = currently["precipIntensity"] as? Double,
-				let humidity = currently["humidity"] as? Double,
-				let windSpeed = currently["windSpeed"] as? Double,
-				let apparentTemperature = currently["apparentTemperature"] as? Double,
-				let precipitationIntensity = currently["precipIntensity"] as? Double,
-				let pressure = currently["pressure"] as? Double,
-				let visibility = currently["visibility"] as? Double,
-				let uvIndex = currently["uvIndex"] as? Double,
 				
 				let daily = data["daily"] as? [String: Any],
 				let dailyData = daily["data"] as? [Any],
@@ -53,25 +42,11 @@ class WeatherModule {
 				let sunriseTime = firstDailyData["sunriseTime"] as? Double,
 				let sunsetTime = firstDailyData["sunsetTime"] as? Double else { return }
 			
-			let weather = Weather()
-			
-			weather.timeZone = timeZone
-			weather.icon = icon
-			weather.summary = summary
-			
+			let weather = weather
 			weather.temperatureMax = temperatureMax
 			weather.temperatureMin = temperatureMin
 			weather.sunriseTime = TimeModule.instance.getStringTime(from: sunriseTime)
 			weather.sunsetTime = TimeModule.instance.getStringTime(from: sunsetTime)
-			
-			weather.precipitationProbability = precipitationProbability
-			weather.humidity = humidity
-			weather.windSpeed = windSpeed
-			weather.apparentTemperature = apparentTemperature
-			weather.precipitationIntensity = precipitationIntensity
-			weather.pressure = pressure
-			weather.visibility = visibility
-			weather.uvIndex = uvIndex
 			
 			city.weather = weather
 			city.time = TimeModule.instance.getCurrentTime(in: timeZone)

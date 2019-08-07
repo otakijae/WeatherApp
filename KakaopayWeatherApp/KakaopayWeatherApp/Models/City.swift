@@ -11,3 +11,7 @@ class City: NSObject, Codable {
 	var dailyWeatherList: [Daily]?
 	var hourlyWeatherList: [Hourly]?
 }
+
+class DarkSky: NSObject, Codable {
+	var currently: Weather
+}

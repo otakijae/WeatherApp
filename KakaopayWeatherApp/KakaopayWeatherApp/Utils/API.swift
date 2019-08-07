@@ -19,7 +19,7 @@ class API: HttpHelper {
 		})
 	}
 	
-	func requestSpecificWeather(with city: City, resultHandler: @escaping (Any) -> Void) {
+	func requestSpecificWeather(with city: City, resultHandler: @escaping ((Any, Weather)) -> Void) {
 		guard let latitude = city.latitude, let longitude = city.longitude else { return }
 		let url = URL(string: "\(HttpHelper.baseURL)/\(HttpHelper.accessToken)/\(latitude),\(longitude)")!
 		let parameters = ["units": "si",
@@ -29,7 +29,9 @@ class API: HttpHelper {
 			guard error == nil else { return }
 			if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
 				guard let jsonToArray = try? JSONSerialization.jsonObject(with: data, options: []) else { return }
-				resultHandler(jsonToArray)
+				let decoder = JSONDecoder()
+				guard let darkSkyResponse = try? decoder.decode(DarkSky.self, from: data) else { return }
+				resultHandler((jsonToArray, darkSkyResponse.currently))
 			}
 		})
 	}
