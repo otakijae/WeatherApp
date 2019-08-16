@@ -48,17 +48,22 @@ class MainListViewController: UIViewController, ObserverProtocol {
 		}
 		
 		viewModel.cityListEmpty.addObserver(self) {
-			self.tableView.isHidden = true
-			self.descriptionView.isHidden = false
+			self.showDescriptionView(true)
 			self.refreshTableView()
 		}
 		
 		viewModel.cityListExists.addObserver(self) {
-			self.tableView.isHidden = false
-			self.descriptionView.isHidden = true
+			self.showDescriptionView(false)
 			self.refreshTableView()
 		}
 		
+	}
+	
+	func showDescriptionView(_ isHidden: Bool) {
+		DispatchQueue.main.async {
+			self.tableView.isHidden = isHidden
+			self.descriptionView.isHidden = !isHidden
+		}
 	}
 	
 	func refreshTableView() {
@@ -69,10 +74,12 @@ class MainListViewController: UIViewController, ObserverProtocol {
 	}
 	
 	@objc func refreshAction() {
-		guard let viewModel = viewModel else { return }
-		viewModel.configureCityList()
-		DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-			self.refreshControl.endRefreshing()
+		DispatchQueue.global(qos: .userInitiated).async {
+			guard let viewModel = self.viewModel else { return }
+			viewModel.configureCityList()
+			DispatchQueue.main.async {
+				self.refreshControl.endRefreshing()
+			}
 		}
 	}
 	

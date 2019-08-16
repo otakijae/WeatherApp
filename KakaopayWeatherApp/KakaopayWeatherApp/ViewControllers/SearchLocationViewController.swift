@@ -26,6 +26,11 @@ class SearchLocationViewController: UIViewController, ObserverProtocol {
 			self.cityList = locationList
 			self.tableView.reloadData()
 		}
+		
+		viewModel.selectedCity.addObserver(self) { selectedCity in
+			self.stopIndicator()
+			self.dismiss(self)
+		}
 	}
 	
 	override func didReceiveMemoryWarning() {
@@ -50,14 +55,10 @@ extension SearchLocationViewController: UITableViewDelegate, UITableViewDataSour
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		guard let viewModel = viewModel else { return }
-		viewModel.saveSelectedCity(with: cityList[indexPath.item])
-		tableView.deselectRow(at: indexPath, animated: true)
 		startIndicator()
-		DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-			self.stopIndicator()
-			self.dismiss(self)
-		}
+		tableView.deselectRow(at: indexPath, animated: true)
+		guard let viewModel = self.viewModel else { return }
+		viewModel.saveSelectedCity(with: self.cityList[indexPath.item])
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

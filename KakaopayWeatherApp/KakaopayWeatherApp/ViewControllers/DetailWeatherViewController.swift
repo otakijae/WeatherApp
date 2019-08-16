@@ -53,10 +53,12 @@ class DetailWeatherViewController: UIViewController, ObserverProtocol {
 	}
 	
 	@objc func refreshAction() {
-		guard let viewModel = viewModel else { return }
-		viewModel.requestDetailWeathers(with: selectedCity)
-		DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-			self.refreshControl.endRefreshing()
+		DispatchQueue.global(qos: .userInitiated).async {
+			guard let viewModel = self.viewModel else { return }
+			viewModel.requestDetailWeathers(with: self.selectedCity)
+			DispatchQueue.main.async {
+				self.refreshControl.endRefreshing()
+			}
 		}
 	}
 	

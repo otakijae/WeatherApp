@@ -1,5 +1,5 @@
 protocol ObservableProtocol: class {
-	var observers : [ObserverProtocol] { get set }
+	var observers: [ObserverProtocol] { get set }
 	func addObserver(_ observer: ObserverProtocol)
 	func removeObserver(_ observer: ObserverProtocol)
 	func notifyObservers(_ observers: [ObserverProtocol])

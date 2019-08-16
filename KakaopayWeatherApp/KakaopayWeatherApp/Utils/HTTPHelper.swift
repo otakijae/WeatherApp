@@ -28,7 +28,7 @@ class HttpHelper {
 		var urlValues = [String]()
 		parameters.forEach { (key: String, value: Any) in
 			guard let value = value as? String else { return }
-			if let encodedValue = value.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) {
+			if let encodedValue = value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
 				urlValues.append(key + "=" + encodedValue)
 			}
 		}

@@ -15,6 +15,7 @@ class ViewModel: ObserverProtocol {
 	var dailyWeatherList = Observable<[Daily]>(value: [])
 	var hourlyWeatherList = Observable<[Hourly]>(value: [])
 	var locationList = Observable<[MKMapItem]>(value: [])
+	var selectedCity = Observable<City>(value: City())
 	
 	var savedCityList: [City] {
 		get {
@@ -54,6 +55,11 @@ class ViewModel: ObserverProtocol {
 		
 		LocationModule.instance.locationList.addObserver(self) { locationList in
 			self.locationList.value = locationList
+		}
+		
+		LocationModule.instance.selectedCity.addObserver(self) { selectedCity in
+			self.appendNewLocation(selectedCity)
+			self.selectedCity.value = selectedCity
 		}
 		
 	}
@@ -100,20 +106,12 @@ class ViewModel: ObserverProtocol {
 		if let selectedCityName = mapItem.placemark.locality {
 			let city = City()
 			city.name = selectedCityName
-			LocationModule.instance.getCoordinates(with: city) { coordinates in
-				city.latitude = coordinates?.0
-				city.longitude = coordinates?.1
-				self.appendNewLocation(city)
-			}
+			LocationModule.instance.getCoordinates(with: city)
 		} else {
 			guard let cityName = mapItem.placemark.name else { return }
 			let city = City()
 			city.name = cityName
-			LocationModule.instance.getCoordinates(with: city) { coordinates in
-				city.latitude = coordinates?.0
-				city.longitude = coordinates?.1
-				self.appendNewLocation(city)
-			}
+			LocationModule.instance.getCoordinates(with: city)
 		}
 	}
 	
