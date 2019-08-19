@@ -34,7 +34,7 @@ class CurrentlyWeatherCell: UITableViewCell, WeatherCell {
 	
 }
 
-class HourlyWeatherCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class HourlyWeatherCell: UITableViewCell, WeatherCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 	
 	@IBOutlet weak var collectionView: UICollectionView!
 	@IBOutlet weak var collectionViewFlowLayout: UICollectionViewFlowLayout!
@@ -104,7 +104,7 @@ class HourlyCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var temperatureLabel: UILabel!
 }
 
-class DailyWeatherCell: UITableViewCell, UITableViewDataSource, UITableViewDelegate {
+class DailyWeatherCell: UITableViewCell, WeatherCell, UITableViewDataSource, UITableViewDelegate {
 	
 	@IBOutlet weak var tableView: UITableView!
 	var selectedCity: City? {
@@ -155,7 +155,7 @@ class DailyTableViewCell: UITableViewCell {
 	@IBOutlet weak var temperatureMaxLabel: UILabel!
 }
 
-class OtherWeatherCell: UITableViewCell {
+class OtherWeatherCell: UITableViewCell, WeatherCell {
 	
 	@IBOutlet weak var suriseTimeLabel: UILabel!
 	@IBOutlet weak var sunsetTimeLabel: UILabel!

@@ -114,36 +114,14 @@ extension DetailWeatherViewController: UITableViewDelegate, UITableViewDataSourc
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		switch indexPath.item {
-		case CellType.currently.rawValue:
-			let cell = tableView.dequeueReusableCell(for: indexPath) as CurrentlyWeatherCell
-			cell.selectedCity = selectedCity
-			return cell
-		case CellType.hourly.rawValue:
-			let cell = tableView.dequeueReusableCell(for: indexPath) as HourlyWeatherCell
-			cell.selectedCity = selectedCity
-			return cell
-		case CellType.daily.rawValue:
-			let cell = tableView.dequeueReusableCell(for: indexPath) as DailyWeatherCell
-			cell.selectedCity = selectedCity
-			return cell
-		case CellType.other.rawValue:
-			let cell = tableView.dequeueReusableCell(for: indexPath) as OtherWeatherCell
-			cell.selectedCity = selectedCity
-			return cell
-		default:
-			return UITableViewCell()
-		}
+		return configureWeatherCell(tableView: tableView, indexPath: indexPath)
 	}
 	
-}
-
-extension UITableView {
-	
-	func dequeueReusableCell<T: UITableViewCell>(for indexPath: IndexPath) -> T {
-		guard let cell = dequeueReusableCell(withIdentifier: T.className, for: indexPath) as? T else {
-			fatalError()
-		}
+	func configureWeatherCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+		guard
+			let type = CellType(rawValue: indexPath.item),
+			let cell = tableView.dequeueReusableCell(withIdentifier: getIdentifier(type: type), for: indexPath) as? WeatherCell else { return UITableViewCell() }
+		cell.selectedCity = selectedCity
 		return cell
 	}
 	
