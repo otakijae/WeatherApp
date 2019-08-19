@@ -34,7 +34,7 @@ class CurrentlyWeatherCell: UITableViewCell, WeatherCell {
 	
 }
 
-class HourlyWeatherCell: UITableViewCell, WeatherCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class HourlyWeatherCell: UITableViewCell, WeatherCell {
 	
 	@IBOutlet weak var collectionView: UICollectionView!
 	@IBOutlet weak var collectionViewFlowLayout: UICollectionViewFlowLayout!
@@ -55,6 +55,10 @@ class HourlyWeatherCell: UITableViewCell, WeatherCell, UICollectionViewDataSourc
 		collectionView.dataSource = self
 		collectionView.delegate = self
 	}
+	
+}
+
+extension HourlyWeatherCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		guard
@@ -104,7 +108,7 @@ class HourlyCollectionViewCell: UICollectionViewCell {
 	@IBOutlet weak var temperatureLabel: UILabel!
 }
 
-class DailyWeatherCell: UITableViewCell, WeatherCell, UITableViewDataSource, UITableViewDelegate {
+class DailyWeatherCell: UITableViewCell, WeatherCell {
 	
 	@IBOutlet weak var tableView: UITableView!
 	var selectedCity: City? {
@@ -119,6 +123,10 @@ class DailyWeatherCell: UITableViewCell, WeatherCell, UITableViewDataSource, UIT
 		tableView.dataSource = self
 		tableView.delegate = self
 	}
+	
+}
+
+extension DailyWeatherCell: UITableViewDataSource, UITableViewDelegate {
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return CGFloat(Constants.tableViewCellHeight)
