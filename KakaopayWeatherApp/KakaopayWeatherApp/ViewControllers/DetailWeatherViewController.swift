@@ -81,6 +81,19 @@ extension DetailWeatherViewController: UITableViewDelegate, UITableViewDataSourc
 		case other = 3
 	}
 	
+	func getIdentifier(type: CellType) -> String {
+		switch type {
+		case .currently:
+			return CurrentlyWeatherCell.className
+		case .hourly:
+			return HourlyWeatherCell.className
+		case .daily:
+			return DailyWeatherCell.className
+		case .other:
+			return OtherWeatherCell.className
+		}
+	}
+	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		switch indexPath.item {
 		case CellType.currently.rawValue:
@@ -103,39 +116,34 @@ extension DetailWeatherViewController: UITableViewDelegate, UITableViewDataSourc
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		switch indexPath.item {
 		case CellType.currently.rawValue:
-			return configureCurrentlyWeatherCell(tableView: tableView, indexPath: indexPath)
+			let cell = tableView.dequeueReusableCell(for: indexPath) as CurrentlyWeatherCell
+			cell.selectedCity = selectedCity
+			return cell
 		case CellType.hourly.rawValue:
-			return configureHourlyWeatherCell(tableView: tableView, indexPath: indexPath)
+			let cell = tableView.dequeueReusableCell(for: indexPath) as HourlyWeatherCell
+			cell.selectedCity = selectedCity
+			return cell
 		case CellType.daily.rawValue:
-			return configureDailyWeatherCell(tableView: tableView, indexPath: indexPath)
+			let cell = tableView.dequeueReusableCell(for: indexPath) as DailyWeatherCell
+			cell.selectedCity = selectedCity
+			return cell
 		case CellType.other.rawValue:
-			return configureOtherWeatherCell(tableView: tableView, indexPath: indexPath)
+			let cell = tableView.dequeueReusableCell(for: indexPath) as OtherWeatherCell
+			cell.selectedCity = selectedCity
+			return cell
 		default:
 			return UITableViewCell()
 		}
 	}
 	
-	func configureCurrentlyWeatherCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: CurrentlyWeatherCell.className, for: indexPath) as? CurrentlyWeatherCell else { return UITableViewCell() }
-		cell.selectedCity = selectedCity
-		return cell
-	}
+}
+
+extension UITableView {
 	
-	func configureHourlyWeatherCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: HourlyWeatherCell.className, for: indexPath) as? HourlyWeatherCell else { return UITableViewCell() }
-		cell.selectedCity = selectedCity
-		return cell
-	}
-	
-	func configureDailyWeatherCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: DailyWeatherCell.className, for: indexPath) as? DailyWeatherCell else { return UITableViewCell() }
-		cell.selectedCity = selectedCity
-		return cell
-	}
-	
-	func configureOtherWeatherCell(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: OtherWeatherCell.className, for: indexPath) as? OtherWeatherCell else { return UITableViewCell() }
-		cell.selectedCity = selectedCity
+	func dequeueReusableCell<T: UITableViewCell>(for indexPath: IndexPath) -> T {
+		guard let cell = dequeueReusableCell(withIdentifier: T.className, for: indexPath) as? T else {
+			fatalError()
+		}
 		return cell
 	}
 	

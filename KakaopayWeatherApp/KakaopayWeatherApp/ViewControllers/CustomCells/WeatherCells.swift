@@ -1,6 +1,10 @@
 import UIKit
 
-class CurrentlyWeatherCell: UITableViewCell {
+protocol WeatherCell where Self: UITableViewCell {
+	var selectedCity: City? { get set }
+}
+
+class CurrentlyWeatherCell: UITableViewCell, WeatherCell {
 	
 	@IBOutlet weak var cityNameLabel: UILabel!
 	@IBOutlet weak var statusLabel: UILabel!
