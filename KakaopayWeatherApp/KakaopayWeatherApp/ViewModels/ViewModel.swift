@@ -17,6 +17,8 @@ class ViewModel: ObserverProtocol {
 	var locationList = Observable<[MKMapItem]>(value: [])
 	var selectedCity = Observable<City>(value: City())
 	
+	var list: [City] = []
+	
 	var savedCityList: [City] {
 		get {
 			guard
@@ -38,7 +40,7 @@ class ViewModel: ObserverProtocol {
 	fileprivate func subscribe() {
 		
 		WeatherModule.instance.city.addObserver(self) { [weak self] city in
-			self?.city.value = city
+			self?.list.append(city)
 		}
 		
 		WeatherModule.instance.cityWeather.addObserver(self) { [weak self] cityWeather in
@@ -79,8 +81,13 @@ class ViewModel: ObserverProtocol {
 	}
 	
 	fileprivate func requestSimpleWeatherList(with cityList: [City]) {
+		list.removeAll()
+		let group = DispatchGroup()
 		cityList.forEach {
-			WeatherModule.instance.requestSimpleWeather(with: $0)
+			WeatherModule.instance.requestSimpleWeather(with: $0, in: group)
+		}
+		group.notify(queue: .main) {
+			self.cityList.value = self.list
 		}
 	}
 	

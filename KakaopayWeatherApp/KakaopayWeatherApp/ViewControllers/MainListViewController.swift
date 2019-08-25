@@ -37,14 +37,9 @@ class MainListViewController: UIViewController, ObserverProtocol {
 			self.alert(message: Constants.networkAlertMessage)
 		}
 		
-		viewModel.city.addObserver(self) { [weak self] city in
-			self?.cityList.filter { $0.name == city.name }.first?.time = city.time
-			self?.cityList.filter { $0.name == city.name }.first?.temperature = city.temperature
-			self?.refreshTableView()
-		}
-		
 		viewModel.cityList.addObserver(self) { cityList in
 			self.cityList = cityList
+			self.refreshTableView()
 		}
 		
 		viewModel.cityListEmpty.addObserver(self) {
