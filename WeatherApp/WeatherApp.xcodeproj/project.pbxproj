@@ -32,7 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		13206CAC22F1D56B00F6C94F /* KakaopayWeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KakaopayWeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13206CAC22F1D56B00F6C94F /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13206CAF22F1D56B00F6C94F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		13206CB622F1D56D00F6C94F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		13206CBB22F1D56D00F6C94F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -80,7 +80,7 @@
 		13206CAD22F1D56B00F6C94F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13206CAC22F1D56B00F6C94F /* KakaopayWeatherApp.app */,
+				13206CAC22F1D56B00F6C94F /* WeatherApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -96,7 +96,8 @@
 				13206CD622F2CB8900F6C94F /* Extensions */,
 				13206CD722F2CB9800F6C94F /* SupportFiles */,
 			);
-			path = KakaopayWeatherApp;
+			name = KakaopayWeatherApp;
+			path = WeatherApp;
 			sourceTree = "<group>";
 		};
 		13206CD622F2CB8900F6C94F /* Extensions */ = {
@@ -182,9 +183,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		13206CAB22F1D56B00F6C94F /* KakaopayWeatherApp */ = {
+		13206CAB22F1D56B00F6C94F /* WeatherApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13206CBE22F1D56D00F6C94F /* Build configuration list for PBXNativeTarget "KakaopayWeatherApp" */;
+			buildConfigurationList = 13206CBE22F1D56D00F6C94F /* Build configuration list for PBXNativeTarget "WeatherApp" */;
 			buildPhases = (
 				13206CA822F1D56B00F6C94F /* Sources */,
 				13206CA922F1D56B00F6C94F /* Frameworks */,
@@ -194,9 +195,9 @@
 			);
 			dependencies = (
 			);
-			name = KakaopayWeatherApp;
+			name = WeatherApp;
 			productName = KakaopayWeatherApp;
-			productReference = 13206CAC22F1D56B00F6C94F /* KakaopayWeatherApp.app */;
+			productReference = 13206CAC22F1D56B00F6C94F /* WeatherApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -214,7 +215,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 13206CA722F1D56B00F6C94F /* Build configuration list for PBXProject "KakaopayWeatherApp" */;
+			buildConfigurationList = 13206CA722F1D56B00F6C94F /* Build configuration list for PBXProject "WeatherApp" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -228,7 +229,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13206CAB22F1D56B00F6C94F /* KakaopayWeatherApp */,
+				13206CAB22F1D56B00F6C94F /* WeatherApp */,
 			);
 		};
 /* End PBXProject section */
@@ -398,13 +399,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R6MGG2G2T3;
-				INFOPLIST_FILE = "$(SRCROOT)/KakaopayWeatherApp/SupportFiles/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/WeatherApp/SupportFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ninetyfivejae.KakaopayWeatherApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ninetyfivejae.WeatherApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -417,13 +418,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R6MGG2G2T3;
-				INFOPLIST_FILE = "$(SRCROOT)/KakaopayWeatherApp/SupportFiles/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/WeatherApp/SupportFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ninetyfivejae.KakaopayWeatherApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ninetyfivejae.WeatherApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -433,7 +434,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		13206CA722F1D56B00F6C94F /* Build configuration list for PBXProject "KakaopayWeatherApp" */ = {
+		13206CA722F1D56B00F6C94F /* Build configuration list for PBXProject "WeatherApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13206CBC22F1D56D00F6C94F /* Debug */,
@@ -442,7 +443,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13206CBE22F1D56D00F6C94F /* Build configuration list for PBXNativeTarget "KakaopayWeatherApp" */ = {
+		13206CBE22F1D56D00F6C94F /* Build configuration list for PBXNativeTarget "WeatherApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13206CBF22F1D56D00F6C94F /* Debug */,
