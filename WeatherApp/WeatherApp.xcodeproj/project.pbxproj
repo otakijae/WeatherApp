@@ -72,7 +72,7 @@
 		13206CA322F1D56B00F6C94F = {
 			isa = PBXGroup;
 			children = (
-				13206CAE22F1D56B00F6C94F /* KakaopayWeatherApp */,
+				13206CAE22F1D56B00F6C94F /* WeatherApp */,
 				13206CAD22F1D56B00F6C94F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,7 +85,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		13206CAE22F1D56B00F6C94F /* KakaopayWeatherApp */ = {
+		13206CAE22F1D56B00F6C94F /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
 				13206CD822F2CBB700F6C94F /* ViewControllers */,
@@ -96,7 +96,6 @@
 				13206CD622F2CB8900F6C94F /* Extensions */,
 				13206CD722F2CB9800F6C94F /* SupportFiles */,
 			);
-			name = KakaopayWeatherApp;
 			path = WeatherApp;
 			sourceTree = "<group>";
 		};
