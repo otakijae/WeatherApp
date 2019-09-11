@@ -27,7 +27,8 @@ class WeatherModule {
 		}
 	}
 	
-	func requestSpecificWeather(with city: City) {
+	func requestSpecificWeather(with city: City, in group: DispatchGroup) {
+		group.enter()
 		API.instance.requestSpecificWeather(with: city) { (json, weather) in
 			guard
 				let data = json as? [String: Any],
@@ -55,10 +56,12 @@ class WeatherModule {
 			city.temperature = String(temperature)
 			
 			self.cityWeather.value = city
+			group.leave()
 		}
 	}
 	
-	func requestDailyWeather(with city: City) {
+	func requestDailyWeather(with city: City, in group: DispatchGroup) {
+		group.enter()
 		API.instance.requestDailyWeather(with: city) { json in
 			self.discoveredDailyWeatherList.removeAll()
 			guard
@@ -85,10 +88,12 @@ class WeatherModule {
 				self.discoveredDailyWeatherList.append(daily)
 			}
 			self.dailyWeatherList.value = self.discoveredDailyWeatherList
+			group.leave()
 		}
 	}
 	
-	func requestHourlyWeather(with city: City) {
+	func requestHourlyWeather(with city: City, in group: DispatchGroup) {
+		group.enter()
 		API.instance.requestHourlyWeather(with: city) { json in
 			self.discoveredDailyWeatherList.removeAll()
 			guard
@@ -113,6 +118,7 @@ class WeatherModule {
 				self.discoveredHourlyWeatherList.append(hourly)
 			}
 			self.hourlyWeatherList.value = self.discoveredHourlyWeatherList
+			group.leave()
 		}
 	}
 	

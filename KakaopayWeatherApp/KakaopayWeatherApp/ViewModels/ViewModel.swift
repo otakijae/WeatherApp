@@ -14,6 +14,7 @@ class ViewModel: ObserverProtocol {
 	var cityWeather = Observable<City>(value: City())
 	var dailyWeatherList = Observable<[Daily]>(value: [])
 	var hourlyWeatherList = Observable<[Hourly]>(value: [])
+	var responseNotify = Observable(value: Void())
 	var locationList = Observable<[MKMapItem]>(value: [])
 	var selectedCity = Observable<City>(value: City())
 	
@@ -92,10 +93,17 @@ class ViewModel: ObserverProtocol {
 	}
 	
 	func requestDetailWeathers(with city: City?) {
+		let group = DispatchGroup()
+		let queue = DispatchQueue.global()
 		guard let city = city else { return }
-		WeatherModule.instance.requestSpecificWeather(with: city)
-		WeatherModule.instance.requestDailyWeather(with: city)
-		WeatherModule.instance.requestHourlyWeather(with: city)
+		queue.async(group: group) {
+			WeatherModule.instance.requestSpecificWeather(with: city, in: group)
+			WeatherModule.instance.requestDailyWeather(with: city, in: group)
+			WeatherModule.instance.requestHourlyWeather(with: city, in: group)
+		}
+		group.notify(queue: queue) {
+			self.responseNotify.value = Void()
+		}
 	}
 	
 	func requestLocations(query: String?) {

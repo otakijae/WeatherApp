@@ -31,16 +31,17 @@ class DetailWeatherViewController: UIViewController, ObserverProtocol {
 		
 		viewModel.cityWeather.addObserver(self) { [weak self] cityWeather in
 			self?.selectedCity = cityWeather
-			self?.refreshTableView()
 		}
 		
 		viewModel.dailyWeatherList.addObserver(self) { [weak self] dailyWeatherList in
 			self?.selectedCity?.dailyWeatherList = dailyWeatherList
-			self?.refreshTableView()
 		}
 		
 		viewModel.hourlyWeatherList.addObserver(self) { [weak self] hourlyWeatherList in
 			self?.selectedCity?.hourlyWeatherList = hourlyWeatherList
+		}
+		
+		viewModel.responseNotify.addObserver(self) { [weak self] in
 			self?.refreshTableView()
 		}
 		
