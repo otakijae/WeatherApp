@@ -11,6 +11,8 @@ class WeatherModule {
 	var discoveredDailyWeatherList: [Daily] = []
 	var discoveredHourlyWeatherList: [Hourly] = []
 	
+	let dispatchSemaphore = DispatchSemaphore(value: 0)
+	
 	func requestSimpleWeather(with city: City, in group: DispatchGroup) {
 		group.enter()
 		API.instance.requestSimpleWeather(with: city) { json in
@@ -23,8 +25,10 @@ class WeatherModule {
 			city.time = TimeModule.instance.getCurrentTime(in: timeZone)
 			city.temperature = "\(Int(round(temperature)))"
 			self.city.value = city
+			self.dispatchSemaphore.signal()
 			group.leave()
 		}
+		dispatchSemaphore.wait()
 	}
 	
 	func requestSpecificWeather(with city: City, in group: DispatchGroup) {
