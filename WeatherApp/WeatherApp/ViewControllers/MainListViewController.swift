@@ -105,6 +105,7 @@ class MainListViewController: UIViewController, ObserverProtocol {
 			let viewModel = viewModel,
 			let searchLocationViewController = SearchLocationViewController.instance as? SearchLocationViewController else { return }
 		searchLocationViewController.viewModel = viewModel
+		searchLocationViewController.modalPresentationStyle = .fullScreen
 		present(searchLocationViewController, animated: true)
 	}
 	
